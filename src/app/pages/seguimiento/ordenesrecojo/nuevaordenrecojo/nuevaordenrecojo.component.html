@@ -1,0 +1,171 @@
+
+
+  
+  <div class="page-head">
+    <h2 class="page-head-title">Nueva Orden de Recojo</h2>
+   <nav aria-label="breadcrumb" role="navigation">
+     <ol class="breadcrumb page-head-nav">
+      <ol class="breadcrumb page-head-nav">
+        <li class="breadcrumb-item"> Seguimiento</li>
+        <li class="breadcrumb-item" [routerLink]="['/recibo/listaordenrecibo']">Órdenes de Recojo</li>
+        <li class="breadcrumb-item active">Nueva Orden de Recojo</li>
+      </ol>
+     </ol>
+   </nav>
+ </div>
+ 
+
+
+
+
+  <div class="main-content container-fluid">
+  
+    <form #f="ngForm"  (ngSubmit)="registrar(f)" >
+      <div class="col-12">
+        <div class="card card-border-color card-border-color-primary">
+          <div class="card-header ">Datos Generales</div>
+          <div class="card-body">
+            
+                <div class="p-fluid p-grid">
+                      <div class="col-4">
+                          <label  for="clientes">Cliente (*) </label>
+                          <p-dropdown name="clientes" 
+                          [virtualScroll]="true" itemSize="30"
+                            [options]="clientes" [(ngModel)]="model.idcliente"  
+                            [showClear]="true" class="input-form-field"  
+                              placeholder="Seleccione un cliente"
+                            [style]="{'width':'100%'}" [resetFilterOnHide]="false" 
+                            [hideTransitionOptions]="'0ms'" required
+                            [showTransitionOptions]="'0ms'" 
+                            filter="false">
+                                <ng-template let-item pTemplate="selectedItem">
+                                    <span style="vertical-align:left;">{{item.label}}</span>
+                                </ng-template>
+                          </p-dropdown>
+                      </div>
+                      <div class="col-4">
+                        <label for="fechacita">Fecha de cita (*) </label>
+                        <p-calendar required name="fechacita" baseZIndex=100   [locale]="es" dateFormat="dd/mm/yy" [(ngModel)]="model.fechacita"></p-calendar>
+
+                      </div>
+                      <div class="col-4">
+                        <label  for="horacita">Hora de cita (*) </label>
+                        <input  [style]="{'width':'100%'}" pInputText type="text" size="6" name="horacita" aria-label="12hr format" required class="form-control col-md-12"  #horacita="ngModel"  [style]="{'width':'100%'}"  [(ngModel)]="model.horacita"  [ngxTimepicker]="default" >                
+                        <ngx-material-timepicker #default></ngx-material-timepicker>
+                      </div>
+                </div>
+          </div>
+          </div>
+          <div class="card card-border-color card-border-color-primary">
+            <div class="card-header ">Detalle del Servicio</div>
+          <div class="card-body ">
+                <div class="p-fluid p-grid">
+                    <div class="col-4">
+                    <label for="personarecojo">Contacto (*) </label>
+                    <input pInputText  minlength="5" maxlength="30" required class="form-control col-md-12"  autocomplete="off" [(ngModel)]="model.personarecojo" name="personarecojo" #personarecojo="ngModel" type="text">
+                    <div *ngIf="personarecojo.invalid && (personarecojo.dirty || personarecojo.touched)"
+                    class="alert-danger">
+
+                  <div *ngIf="personarecojo.errors.required">
+                   Contacto es requerido
+                  </div>
+                  <div *ngIf="personarecojo.errors.minlength">
+                   No puede contener menos de 5 caracteres.
+                  </div>
+                </div>
+                    </div>
+                    <div class="col-4">
+                    <label for="puntopartida">Punto de Recojo (*) </label>
+                    <input pInputText  minlength="5" maxlength="150"  required class="form-control col-md-12"  autocomplete="off" [(ngModel)]="model.puntopartida" name="puntopartida" #puntopartida="ngModel" type="text">
+                    <div *ngIf="puntopartida.invalid && (puntopartida.dirty || puntopartida.touched)"
+                            class="alert-danger">
+
+                          <div *ngIf="puntopartida.errors.required">
+                           Centro de acopio es requerido
+                          </div>
+                          <div *ngIf="puntopartida.errors.minlength">
+                           No puede contener menos de 5 caracteres.
+                          </div>
+                        </div>
+                    
+                    </div>
+                    <div class="col-4">
+                    <label for="centroacopio">Centro de Acopio (*) </label>
+                    <input pInputText  minlength="5" maxlength="30"  required class="form-control col-md-12"  autocomplete="off" [(ngModel)]="model.centroacopio" name="centroacopio" #centroacopio="ngModel" type="text">
+                    <div *ngIf="centroacopio.invalid && (centroacopio.dirty || centroacopio.touched)"
+                            class="alert-danger">
+
+                          <div *ngIf="centroacopio.errors.required">
+                           Centro de acopio es requerido
+                          </div>
+                          <div *ngIf="centroacopio.errors.minlength">
+                           No puede contener menos de 5 caracteres.
+                          </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                      <label  for="clientes">Tipo unidad </label>
+                      
+                          
+                          <p-dropdown name="tipounidad" 
+                              [options]="tipounidad" [(ngModel)]="model.idtipounidad"  
+                              [showClear]="true" class="input-form-field"  
+                                placeholder="Seleccione un tipo de unidad"
+                              [style]="{'width':'100%'}" [resetFilterOnHide]="false" 
+                              [hideTransitionOptions]="'0ms'" 
+                              [showTransitionOptions]="'0ms'" 
+                              filter="false">
+                                  <ng-template let-item pTemplate="selectedItem">
+                                      <span style="vertical-align:left;">{{item.label}}</span>
+                                  </ng-template>
+                            </p-dropdown>
+        
+                    </div>
+                    <div class="col-4">
+                 
+                    <label  for="bultos">Cant. Bultos</label>
+                    <p-inputNumber  name="bultos"  [useGrouping]="false" [showButtons]="true" [min]="0" [max]="5000" [(ngModel)]="model.bulto"  ></p-inputNumber>
+                    
+                    </div>
+                    <div class="col-4">
+                    <label  for="peso">Peso Kg.</label>
+                    <p-inputNumber  name="peso" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="5"  [showButtons]="true" [min]="0" [max]="30000" [(ngModel)]="model.peso"  ></p-inputNumber>
+                    
+                    </div>
+                    <div class="col-4">
+                    
+                    <label  for="peso">Volumen m3</label>
+                    <p-inputNumber  name="volumen" mode="decimal"  [minFractionDigits]="2" [maxFractionDigits]="5" [showButtons]="true" [min]="0" [max]="100" [(ngModel)]="model.volumen"  ></p-inputNumber>
+                    
+                    </div>
+                    <div class="col-12">
+                    
+                      <label  for="peso">Observación</label>
+                      <textarea  pInputTextarea name="observaciones"  maxlength="1000"  [(ngModel)]="model.observaciones"  ></textarea >
+                      
+                      </div>
+                  
+                   
+                </div>
+              <div class="row pt-2 pt-sm-5 mt-1">
+                  <div class="col-sm-6 pl-0">
+                    <p class="text-right">
+                      <button [disabled]="!f.valid"  class="btn btn-space btn-primary" type="submit">Guardar</button>
+                      <button  [routerLink]="['/seguimiento/ordenrecojo']" routerLinkActive="router-link-active"  class="btn btn-space btn-secondary">Cancel</button>
+                    </p>
+                  </div>
+               </div>
+             
+              
+          </div>
+        </div>
+      </div>
+    
+
+    </form>
+  
+   
+
+</div>
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" ></ngx-loading>
+<p-confirmDialog  header="Confirmación" icon="pi pi-exclamation-triangle"></p-confirmDialog>

@@ -1,0 +1,133 @@
+<div class="container">
+  <div class="card card-border-color card-border-color-primary">
+    <div class="card-header">
+        <b> Seleccionar un archivo </b>
+    </div>
+    <div class="card-body">
+      <div class="row">
+
+            <div class="col-12">
+                <div class="row">
+                      <div class="form-group ml-5">
+                      <h2>Cliente :</h2>
+
+                      <p-dropdown name="clientes" *ngIf="ProveedorLoaded === true"
+                          [options]="clientes" [(ngModel)]="model.idcliente"
+                          scrollHeight="30vh"  class="input-form-field"
+                          [virtualScroll]="true" itemSize="30"
+                          [style]="{'width':'100%'}" [resetFilterOnHide]="false"
+                          [hideTransitionOptions]="'0ms'"
+                          [showTransitionOptions]="'0ms'"
+                          filter="false">
+                              <ng-template let-item pTemplate="selectedItem">
+                                  <span style="vertical-align:left;">{{item.label}}</span>
+                              </ng-template>
+                        </p-dropdown>
+                      </div>
+                      <div class="form-group ml-5">
+                            <h2>Elegir archivo:</h2>
+                            <input type="file" #file name="image" (change)="fileProgress($event)" />
+                      </div>
+
+
+
+
+
+                </div>
+            </div>
+            <div class="offset-2 col-8">
+              <div  *ngIf="div_visible" >
+                <p-progressBar mode="indeterminate" [style]="{'height': '6px'}"></p-progressBar>
+              </div>
+            </div>
+
+            <div class="offset-4 col-8 mb-3 mr-2 ml-5 ">
+              <div class="btn-toolbar " role="toolbar" aria-label="Toolbar with button groups">
+                <div class="btn-group " role="group" aria-label="First group">
+                    <button type="button" class="btn btn-block btn-success"
+                    (click)="uploadFile(file.files)" >
+                            <span class="fa fa-upload"></span> Subir
+                            </button>
+
+                  </div>
+                  <div class="btn-group ml-2" role="group" aria-label="Second group">
+                    <button type="button" class="btn btn-block btn-info"
+                    (click)="downloadFile()" >
+                            <span class="fa fa-download"></span> Plantilla
+                    </button>
+
+                </div>
+
+              </div>
+            </div>
+      </div>
+
+    </div>
+
+
+  </div>
+  <div class="card card-border-color card-border-color-primary">
+  <div class="card-header">
+            <b> Datos por procesar </b>
+    </div>
+  <div class="card-body">
+    <div  class="mat-elevation-z8">
+      <div class="pb-2 col-12 ">
+          <p-button label="Procesar" *ngIf="btn_procesar" style="height: 1px;" (onClick)="procesar()" > </p-button>
+      </div>
+        <p-table  [columns]="cols"
+        [scrollable]="false"  [style]="{width:'100%'}"
+        [rowsPerPageOptions]="[20,40,60,120]"
+
+        [value]="ordenes" #dt [paginator]="true" selectionMode="multiple"
+        [rows]="10" [resizableColumns]="true" [responsive]="true" >
+
+
+        <ng-template pTemplate="colgroup" let-columns>
+          <colgroup>
+              <col *ngFor="let col of columns"   [ngStyle]="{'width': col.width}" >
+          </colgroup>
+        </ng-template>
+
+
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+              <th  [ngStyle]="{'width': col.width}" *ngFor="let col of columns" pResizableColumn [pSortableColumn]="col.field">
+                  {{col.header}}
+              </th>
+          </tr>
+        </ng-template>
+
+
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr [pSelectableRow]="rowData">
+
+
+            <td class="ui-resizable-column" style="text-align:center;"> {{rowData.clientnum}} </td>
+            <td class="ui-resizable-column" style="text-align:left;"> {{rowData.lastname  }}</td>
+            <td class="ui-resizable-column" style="text-align:left;"> {{rowData.addr1 }} </td>
+            <td class="ui-resizable-column" style="text-align:left;"> {{rowData.addr2 }} </td>
+            <td class="ui-resizable-column" style="text-align:left;"> {{rowData.addr3 }} </td>
+            <td class="ui-resizable-column" style="text-align:left;"> {{rowData.addr4 }} </td>
+            <td class="ui-resizable-column" style="text-align:left;"> {{rowData.addr5 }} </td>
+            <td class="ui-resizable-column" style="text-align:left;"> {{rowData.homephone}}</td>
+            <td class="ui-resizable-column" style="text-align:left;"> {{rowData.numguia}}</td>
+            <td class="ui-resizable-column" style="text-align:left;"> {{rowData.peso}}</td>
+
+
+        </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <div class="flex align-items-center justify-content-between">
+            Son {{ordenes ? ordenes.length : 0 }} registros cargados.
+          </div>
+      </ng-template>
+        </p-table>
+    </div>
+
+  </div>
+  </div>
+</div>
+
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" ></ngx-loading>
+<p-confirmDialog  header="Confirmación" icon="pi pi-exclamation-triangle"></p-confirmDialog>

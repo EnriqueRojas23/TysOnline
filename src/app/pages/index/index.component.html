@@ -1,0 +1,497 @@
+
+  <!-- <div class="light-font">
+    <nav aria-label="breadcrumb" role="navigation">
+    <ol class="breadcrumb primary-color">
+        <li class="breadcrumb-item active">Dashboard General  </li>
+    </ol>
+    </nav>
+    </div> -->
+
+<div class="main-content container-fluid ">
+  <div class="col-md-12">
+
+    <div class="be-content docs">
+      <aside class="page-aside">
+        <div class="be-scroller-aside">
+          <div class="aside-content">
+            <div class="content">
+              <div class="aside-header">
+                <button class="navbar-toggle" data-target="#aside-spy" data-toggle="collapse" type="button"><span class="icon mdi mdi-caret-down"></span></button><span class="title">Dashboard</span>
+                <p class="description">Gráficas</p>
+              </div>
+            </div>
+            <div class="navbar aside-nav" id="aside-spy">
+              <ul class="navbar nav">
+                <li class="nav-item"><a class="nav-link" (click)="position_filtros()" >Filtros</a>
+                  <!-- href="#general_structure" -->
+                </li>
+                <li class="nav-item"><a class="nav-link" (click)="position_StockPorProducto()" >Pendientes de Despacho</a>
+                  <!-- href="#general_structure" -->
+                </li>
+                <li class="nav-item"><a class="nav-link" (click)="position_cumplimientoentrega()">Pendientes de Entrega</a>
+
+                </li>
+
+                <li class="nav-item"><a class="nav-link" (click)="position_retorno()">Pendientes de Retorno</a>
+
+                </li>
+                <li class="nav-item"><a class="nav-link" (click)="position_mobilevstrafico()">Entregas Mobile Vs Plantilla</a>
+
+                </li>
+                <!-- <li class="nav-item"><a class="nav-link" (click)="position_tiemposentrega()" >Tiempos de entrega</a></li>
+                <li class="nav-item"><a class="nav-link" (click)="position_daysofweek()"  >Días de semana de entrega</a></li>
+                <li class="nav-item"><a class="nav-link" (click)="position_otsxmanifiesto()">OTs por Manifiesto</a></li> -->
+              </ul>
+            </div>
+          </div>
+        </div>
+      </aside>
+      <div class="main-content container-fluid">
+
+
+        <div class="card card-border-color card-border-color-primary">
+          <div class="card-header">
+                    <b> Filtro de búsqueda  </b>
+              </div>
+          <div class="card-body">
+              <div class="row">
+                <div class="col-md-3">
+                <label>Departamento</label>
+                <p-dropdown name="id"    id="iddepartamento" [options]="listaDepartamento"
+                        [(ngModel)]="model.iddepartamento"  (onChange)="cargarProvinciasDestino($event)"
+
+                      scrollHeight="40vh"
+                      placeholder="seleccione un departamento"
+                      [style]="{'width':'100%'}"  [resetFilterOnHide]="true"
+                      [hideTransitionOptions]="'0ms'"
+                      [showTransitionOptions]="'0ms'"   >
+                <ng-template let-item pTemplate="selectedItem">
+                <span style="vertical-align:middle;">{{item.label}}</span>
+                </ng-template>
+              </p-dropdown>
+                </div>
+                <div class="col-md-3">
+                    <div class=" form-group">
+                      <label>Provincia</label>
+                      <p-dropdown name="idprovincia"   id="idprovincia" [options]="listaProvincia"
+                          [(ngModel)]="model.idprovincia"
+                        scrollHeight="40vh"
+                        placeholder="seleccione una provincia"
+                        [style]="{'width':'100%'}"  [resetFilterOnHide]="true"
+                        [hideTransitionOptions]="'0ms'"
+                        [showTransitionOptions]="'0ms'"   >
+                      <ng-template let-item pTemplate="selectedItem">
+                      <span style="vertical-align:middle;">{{item.label}}</span>
+                      </ng-template>
+
+                      </p-dropdown>
+                    </div>
+              </div>
+
+                <div class="col-md-6">
+                  <div class=" form-group">
+                    <label>Cliente</label>
+
+                  <p-dropdown name="clientes"
+                      [options]="clientes" [(ngModel)]="model.idcliente"
+                      scrollHeight="60vh"  class="input-form-field"
+                      [virtualScroll]="true" itemSize="60"
+                      [style]="{'width':'100%'}" [resetFilterOnHide]="false"
+                      [hideTransitionOptions]="'0ms'"
+                      [showTransitionOptions]="'0ms'"
+                      filter="false">
+                          <ng-template let-item pTemplate="selectedItem">
+                              <span style="vertical-align:left;">{{item.label}}</span>
+                          </ng-template>
+                    </p-dropdown>
+              </div>
+                </div>
+
+              </div>
+              <div class="row">
+
+
+            <!-- <div class="col-md-2 mb-5">
+                <h5>Inicio:</h5>
+                <p-calendar [(ngModel)]="dateInicio"   baseZIndex="100" [locale]="es" dateFormat="dd/mm/yy"></p-calendar>
+            </div>
+            <div class="col-md-2 mb-5">
+                <h5>Fin:</h5>
+                <p-calendar [(ngModel)]="dateFin"   baseZIndex="100" [locale]="es" dateFormat="dd/mm/yy"></p-calendar>
+            </div> -->
+
+
+              <div class="col-md-2 mt-3">
+                      <button   class='btn-primary btn btn-xs' pButton iconPos="left" label="Buscar" icon="fa fa-search"   (click)="buscar()"  type="button"></button>
+              </div>
+              <div class="col-md-2 mt-3">
+                      <button   class='btn-primary btn btn-xs' type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL" (click)="exportExcel()"></button>
+              </div>
+          </div>
+          </div>
+        </div>
+
+
+                <div class="row">
+
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                  <div class="card card-stats">
+                      <div class="card-header card-header-warning card-header-icon">
+                          <div class="card-icon">
+                              <i class="material-icons">content_copy</i>
+                          </div>
+                          <p class="card-category">Pendientes de Despacho</p>
+                          <h3 class="card-title"> {{ model.hasta7_despacho }}
+                              <small>de 0 a 7 días</small>
+                          </h3>
+                      </div>
+                      <div class="card-footer">
+                        <div class="stats">
+                          <i class="material-icons"></i>  Ver detalle
+                      </div>
+                      </div>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header card-header-warning card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">content_copy</i>
+                        </div>
+                        <p class="card-category">Pendientes de Despacho</p>
+                        <h3 class="card-title"> {{ model.hasta50_despacho }}
+                            <small>de 7 a 50 días</small>
+                        </h3>
+                    </div>
+                    <div class="card-footer">
+                      <div class="stats">
+                        <i class="material-icons"></i>  Ver detalle
+                    </div>
+                    </div>
+                </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                  <div class="card-header card-header-warning card-header-icon">
+                      <div class="card-icon">
+                          <i class="material-icons">content_copy</i>
+                      </div>
+                      <p class="card-category">Pendientes de Despacho</p>
+                      <h3 class="card-title"> {{ model.hasta100_despacho }}
+                          <small>de 50 a 100 días</small>
+                      </h3>
+                  </div>
+                  <div class="card-footer">
+                    <div class="stats">
+                      <i class="material-icons"></i>  Ver detalle
+                  </div>
+                  </div>
+                </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                  <div class="card card-stats">
+                    <div class="card-header card-header-warning card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">content_copy</i>
+                        </div>
+                        <p class="card-category">Pendientes de Despacho</p>
+                        <h3 class="card-title"> {{  model.masde100_despacho }}
+                            <small>más de 100 días</small>
+                        </h3>
+                    </div>
+                    <div class="card-footer">
+                      <div class="stats">
+                        <i class="material-icons"></i>  Ver detalle
+                    </div>
+                    </div>
+                  </div>
+                  </div>
+
+
+                </div>
+                <div class="row">
+                    <div class="mt-5  col-md-10">
+                    <div class="widget widget-tile bg-white">
+                    <div class="chart sparkline" id="spark2"></div>
+                    <div class="data-info">
+                      <div class="report-title"> {{  model.anioactual  }}</div>
+
+                        <p-chart type="doughnut" [data]="data2"></p-chart>
+
+                    </div>
+
+                    </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+                <div class="row">
+
+                  <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="card card-stats">
+                        <div class="card-header card-header-warning card-header-icon">
+                            <div class="card-icon">
+                                <i class="material-icons">content_copy</i>
+                            </div>
+                            <p class="card-category">Pendientes de Entrega</p>
+                            <h3 class="card-title"> {{ model.hasta7_entrega }}
+                                <small>de 0 a 7 días</small>
+                            </h3>
+                        </div>
+                        <div class="card-footer">
+                          <div class="stats">
+                            <i class="material-icons"></i>  Ver detalle
+                        </div>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-3 col-md-6 col-sm-6">
+                  <div class="card card-stats">
+                      <div class="card-header card-header-warning card-header-icon">
+                          <div class="card-icon">
+                              <i class="material-icons">content_copy</i>
+                          </div>
+                          <p class="card-category">Pendientes de Entrega</p>
+                          <h3 class="card-title"> {{ model.hasta50_entrega }}
+                              <small>de 7 a 50 días</small>
+                          </h3>
+                      </div>
+                      <div class="card-footer">
+                        <div class="stats">
+                          <i class="material-icons"></i>  Ver detalle
+                      </div>
+                      </div>
+                  </div>
+                  </div>
+                  <div class="col-lg-3 col-md-6 col-sm-6">
+                  <div class="card card-stats">
+                    <div class="card-header card-header-warning card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">content_copy</i>
+                        </div>
+                        <p class="card-category">Pendientes de Entrega</p>
+                        <h3 class="card-title"> {{ model.hasta100_entrega }}
+                            <small>de 50 a 100 días</small>
+                        </h3>
+                    </div>
+                    <div class="card-footer">
+                      <div class="stats">
+                        <i class="material-icons"></i>  Ver detalle
+                    </div>
+                    </div>
+                  </div>
+                  </div>
+
+                  <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="card card-stats">
+                      <div class="card-header card-header-warning card-header-icon">
+                          <div class="card-icon">
+                              <i class="material-icons">content_copy</i>
+                          </div>
+                          <p class="card-category">Pendientes de Entrega</p>
+                          <h3 class="card-title"> {{  model.masde100_entrega }}
+                              <small>más de 100 días</small>
+                          </h3>
+                      </div>
+                      <div class="card-footer">
+                        <div class="stats">
+                          <i class="material-icons"></i>  Ver detalle
+                      </div>
+                      </div>
+                    </div>
+                    </div>
+
+
+                  </div>
+                  <div class="row">
+                      <div class="mt-5  col-md-10">
+                      <div class="widget widget-tile bg-white">
+                      <div class="chart sparkline" id="spark2"></div>
+                      <div class="data-info">
+                        <div class="report-title"> {{  model.anioactual  }}</div>
+
+                          <p-chart type="doughnut" [data]="data3"></p-chart>
+
+                      </div>
+
+                      </div>
+                      </div>
+                  </div>
+
+
+
+
+
+
+
+
+                  <div class="row">
+
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                      <div class="card card-stats">
+                          <div class="card-header card-header-warning card-header-icon">
+                              <div class="card-icon">
+                                  <i class="material-icons">content_copy</i>
+                              </div>
+                              <p class="card-category">Pendientes de Retorno</p>
+                              <h3 class="card-title"> {{ model.hasta7 }}
+                                  <small>de 0 a 7 días</small>
+                              </h3>
+                          </div>
+                          <div class="card-footer">
+                            <div class="stats">
+                              <i class="material-icons"></i>  Ver detalle
+                          </div>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="card card-stats">
+                        <div class="card-header card-header-warning card-header-icon">
+                            <div class="card-icon">
+                                <i class="material-icons">content_copy</i>
+                            </div>
+                            <p class="card-category">Pendientes de Retorno</p>
+                            <h3 class="card-title"> {{ model.hasta50 }}
+                                <small>de 7 a 50 días</small>
+                            </h3>
+                        </div>
+                        <div class="card-footer">
+                          <div class="stats">
+                            <i class="material-icons"></i>  Ver detalle
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="card card-stats">
+                      <div class="card-header card-header-warning card-header-icon">
+                          <div class="card-icon">
+                              <i class="material-icons">content_copy</i>
+                          </div>
+                          <p class="card-category">Pendientes de Retorno</p>
+                          <h3 class="card-title"> {{ model.hasta100 }}
+                              <small>de 50 a 100 días</small>
+                          </h3>
+                      </div>
+                      <div class="card-footer">
+                        <div class="stats">
+                          <i class="material-icons"></i>  Ver detalle
+                      </div>
+                      </div>
+                    </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                      <div class="card card-stats">
+                        <div class="card-header card-header-warning card-header-icon">
+                            <div class="card-icon">
+                                <i class="material-icons">content_copy</i>
+                            </div>
+                            <p class="card-category">Pendientes de Retorno</p>
+                            <h3 class="card-title"> {{  model.masde100 }}
+                                <small>más de 100 días</small>
+                            </h3>
+                        </div>
+                        <div class="card-footer">
+                          <div class="stats">
+                            <i class="material-icons"></i>  Ver detalle
+                        </div>
+                        </div>
+                      </div>
+                      </div>
+
+
+                    </div>
+                    <div class="row">
+                        <div class="mt-5  col-md-10">
+                        <div class="widget widget-tile bg-white">
+                        <div class="chart sparkline" id="spark2"></div>
+                        <div class="data-info">
+                          <div class="report-title"> {{  model.anioactual  }}</div>
+
+                            <p-chart type="doughnut" [data]="data"></p-chart>
+
+                        </div>
+
+                        </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
+                    <div class="row">
+
+                      <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="card card-stats">
+                            <div class="card-header card-header-warning card-header-icon">
+                                <div class="card-icon">
+                                    <i class="material-icons">content_copy</i>
+                                </div>
+                                <p class="card-category">Pendientes de Retorno</p>
+                                <h3 class="card-title"> {{ model.hasta7 }}
+                                    <small>de 0 a 7 días</small>
+                                </h3>
+                            </div>
+                            <div class="card-footer">
+                              <div class="stats">
+                                <i class="material-icons"></i>  Ver detalle
+                            </div>
+                            </div>
+                        </div>
+                      </div>
+
+
+                      <div class="col-lg-3 col-md-6 col-sm-6">
+                      <div class="card card-stats">
+                        <div class="card-header card-header-warning card-header-icon">
+                            <div class="card-icon">
+                                <i class="material-icons">content_copy</i>
+                            </div>
+                            <p class="card-category">Pendientes de Retorno</p>
+                            <h3 class="card-title"> {{ model.hasta100 }}
+                                <small>de 50 a 100 días</small>
+                            </h3>
+                        </div>
+                        <div class="card-footer">
+                          <div class="stats">
+                            <i class="material-icons"></i>  Ver detalle
+                        </div>
+                        </div>
+                      </div>
+                      </div>
+
+
+
+                      </div>
+                      <div class="row">
+                          <div class="mt-5  col-md-10">
+                          <div class="widget widget-tile bg-white">
+                          <div class="chart sparkline" id="spark2"></div>
+                          <div class="data-info">
+                            <div class="report-title"> {{  model.anioactual  }}</div>
+
+                              <p-chart type="doughnut" [data]="data"></p-chart>
+
+                          </div>
+
+                          </div>
+                          </div>
+                      </div>
+
+      </div>
+  </div>
+</div>
+
+
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" ></ngx-loading>

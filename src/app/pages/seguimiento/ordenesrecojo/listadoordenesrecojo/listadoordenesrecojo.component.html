@@ -1,0 +1,156 @@
+
+<div class="main-content container-fluid">
+
+  <div class="col-md-12">
+      <div class="card card-border-color card-border-color-primary">
+          <div class="card-header">
+                    <b> Filtro de búsqueda  </b>
+          </div>
+          <div class="card-body">
+              <div class="row">
+                <div class="col-md-3">
+                  <h6>Cliente :</h6>
+
+                  <p-dropdown name="clientes" *ngIf="ProveedorLoaded === true"
+                      [options]="clientes" [(ngModel)]="model.idcliente"
+                      scrollHeight="30vh"  class="input-form-field"
+                      [virtualScroll]="true" itemSize="30"
+                      [style]="{'width':'100%'}" [resetFilterOnHide]="false"
+                      [hideTransitionOptions]="'0ms'"
+                      [showTransitionOptions]="'0ms'"
+                      filter="false">
+                          <ng-template let-item pTemplate="selectedItem">
+                              <span style="vertical-align:left;">{{item.label}}</span>
+                          </ng-template>
+                    </p-dropdown>
+              </div>
+
+
+
+              <div class="col-md-3">
+                <h6>Inicio:</h6>
+                <p-calendar [(ngModel)]="dateInicio"  baseZIndex="100" [locale]="es" dateFormat="dd/mm/yy"></p-calendar>
+              </div>
+
+              <div class="col-md-3">
+                <h6>Fin:</h6>
+                <p-calendar [(ngModel)]="dateFin" baseZIndex="100"  [locale]="es" dateFormat="dd/mm/yy"></p-calendar>
+              </div>
+
+
+
+              <div class="col-md-3">
+              <h6>Estado :</h6>
+
+                <p-dropdown name="estados"
+                  [options]="estados" [(ngModel)]="model.idestado"
+                  scrollHeight="20vh"  class="input-form-field"
+                  [style]="{'width':'100%'}"
+                   [resetFilterOnHide]="false"
+                  [hideTransitionOptions]="'0ms'"
+                  [showTransitionOptions]="'0ms'"
+                  filter="false">
+                      <ng-template let-item pTemplate="selectedItem">
+                          <span style="vertical-align:left;">{{item.label}}</span>
+                      </ng-template>
+                </p-dropdown>
+
+
+              </div>
+            </div>
+            <div class="row">
+
+              <div class="col-md-2 offset-8">
+                      <button   class='btn-primary btn btn-xs' pButton iconPos="left" label="Buscar" icon="fa fa-search"   (click)="buscar()"  type="button"></button>
+              </div>
+              <div class="col-md-2">
+                      <button   class='btn-primary btn btn-xs' type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL" (click)="exportExcel()"></button>
+              </div>
+          </div>
+          </div>
+      </div>
+
+      <div class="card card-border-color card-border-color-primary">
+            <div class="card-header">
+                <b> Órdenes de Transporte  </b>
+            </div>
+
+              <div class="card-body">
+
+
+
+                <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" ></ngx-loading>
+                <div  class="mat-elevation-z8">
+                    <div class="pb-2 col-12 ">
+                      <p-button label="Programar" icon="pi pi-plus" style="height: 1px;" (onClick)="save('info')" ></p-button>
+                   </div>
+                    <p-table  [columns]="cols"
+                      [scrollable]="false"  [style]="{width:'100%'}"
+                      [rowsPerPageOptions]="[20,40,60,120]"
+                      [(selection)]="selected"
+                      [value]="ordenes" #dt [paginator]="true" selectionMode="multiple"
+                      [rows]="10" [resizableColumns]="true" [responsive]="true" >
+
+
+                        <ng-template pTemplate="colgroup" let-columns>
+                          <colgroup>
+                              <col *ngFor="let col of columns"   [ngStyle]="{'width': col.width}" >
+                          </colgroup>
+                       </ng-template>
+
+
+                        <ng-template pTemplate="header" let-columns>
+                          <tr>
+                              <th  [ngStyle]="{'width': col.width}" *ngFor="let col of columns" pResizableColumn [pSortableColumn]="col.field">
+                                  {{col.header}}
+                              </th>
+                          </tr>
+                      </ng-template>
+
+
+                    <ng-template pTemplate="body" let-rowData let-columns="columns">
+                      <tr [pSelectableRow]="rowData">
+                        <td class="ui-resizable-column" style="text-align:left;">
+                          <button type='button'  class='btn-primary btn btn-xs' pButton  title='Ver Archivos' icon="fa fa-edit" (click)='editar(rowData.idordentrabajo);'>  </button>
+                          <button type='button'  class='btn-danger btn btn-xs' pButton  title='Eliminar' icon="fa fa-trash" (click)='eliminar(rowData.idordentrabajo);'>  </button>
+                          <button type='button'  class='btn-info btn btn-xs' pButton  title='Asignar' icon="fa fa-address-book" (click)='asignar(rowData.idordenrecojo);'>  </button>
+                          <button type='button'  class='btn-info btn btn-xs' pButton  title='Asignar' icon="fa fa-search" (click)='ver(rowData.idordenrecojo);'>  </button>
+                        </td>
+                        <td class="ui-resizable-column"  style="text-align:center; background-color:#d1d7e2; color: rgb(37, 40, 165);text-decoration: underline red"> <a style="cursor: pointer" (click)="verguias(rowData.idordentrabajo)">  {{ rowData.numcp    }}  </a> </td>
+
+                        <td class="ui-resizable-column" style="text-align:center;"> {{rowData.fecharegistro  | date:'dd/MM/yyyy HH:mm:ss' }}</td>
+                        <td class="ui-resizable-column" style="text-align:center;"> {{rowData.responsable}} </td>
+                        <td class="ui-resizable-column" style="text-align:left;"> {{rowData.razonsocial  }}</td>
+                        <td class="ui-resizable-column" style="text-align:left;"> {{rowData.fechahoracita | date:'dd/MM/yyyy HH:mm:ss'}} </td>
+                        <td  [ngClass]="rowData.estado == 'Registrado' ? 'very-old-car' :  (rowData.estado == 'Programaddo'?'': rowData.estado == 'Programado'?'old-car': null) "> {{rowData.estado}}</td>
+                        <td class="ui-resizable-column" style="text-align:left;"> {{rowData.personarecojo }} </td>
+                        <td class="ui-resizable-column" style="text-align:left;"> {{rowData.tipounidad}}</td>
+                        <td class="ui-resizable-column" style="text-align:left;"> {{rowData.puntorecojo}}</td>
+                        <td class="ui-resizable-column" style="text-align:left;"> {{rowData.centroacopio}}</td>
+                        <td class="ui-resizable-column" style="text-align:center;"> {{rowData.bulto}}</td>
+                        <td class="ui-resizable-column" style="text-align:center;"> {{rowData.peso}}</td>
+                        <td class="ui-resizable-column" style="text-align:center;"> {{rowData.pesovol}}</td>
+                        <td class="ui-resizable-column" style="text-align:left;"> {{rowData.observaciones}}</td>
+
+                    </tr>
+                    </ng-template>
+                    </p-table>
+                </div>
+              </div>
+      </div>
+
+
+
+  </div>
+
+</div>
+
+<p-overlayPanel [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"  [dismissable]="true" [showCloseIcon]="true" #op1 [appendTo]="'body'">
+
+  <img [src]="imageToShow" width="320" height="320"
+  alt="Place
+  image title"
+  >
+
+</p-overlayPanel>
+<p-confirmDialog  header="Confirmación" icon="pi pi-exclamation-triangle"></p-confirmDialog>

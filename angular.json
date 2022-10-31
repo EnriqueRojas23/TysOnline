@@ -24,11 +24,15 @@
             "tsConfig": "tsconfig.app.json",
             "aot": true,
             "assets": [
-              "src/favicon.ico",
+              "src/logo-TWH.ico",
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "src/assets/css/primeflex.min.css",
+              "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": []
           },
@@ -52,7 +56,7 @@
                 {
                   "type": "initial",
                   "maximumWarning": "2mb",
-                  "maximumError": "5mb"
+                  "maximumError": "10mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -123,6 +127,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "twh-spa"
+    }
+  },
+  "defaultProject": "twh-spa",
+  "cli": {
+    "analytics": "8947edad-a41d-48e5-996c-8c1475542af2"
+  }
 }

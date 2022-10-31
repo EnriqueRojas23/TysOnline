@@ -1,0 +1,206 @@
+
+
+  <!-- <h2 class="page-head-title"> Detalle de la Orden de Trabajo</h2> -->
+  <div class="light-font">
+  <nav aria-label="breadcrumb" role="navigation">
+    <ol class="breadcrumb primary-color">
+      <li class="breadcrumb-item active">Ciclo de vida de la orden de transporte</li>
+    </ol>
+  </nav>
+</div>
+
+
+
+<div class="main-content container-fluid">
+  <div class="card">
+      <div class="card-header card-header text-center titulo-oriflame font-weight-bold  col-sm-12  col-md-4 offset-md-4 offset-ms-1 card-header-divider card-header-divider">Despacho 
+      <span class="row card-subtitle  font-weight-bold ">N° Orden: {{ orden.numcp}}</span>
+      <span class="row card-subtitle font-weight-bold ">Entregar a: {{ orden.personarecojo }}</span>
+      </div>
+      <div class="card-body">
+
+
+
+        <div class="col-12 offset-3 row">
+          <div class="col-lg-3">
+            <div class="pricing-table pricing-table-color pricing-table-primary">
+              <div *ngIf="orden.estado==='Por Despachar'"  class="user-display-avatar_small"><img  src="assets/img/27-512.png" alt="Avatar"></div>
+              <div class="pricing-table-title">Recepcionado</div>
+              <div class="card-divider card-divider-xl"></div>
+              <div class="pricing-table-price"><span class="value">{{orden.fecharecojo | date: 'dd-MM-yyyy'}}</span><span class="frecuency"></span></div>
+        
+              
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="pricing-table pricing-table-color pricing-table-warning">
+              <div *ngIf="orden.estado==='Por Entregar'" class="user-display-avatar_small"><img  src="assets/img/27-512.png" alt="Avatar"></div>
+              <div class="pricing-table-title">En Ruta</div>
+              <div class="card-divider card-divider-xl"></div>
+              <div class="pricing-table-price"><span class="value">{{orden.fechadespacho | date: 'dd-MM-yyyy'}}</span><span class="frecuency"></span></div>
+        
+              
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="pricing-table pricing-table-color pricing-table-success">
+              <div *ngIf="orden.estado==='Entregado'" class="user-display-avatar_small">
+                </div>
+              <div class="pricing-table-title">Arribo destino</div>
+              <div class="card-divider card-divider-xl"></div>
+              <div class="pricing-table-price"><span class="value">{{orden.fechaentrega | date: 'dd-MM-yyyy'}}</span><span class="frecuency"></span></div>
+          
+              
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="pricing-table pricing-table-color pricing-table-danger">
+              <div *ngIf="orden.estado==='Entregado'" class="user-display-avatar_small"><img  src="assets/img/27-512.png" alt="Avatar"></div>
+              <div class="pricing-table-title">Entregado</div>
+              <div class="card-divider card-divider-xl"></div>
+              <div class="pricing-table-price"><span class="value">{{orden.fechaentrega | date: 'dd-MM-yyyy'}}</span><span class="frecuency"></span></div>
+          
+            </div>
+          </div>
+        </div>
+
+        
+
+
+      </div>
+  </div>
+
+  <div class="card">
+      <div class="card-body">
+      <div class="row">
+        <div class="col-md-6 col-ms-12">
+          <div class="col-12">
+              <div class="user-display">
+              <div class="user-display-bottom">
+              <div class="user-display-avatar"><img src="assets/img/avatar-150.png" alt="Avatar"></div>
+              <div class="user-display-info">
+                <div class="name">{{ orden.razonsocial }}</div>
+                <div class="nick"><span class="mdi mdi-account"></span> {{orden.oriflameid}}</div>
+              </div>
+              <div class="row user-display-details">
+                <div class="col-4">
+                  <div class="title">Origen</div>
+                  <div class="counter"><span class="mdi mdi-crosshairs"></span>{{orden.origen}}</div>
+                </div>
+                <div class="col-4">
+                  <div class="title">Remitente</div>
+                  <div class="counter">{{orden.remitente}}</div>
+                </div>
+                <div class="col-4">
+                  <div class="title">Fecha Servicio</div>
+                  <div class="counter">{{orden.fecharecojo | date: 'dd-MM-yyyy' }}</div>
+                </div>
+              </div>
+              <div class="row user-display-details">
+                <div class="col-4">
+                  <div class="title">Destino</div>
+                  <div class="counter">{{orden.destino}}</div>
+                </div>
+                <div class="col-4">
+                  <div class="title">Destinatario</div>
+                  <div class="counter">{{orden.destinatario}}</div>
+                </div>
+                <div class="col-4">
+                  <div class="title">Estado</div>
+                  <div  class="bg-primary text-white counter">{{orden.estado}}</div>
+                </div>
+              </div>
+              <div class="row user-display-details">
+                <div class="col-4">
+                  <div class="title">Bultos</div>
+                  <div class="counter">{{orden.bulto}}</div>
+                </div>
+                <div class="col-4">
+                  <div class="title">Peso</div>
+                  <div class="counter">{{orden.peso}}</div>
+                </div>
+                <div class="col-4">
+                  <div class="title">PesoVol</div>
+                  <div  class="counter">{{orden.volumen}}</div>
+                </div>
+              </div>
+              <div class="row user-display-details">
+                <div class="col-4">
+                  <div class="title">Dirección Destino</div>
+                  <div  class="counter">{{orden.direccion}}</div>
+                </div>
+                <div class="col-4">
+                  <div class="title">Tel.</div>
+                  <div  class="counter">{{orden.telefonorecojo}}</div>
+                </div>
+                <div class="col-4">
+                  <div class="title">N° Visitas</div>
+                  <div  class="counter">1</div>
+                </div>
+              </div>
+
+              </div>
+              </div>
+          </div>
+    
+        <div class="col-md-12 col-ms-12">
+        <p-carousel [value]="documentos" [numVisible]="1" [numScroll]="1" [circular]="true" >
+        <ng-template pTemplate="header">
+            <h5>Basic</h5>
+        </ng-template>
+        <ng-template let-product pTemplate="item">
+            <div class="product-item">
+                <div class="product-item-content">
+                    <div class="p-mb-3">
+                        <img src="http://104.36.166.65/Tys2.0/uploadedfiles/{{product.idordentrabajo}}/{{product.nombrearchivo}}" width="200" height="240" />
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+        </p-carousel>
+
+        </div>
+        <div class="col-md-12 col-md-12">
+          <agm-map [latitude]="lat"   [longitude]="lng" [zoom]="zoom">
+            <agm-marker #maker [latitude]="lat"  
+          
+              [iconUrl]="{
+                url: '/assets/img/27-512.png',
+                scaledSize: {
+                    width: 40,
+                    height: 40
+                }
+            }"
+            [longitude]="lng"></agm-marker>
+          </agm-map>
+          </div>
+        </div>
+        <div class="col-md-6 col-ms-12">
+
+
+        <div class="col-12">
+
+        <div class="card-body">
+              <div  class="example-container mat-elevation-z8">
+                <ul class="user-timeline user-timeline-compact">
+                  <li *ngFor="let item of incidencias" class="latest">
+                      <div class="timeline-content timeline-type file">
+                        <div class="user-timeline-date">{{item.fechaevento  | date:'medium'}}</div>
+                        <div class="user-timeline-title">{{item.evento}}</div>
+                        <div class="user-timeline-description">{{item.observacion}}</div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+          
+        </div>
+        </div>  
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+          

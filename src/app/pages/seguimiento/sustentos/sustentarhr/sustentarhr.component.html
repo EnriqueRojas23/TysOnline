@@ -1,0 +1,150 @@
+<div class="card card-border-color card-border-color-primary">
+  <div class="card-header">
+      <b> Ordenes de Transporte por Liquidar </b>
+  </div>
+  <div class="row">
+    <div class="col-2">
+      <button   pButton iconPos="left" label="Volver"  (click)="volver()"  type="button"></button>
+    </div>
+    <!-- <div class="col-2">
+      <button   pButton iconPos="left" label="Liquidar Todo"  (click)="evento(0,'0')"  type="button"></button>
+    </div> -->
+  </div>
+
+    <div class="card-body">
+
+
+
+
+          <div class="control-section">
+
+
+                <kendo-grid
+
+
+                  [data]="gridDataResult"
+                  [height]="533"
+                  [pageSize]="10"
+                  [sort]="sort"
+                  [pageable]="true"
+                  [sortable]="true"
+                  [navigable]="true"
+                  (edit)="editHandler($event)"
+                  (cancel)="cancelHandler($event)"
+                  (save)="saveHandler($event)"
+                  (remove)="removeHandler($event)"
+                  (add)="addHandler($event)"
+                >
+                  <ng-template kendoGridToolbarTemplate>
+                    <button kendoGridAddCommand type="button">Nuevo</button>
+                    <button kendoButton  [primary]="true"  *ngIf="!dialogOpened && !windowOpened"
+                    (click)="open('dialog')"   type="button">Liquidar</button>
+                  </ng-template>
+
+                  <kendo-grid-column field="tipoDocumento" title="Documento" width="200">
+
+                    <ng-template
+                    kendoGridEditTemplate
+                    let-dataItem="dataItem"
+                    let-formGroup="formGroup">
+                    <kendo-dropdownlist
+                          kendoGridFocusable
+                          [textField]="'tipodocumento'"
+                          [valueField]="'tipodocumentoid'"
+                          [formControl]="formGroup.get('tipoDocumento')"
+                          [data]="TipoDocumento">
+                    </kendo-dropdownlist>
+                        </ng-template>
+                      </kendo-grid-column>
+
+
+                    <kendo-grid-column field="tipoSustento" title="Gasto" width="200">
+                      <ng-template
+                      kendoGridEditTemplate
+                      let-dataItem="dataItem"
+                      let-formGroup="formGroup">
+                            <kendo-dropdownlist
+                                kendoGridFocusable
+                                [textField]="'tipogasto'"
+                                [valueField]="'tipogastoid'"
+                                [formControl]="formGroup.get('tipoSustento')"
+                              [data]="TipoSustento">
+                          </kendo-dropdownlist>
+                            </ng-template>
+                      </kendo-grid-column>
+
+
+                      <kendo-grid-column field="fecha" title="Fecha" editor="date" format="dd/MM/yyyy">
+                        <ng-template kendoGridCellTemplate let-dataItem="dataItem" let-formGroup="formGroup"
+                            let-column="column">
+                            <div> {{dataItem.fecha | date : 'dd/MM/yyyy'}} </div>
+                        </ng-template>
+                        <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-formGroup="formGroup"
+                            let-column="column">
+                            <kendo-datepicker format="dd/MM/yyyy"
+                                [formControl]="formGroup.get('fecha')">
+                            </kendo-datepicker>
+                        </ng-template>
+                    </kendo-grid-column>
+
+                  <kendo-grid-column field="numeroDocumento" title="N° Documento">
+
+                  </kendo-grid-column>
+
+
+                  <kendo-grid-column field="montoBase"  format="{0:c}" editor="numeric" title="Monto Base">
+
+                  </kendo-grid-column>
+
+
+
+                  <kendo-grid-command-column title="command" width="220">
+                    <ng-template kendoGridCellTemplate let-isNew="isNew">
+                      <button kendoGridEditCommand type="button" [primary]="true">
+                        Editar
+                      </button>
+                      <button kendoGridRemoveCommand type="button">Eliminar</button>
+                      <button
+                        kendoGridSaveCommand
+                        type="button"
+
+                      >
+                        {{ isNew ? "Guardar" : "Actualizar" }}
+                      </button>
+                      <button kendoGridCancelCommand type="button">
+                        {{ isNew ? "Descartar" : "Cancelar" }}
+                      </button>
+                    </ng-template>
+                  </kendo-grid-command-column>
+                </kendo-grid>
+
+
+
+               <kendo-dialog
+                title="Liquidación de Hoja de Ruta"
+                *ngIf="dialogOpened"
+                (close)="close('dialog')"
+                [minWidth]="250"
+                [width]="450" >
+                <p style="margin: 30px; text-align: center;">
+                  ¿Está seguro de que desea liquidar la Hoja de Ruta?
+                </p>
+                <kendo-dialog-actions>
+                  <button kendoButton (click)="action('no')">Cancelar</button>
+                  <button kendoButton (click)="action('yes')" primary="true">
+                    Liquidar
+                  </button>
+                </kendo-dialog-actions>
+              </kendo-dialog>
+
+        </div>
+        <style>
+                #typeddl {
+                    min-width: 100px;
+                }
+        </style>
+        </div>
+
+
+</div>
+

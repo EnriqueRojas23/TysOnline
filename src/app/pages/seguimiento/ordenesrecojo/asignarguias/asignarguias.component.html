@@ -1,0 +1,76 @@
+
+
+  
+  <div class="page-head">
+    <h2 class="page-head-title">Guías de remisión en blanco</h2>
+   <nav aria-label="breadcrumb" role="navigation">
+     <ol class="breadcrumb page-head-nav">
+      <ol class="breadcrumb page-head-nav">
+        <li class="breadcrumb-item"> Seguimiento</li>
+        <li class="breadcrumb-item" [routerLink]="['/recibo/listaordenrecibo']">Guías de remisión </li>
+        <li class="breadcrumb-item active">Generar guias de remisión en blanco</li>
+      </ol>
+     </ol>
+   </nav>
+   
+
+  <div class="card card-border-color card-border-color-primary">
+    <div class="card-header">
+        <b> Guías de Remisión en Blanco </b> 
+    </div>
+
+      <div class="card-body">
+
+         
+        <div class="p-fluid p-grid">
+          <div class="col-3 mb-3">
+            <label>GRT (*)</label>            
+          </div>
+          <div class="col-3 mb-3"> 
+            <input pInputText  minlength="1" maxlength="11" [(ngModel)]="model.numeroguia"  required class="form-control col-md-8"  autocomplete="off"  type="text" name=numeroguia>
+          </div>
+          <div class="col-3 mb-3">
+            <input pInputText  minlength="1" maxlength="10" [(ngModel)]="model.cantidad"  required class="form-control col-md-8"  (keyup.enter)="focusOutFunction()" autocomplete="off"  type="text" name=cantidad>            
+          </div>
+        </div>
+        
+
+        <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" ></ngx-loading>
+         <div  class="mat-elevation-z8">
+          <button   pButton iconPos="left" label="Regresar"  (click)="volver()"  type="button"></button>
+            <p-table  [columns]="cols"   
+              [scrollable]="false"  [style]="{width:'100%'}" 
+              [rowsPerPageOptions]="[20,40,60,120]"
+              [value]="guiablanco" #dt [paginator]="true" selectionMode="single" 
+              [rows]="20" [resizableColumns]="true" [responsive]="true" > 
+
+                <ng-template pTemplate="colgroup" let-columns>
+                  <colgroup>
+                      <col *ngFor="let col of columns"   [ngStyle]="{'width': col.width}" >
+                  </colgroup>
+              </ng-template>    
+    
+                <ng-template pTemplate="header" let-columns>
+                  <tr>
+                      <th  [ngStyle]="{'width': col.width}" *ngFor="let col of columns" pResizableColumn [pSortableColumn]="col.field">
+                          {{col.header}}
+                      </th>
+                  </tr>
+              </ng-template>
+
+            <ng-template pTemplate="body" let-rowData let-columns="columns">
+              <tr [pSelectableRow]="rowData">            
+                <td class="ui-resizable-column" style="text-align:left;">  
+                  <button type='button'  class='btn-danger btn btn-xs' pButton  title='Eliminar' icon="fa fa-trash" (click)='eliminar(rowData.id);'>  </button>  
+                </td>
+                <td class="ui-resizable-column" style="text-align:left;"> {{rowData.numeroguia }}</td>   
+                <td class="ui-resizable-column" style="text-align:left;"> {{rowData.fecharegistro  | date: 'dd-MM-yyyy hh:mm' }}</td>                
+              </tr>
+            </ng-template>
+            </p-table>  
+        </div> 
+
+      </div>
+  </div>
+</div>
+<p-toast baseZIndex='1000' position="top-left"></p-toast>

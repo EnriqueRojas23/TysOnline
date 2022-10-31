@@ -1,0 +1,18 @@
+body {
+    .ui-table {
+        .ui-table-tbody {
+            > tr {
+                background: #f0f3f5;
+            }
+
+            > tr:nth-child(even) {
+                background-color: #ffffff;
+            }
+        }
+    }
+}
+
+.p-multiselect .p-multiselect-label {
+    padding: 0.2rem 0.2rem !important;
+}
+

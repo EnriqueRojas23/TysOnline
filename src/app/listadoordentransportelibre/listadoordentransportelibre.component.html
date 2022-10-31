@@ -1,0 +1,153 @@
+
+<div class="be-left-sidebar2">
+  <div class="left-sidebar-wrapper"><a class="left-sidebar-toggle">  </a>
+  <div class="left-sidebar-spacer">
+  <div class="left-sidebar-scroll">
+
+       <div class="left-sidebar-content">
+         
+         <div class="card-header bg-white"><img class="logo-img"  src="assets/img/logo_grande.png" alt="logo"  ></div>  
+         <!-- <div class="card-header"><img class="logo-img"  src="assets/img/numero.png" alt="logo"  ></div>   -->
+         <div class="card-header mt-5"><img class="logo-img"  src="assets/img/ultimo.jpeg" alt="logo" width="400" height="350"  ></div>  
+    </div> 
+  </div>
+</div>
+</div> 
+
+
+</div>
+
+<div class="be-wrapper be-color-header  be-collapsible-sidebar be-fixed-sidebar ">
+
+  <div class="be-content2">
+<div class="main-content container-fluid">
+
+  <div class="col-md-12">
+      <div class="card card-border-color card-border-color-primary">
+          <div class="card-header">
+                    <b> Filtro de búsqueda  </b>  
+              </div>
+          <div class="card-body">
+              <div class="row">
+              
+
+              <div class="col-md-3">
+                <h6>N° OT :</h6>
+                <input type="text" name="numcp" autocomplete="off" class="form-control"   [(ngModel)]="model.numcp"   placeholder="Número de OT"   pInputText />
+
+              </div>
+
+
+              <div class="col-md-3">
+                <h6>Guía de Remisión :</h6>
+                <input type="text" name="grr" autocomplete="off" class="form-control"   [(ngModel)]="model.guiarecojo"   placeholder="Documento de Referencia"   pInputText />
+
+              </div>
+            
+            
+              <div class="col-md-2 mt-4">
+                      <button   pButton iconPos="left" label="Buscar" icon="fa fa-search"   (click)="buscar()"  type="button"></button>
+              </div>
+              <div class="col-md-2 mt-4">
+                <button   pButton iconPos="left" label="Cerrar" icon="fa fa-times"   (click)="cerrar()"  type="button"></button>
+              </div>
+          </div>
+        </div>
+      </div>
+              
+      <div class="card card-border-color card-border-color-primary">
+            <div class="card-header">
+                <b> Órden de Transporte  </b> 
+               
+            </div>
+              <div class="card-body">
+                <div class="row">
+                  
+                  <div class="col-6">
+                  <div class="ui-inputgroup">
+                    <button  pButton type='button'  title='Ver Archivos'  class='btn btn-primary btn-xs '  (click)='verarchivos(ordenes.idordentrabajo);' icon="fa fa-upload"  > </button>
+                    <button  pButton type='button'   title='Ver Guías'  class='btn btn-primary btn-xs '  (click)='verguias(ordenes.idordentrabajo);' icon="fa fa-search"  > </button>
+                  </div>
+                  </div>
+                </div>
+                <div class="row">
+                
+                  <div class="col-6">
+                    <div>
+                      <div class="invoice-number" fxLayout="row" fxLayoutAlign="start center">
+                        <span class="title">CLIENTE: </span>
+                        <span class="number">{{ordenes.razonsocial}}</span>
+                    </div>
+                        <div class="invoice-number" fxLayout="row" fxLayoutAlign="start center">
+                            <span class="title">N° OT: </span>
+                            <span class="number">{{ordenes.numcp}}</span>
+                        </div>
+
+                        <div class="invoice-number" fxLayout="row" fxLayoutAlign="start center">
+                          <span class="title">DESTINATARIO: </span>
+                          <span class="number">{{ordenes.destinatario}}</span>
+                      </div>
+                      <div class="info">
+                            <div class="title"> FECHA DE ENTREGA: </div>
+                            <div  class="address">   {{ordenes.fechaentrega  | date: 'dd-MM-yyyy' }}</div>
+                      
+                        </div> 
+
+                    <div class="issuer accent" fxLayout="row" fxLayoutAlign="start center">
+                       
+
+                        <div class="total">
+                            
+                            <div  class="address">{{ordenes.estado}}</div>
+                            <div  class="phone">{{ordenes.estado}}</div>
+                            <div  class="email">{{ordenes.estado}}</div>
+                            <div  class="website">{{ordenes.estado}}</div>
+                        </div>
+                    </div>
+                  </div>
+                  </div>
+                  <div class="col-6" >
+                  <div>
+                    <div class="invoice-number" fxLayout="row" fxLayoutAlign="start center">
+                      <span class="title">DESTINO: </span>
+                      <span class="number">{{ordenes.destino}}</span>
+                  </div>
+                      <div class="invoice-number" fxLayout="row" fxLayoutAlign="start center">
+                          <span class="title">GRR: </span>
+                          <span class="number">{{ordenes.GRR}}</span>
+                      </div>
+
+                      <div class="invoice-number" fxLayout="row" fxLayoutAlign="start center">
+                        <span class="title">TIPO TRANSPORTE: </span>
+                        <span class="number">{{ordenes.tipotransporte}}</span>
+                    </div>
+                        <div class="info">
+                          <div class="title">FECHA REGISTRO </div>
+                            <div  class="address">{{ordenes.fecharegistro  | date: 'dd-MM-yyyy' }}</div>
+                    
+                      </div> 
+                  </div>
+
+                  <!-- <div class="issuer accent" fxLayout="row" fxLayoutAlign="start center">
+
+                      <div class="total">
+                          
+                          <div  class="address">{{ordenes.estado}}</div>
+                          <div  class="phone">{{ordenes.estado}}</div>
+                          <div  class="email">{{ordenes.estado}}</div>
+                          <div  class="website">{{ordenes.estado}}</div>
+                      </div>
+                  </div> -->
+                  </div>
+                </div>
+              </div>
+      </div>
+          
+      
+  
+  </div>
+
+</div>
+</div>
+</div>
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" ></ngx-loading>

@@ -1,0 +1,73 @@
+
+      <div class="card card-border-color card-border-color-primary">
+        <div class="card-header">
+            <b> Manifiestos por Liquidar </b>
+        </div>
+
+        <div class="row">
+          <div class="offset-1 col-2">
+             <button   pButton iconPos="left" label="Liquidar" class="btn-block" (click)="evento()"  type="button"></button>
+
+          </div>
+          <div class="col-2">
+            <button type='button' *ngIf="liquidado" label="Imprimir OC"  class="btn-block btn-secondary"  pButton (click)="imprimirOC()" title='Orden de Compra' icon="fa fa-print">  </button>
+          </div>
+          <div class="col-2">
+          <button   pButton iconPos="left" label="Regresar"   class="btn-block btn-danger"  (click)="volver()"  type="button"></button>
+        </div>
+      </div>
+          <div class="card-body">
+              <div  class="mat-elevation-z8">
+
+                <p-table  [columns]="cols"
+                  [scrollable]="false"  [style]="{width:'100%'}"
+                  [rowsPerPageOptions]="[20,40,60,120]"
+                  [(selection)]="selectedRow"
+                  [value]="ordenes" #dt [paginator]="true" selectionMode="single"
+                  [rows]="20" [resizableColumns]="true" [responsive]="true" >
+
+
+                    <ng-template pTemplate="colgroup" let-columns>
+                      <colgroup>
+                          <col *ngFor="let col of columns"   [ngStyle]="{'width': col.width}" >
+                      </colgroup>
+                  </ng-template>
+
+
+                    <ng-template pTemplate="header" let-columns>
+                      <tr>
+                          <th  [ngStyle]="{'width': col.width}" *ngFor="let col of columns" pResizableColumn [pSortableColumn]="col.field">
+                              {{col.header}}
+                          </th>
+                      </tr>
+                  </ng-template>
+
+
+                <ng-template pTemplate="body" let-rowData let-columns="columns">
+                  <tr [pSelectableRow]="rowData">
+                    <td class="ui-resizable-column" style="text-align:left;">
+                      <button type='button'  class='btn-primary btn btn-xs' pButton (click)="verguias(rowData.idmanifiesto)" title='Liquidar' icon="fa fa-envelope-open">  </button>
+
+                    </td>
+                    <td class="ui-resizable-column"  style="text-align:center;"> <a style="cursor: pointer" >  {{ rowData.nummanifiesto    }}  </a> </td>
+                    <td class="ui-resizable-column" style="text-align:center;"> {{rowData.fecharegistro | date: 'dd-MM-yyyy hh:mm' }}</td>
+                    <td class="ui-resizable-column" style="text-align:center;"> {{rowData.nombrechofer}} </td>
+                    <td class="ui-resizable-column" style="text-align:center;"> {{rowData.destino}} </td>
+                    <td class="ui-resizable-column" style="text-align:center;"> {{rowData.tipoOperacion}} </td>
+                    <td class="ui-resizable-column" style="text-align:center;"> {{rowData.tipoTransporte}} </td>
+                    <td class="ui-resizable-column" style="text-align:center;"> {{rowData.proveedor}} </td>
+                    <td  [ngClass]="rowData.estado == 'Registrado' ? 'very-old-car' :  (rowData.estado == 'Completado'?'old-car': rowData.estado == 'Completado'?'old-car': null) "> {{rowData.estado}}</td>
+                    <td class="ui-resizable-column" style="text-align:left;"> {{rowData.bulto }} </td>
+                    <td class="ui-resizable-column" style="text-align:left;"> {{rowData.peso}}</td>
+                    <td class="ui-resizable-column" style="text-align:left;"> {{rowData.volumen}}</td>
+
+
+                </tr>
+                </ng-template>
+                </p-table>
+              </div>
+
+          </div>
+      </div>
+
+<p-toast  [baseZIndex]="10000" position="top-right"></p-toast>

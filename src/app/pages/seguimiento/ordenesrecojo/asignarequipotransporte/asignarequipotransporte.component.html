@@ -1,0 +1,98 @@
+
+<div class="page-head">
+  <h2 class="page-head-title">Vincular Equipo de Transporte</h2>
+
+</div>
+<div class="main-content container-fluid">
+
+<form #f="ngForm"  (ngSubmit)="registrar(f)" >
+    <div class="col-12">
+      <div class="card card-border-color card-border-color-primary">
+        <div class="card-header card-header-divider">Vehículo<span class="card-subtitle"> Datos del vehículo y Empresa Transportista</span></div>
+
+       
+        
+            <div class="card-body">
+
+              <div class="p-fluid p-grid">
+                <div class="col-8 offset-2">
+                <label  for="placa">Ordenes de recojo para programar</label>
+                <div class="p-inputgroup">
+                    <input  class="form-control" pInputText style="font-size: large; color: rgb(255, 255, 255); background-color: rgb(61, 58, 221);" [(ngModel)]="model.numcp"  required name="numcp" #numcp="ngModel" type="text">
+                </div>
+                </div>
+                  <div class="col-8 offset-2">
+                              <label  for="placa">Vehículo</label>
+                              <div class="p-inputgroup">
+                                  <input  class="form-control" pInputText  [(ngModel)]="model.placa" (blur)="onBlurMethod($event.target.value)" required name="placa" #placa="ngModel" placeholder="Placa del vehículo"  type="text">
+                                  <button  class="btn btn-primary" (click)="buscarplaca()" type="button"><i class="pi pi-search"></i></button>
+                            </div>
+                  </div>
+                  <div class="col-8 offset-2">
+                    <label  for="tipovehiculo">Tipo de Vehículo</label>
+                    <div class="p-inputgroup">
+                      <input pInputText class="form-control" [ngClass]="(bitplacaencontrada == true)?'encontrado':''" [(ngModel)]="model.datosunidad" name="datosunidad" placeholder="Datos de la Unidad"  type="text">
+                      <button  class="btn btn-primary"  type="button">Ver actividad</button>
+                    </div>
+                  </div>
+
+
+                  <div class="col-8 offset-2">
+                              <label for="proveedor">Proveedor</label>
+                              <div class="p-inputgroup">
+                              <input pInputText   class="form-control" [ngClass]="(bitplacaencontrada == true)?'encontrado':''" [(ngModel)]="model.proveedor" name="razonSocial" placeholder="Razón Social"  type="text">
+                              <!-- <button  class="btn btn-primary"  type="button"><i class="pi pi-search"></i></button>  -->
+                            </div>
+                  </div>
+                  
+                </div>
+
+            </div>
+      </div>
+            <input  [(ngModel)]="model.ruc" name="ruc"  type="hidden">
+
+            <div class="col-md-12">
+              <div class="card card-border-color card-border-color-primary">
+                <div class="card-header card-header-divider">Chofer <span class="card-subtitle"> Datos del chofer</span></div>
+                <div class="card-body ">
+                  <div class="p-fluid p-grid">
+                
+                    <div class="col-8 offset-2">
+                      <label  for="dni">DNI</label>
+                      <div class="p-inputgroup">
+                          <input required class="form-control"   [ngClass]="(bitplacaencontrada == true)?'encontrado':''" pInputText   type="text"  [(ngModel)]="model.dni" name="dni" #dni="ngModel"  placeholder="DNI del chofer">
+                          <button  class="btn btn-primary" (click)="buscarchofer()" type="button"><i class="pi pi-search"></i></button>
+                      </div>
+                        
+                    </div>
+                  
+                    <div class="col-8 offset-2">
+                      <label  for="nombreCompleto">Conductor</label>
+                        <input matInput class="form-control"  [ngClass]="(bitplacaencontrada == true)?'encontrado':''"  required minlength="5" maxlength="100"  autocomplete="off" [(ngModel)]="model.nombrechofer" name="nombrechofer" #nombreCompleto="ngModel" type="text">
+                    </div>
+                    <div class="col-8 offset-2">
+                      <label  for="brevete">Brevete</label>
+                        <input matInput class="form-control"  [ngClass]="(bitplacaencontrada == true)?'encontrado':''" required minlength="5" maxlength="12"  autocomplete="off" [(ngModel)]="model.brevete" name="brevete" #brevete="ngModel" type="text">
+                    
+                    </div>
+                    <div class="col-8 mt-5 offset-5">
+                        <div class="col-sm-6 pl-0">
+                            <button p-button [disabled]="!f.valid" class="btn btn-space btn-primary" type="submit">Programar</button>
+                            <button p-button [routerLink]="['/seguimiento/listaorden']" routerLinkActive="router-link-active" type="button"  class="btn btn-space btn-secondary">Cancel</button>
+                          
+                        </div>
+                      </div>
+                  </div>
+                  
+                </div>
+                </div>
+              </div>
+              <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" ></ngx-loading>
+      </div>
+</form>       
+  
+    
+ 
+
+</div>
+<p-toast baseZIndex='1000' position="top-center"></p-toast>

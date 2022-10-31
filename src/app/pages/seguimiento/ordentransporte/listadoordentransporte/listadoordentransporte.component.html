@@ -1,0 +1,303 @@
+
+<div class="main-content container-fluid">
+
+  <div class="col-md-12">
+      <div class="card card-border-color card-border-color-primary">
+          <div class="card-header">
+                    <b> Filtrooo de búsqueda  </b>
+              </div>
+          <div class="card-body">
+              <div class="row">
+                <div class="col-md-3">
+                  <h6>Cliente :</h6>
+
+                  <p-dropdown name="clientes" *ngIf="ProveedorLoaded === true"
+                      [options]="clientes" [(ngModel)]="model.idcliente"
+                      scrollHeight="30vh"  class="input-form-field"
+                      [virtualScroll]="true" itemSize="30"  (onChange)="cargarDestinatarios($event)"
+                      [style]="{'width':'100%'}" [resetFilterOnHide]="false"
+                      [hideTransitionOptions]="'0ms'"
+                      [showTransitionOptions]="'0ms'"
+                      filter="false">
+                          <ng-template let-item pTemplate="selectedItem">
+                              <span style="vertical-align:left;">{{item.label}}</span>
+                          </ng-template>
+                    </p-dropdown>
+              </div>
+              <div class="col-md-3">
+                <h6>Destinatario :</h6>
+
+                <p-dropdown name="destinatarios" *ngIf="ProveedorLoaded === true"
+                    [options]="destinatarios" [(ngModel)]="model.iddestinatario"
+                    scrollHeight="30vh"  class="input-form-field"
+                    [virtualScroll]="true" itemSize="30"
+                    [style]="{'width':'100%'}" [resetFilterOnHide]="false"
+                    [hideTransitionOptions]="'0ms'"
+                    [showTransitionOptions]="'0ms'"
+                    filter="false">
+                        <ng-template let-item pTemplate="selectedItem">
+                            <span style="vertical-align:left;">{{item.label}}</span>
+                        </ng-template>
+                  </p-dropdown>
+            </div>
+
+              <div class="col-md-2">
+                <h6>N° OT :</h6>
+                <input type="text" name="numcp" autocomplete="off" class="form-control"   [(ngModel)]="model.numcp"   placeholder="Número de OT"   pInputText />
+
+              </div>
+
+              <div class="col-md-2">
+                <h6>Doc. Referencia :</h6>
+                <input pInputText   class="form-control col-md-12"   name="docreferencia" [(ngModel)]="model.docreferencia" #docreferencia="ngModel" autocomplete="off" minlength="2" maxlength="12" type="text"     placeholder="Documento de Referencia" />
+
+
+              </div>
+
+              <div class="col-md-2">
+                <h6>GRR :</h6>
+                <input type="text" name="grr" autocomplete="off" class="form-control"   [(ngModel)]="model.grr"   placeholder="GRR"   pInputText />
+
+              </div>
+              </div>
+              <div class="row">
+
+              <div class="col-md-3">
+                <h6>Inicio:</h6>
+                <p-calendar [(ngModel)]="dateInicio"  baseZIndex="100"  dateFormat="dd/mm/yy"></p-calendar>
+              </div>
+
+              <div class="col-md-3">
+                <h6>Fin:</h6>
+                <p-calendar [(ngModel)]="dateFin" baseZIndex="100"   dateFormat="dd/mm/yy"></p-calendar>
+              </div>
+              <div class="col-md-2">
+                <h6>Tipo Transporte :</h6>
+
+                <p-dropdown name="tipotransporte" *ngIf="ProveedorLoaded === true"
+                    [options]="tipotransporte" [(ngModel)]="model.idtipotransporte"
+                    scrollHeight="20vh"  class="input-form-field"
+                    [virtualScroll]="true" itemSize="4"
+                    [style]="{'width':'100%'}" [resetFilterOnHide]="false"
+                    [hideTransitionOptions]="'0ms'"
+                    [showTransitionOptions]="'0ms'"
+                    filter="false">
+                        <ng-template let-item pTemplate="selectedItem">
+                            <span style="vertical-align:left;">{{item.label}}</span>
+                        </ng-template>
+                  </p-dropdown>
+            </div>
+
+              <div class="col-md-2">
+                <h6>Destino :</h6>
+
+                <p-dropdown name="ubigeo" *ngIf="UbigeoLoaded === true"
+                    [options]="ubigeo"  [(ngModel)]="model.iddistrito"
+                    scrollHeight="30vh"  class="input-form-field"
+                    [virtualScroll]="true" itemSize="70"
+                    [style]="{'width':'100%'}"
+                    [resetFilterOnHide]="false"
+                    [hideTransitionOptions]="'0ms'"
+                    [showTransitionOptions]="'0ms'"
+                    filter="false">
+                        <ng-template let-item pTemplate="selectedItem">
+                            <span style="vertical-align:left;">{{item.label}}</span>
+                        </ng-template>
+                  </p-dropdown>
+
+
+              </div>
+
+              <div class="col-md-2">
+              <h6>Estado :</h6>
+
+                <p-dropdown name="estados"
+                  [options]="estados" [(ngModel)]="model.idestado"
+                  scrollHeight="20vh"  class="input-form-field"
+                  [style]="{'width':'100%'}"
+                   [resetFilterOnHide]="false"
+                  [hideTransitionOptions]="'0ms'"
+                  [showTransitionOptions]="'0ms'"
+                  filter="false">
+                      <ng-template let-item pTemplate="selectedItem">
+                          <span style="vertical-align:left;">{{item.label}}</span>
+                      </ng-template>
+                </p-dropdown>
+
+
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-2 offset-8">
+                      <button   class='btn-primary btn btn-xs' pButton iconPos="left" label="Buscar" icon="fa fa-search"   (click)="buscar()"  type="button"></button>
+              </div>
+              <div class="col-md-2">
+                      <button   class='btn-primary btn btn-xs' type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL" (click)="exportExcel()"></button>
+              </div>
+          </div>
+          </div>
+      </div>
+
+      <div class="card card-border-color card-border-color-primary">
+            <div class="card-header">
+                <b> Órdenes de Transporte  </b>
+                <!-- <span class="card-subtitle">   Listado de ordenes de Transporte</span> -->
+            </div>
+
+
+              <div class="card-body">
+                <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" ></ngx-loading>
+                <div  class="mat-elevation-z8">
+
+                    <button  routerLink="/seguimiento/uploadfile"    pButton pRipple type="button" icon="pi pi-plus" class=" p-button-nuevo p-button-rounded"></button>
+                    <!-- <button  mat-fab ngbTooltip="Nueva Carga" color="primary"  routerLink="/seguimiento/uploadfile"> <i aria-hidden="true" class="fa fa-plus fa-1x"></i></button>  -->
+                    <p-table  [columns]="cols"
+                      [scrollable]="true"  [style]="{width:'100%'}"  editMode="row" dataKey="idordentrabajo"
+                      [rowsPerPageOptions]="[20,40,60,120]"
+                      [value]="ordenes2" #dt [paginator]="true"
+                      [rows]="10" [resizableColumns]="true" [responsive]="true" >
+
+
+                        <ng-template pTemplate="colgroup" let-columns>
+                          <colgroup>
+                              <col *ngFor="let col of columns"   [ngStyle]="{'width': col.width}" >
+                          </colgroup>
+                       </ng-template>
+
+
+                        <ng-template pTemplate="header" let-columns>
+                          <tr>
+
+                              <th  [ngStyle]="{'width': col.width}" *ngFor="let col of columns" pResizableColumn [pSortableColumn]="col.field">
+                                  {{col.header}}
+
+                              </th>
+                          </tr>
+                      </ng-template>
+
+
+
+
+                    <ng-template pTemplate="body" let-rowData  let-editing="editing" let-ri="rowIndex" >
+                      <tr  [pEditableRow]="rowData">
+                        <td class="ui-resizable-column" style="text-align:left;">
+                          <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" (click)="onRowEditInit(rowData)" class="p-button-rounded p-button-text"></button>
+                          <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" (click)="onRowEditSave(rowData)" class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
+                          <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times" (click)="onRowEditCancel(rowData, ri)" class="p-button-rounded p-button-text p-button-danger"></button>
+                        </td>
+                        <!-- <td class="ui-resizable-column"  style="text-align:center; background-color:#2c76ff; color: white;text-decoration: underline red"> <a style="cursor: pointer" (click)="verguias(rowData.idordentrabajo)">  {{ rowData.numcp    }}  </a> </td> -->
+                        <td class="ui-resizable-column" style="text-align:center;" > {{ rowData.numcp    }}   </td>
+
+
+                        <td  pEditableColumn class="ui-resizable-column" style="text-align:left;">
+                              {{rowData.docgeneral  }}
+                        </td>
+
+                        <td pEditableColumn>
+                          <p-cellEditor>
+                              <ng-template pTemplate="input">
+                                  <p-dropdown [options]="statuses" appendTo="body" [(ngModel)]="rowData.motivo1des" [style]="{'width':'100%'}"></p-dropdown>
+                              </ng-template>
+                              <ng-template pTemplate="output">
+                                  {{rowData.motivo1des}}
+                              </ng-template>
+                          </p-cellEditor>
+                      </td>
+                      <td pEditableColumn>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                               <p-calendar [(ngModel)]="rowData.fecvisita1"   [showIcon]="true" appendTo="body"   dateFormat="dd/mm/yy"></p-calendar>
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{ rowData.fecvisita1 | date : "dd/MM/yyyy"}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td pEditableColumn>
+                      <p-cellEditor>
+                          <ng-template pTemplate="input">
+                              <p-dropdown [options]="statuses" appendTo="body" [(ngModel)]="rowData.motivo2des" [style]="{'width':'100%'}"></p-dropdown>
+                          </ng-template>
+                          <ng-template pTemplate="output">
+                              {{rowData.motivo2des}}
+                          </ng-template>
+                      </p-cellEditor>
+                  </td>
+                  <td pEditableColumn>
+                    <p-cellEditor>
+                        <ng-template pTemplate="input">
+                           <p-calendar [(ngModel)]="rowData.fecvisita2"   [showIcon]="true" appendTo="body"   dateFormat="dd/mm/yy"></p-calendar>
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                            {{ rowData.fecvisita2  | date:'dd/MM/yyyy' }}
+                        </ng-template>
+                    </p-cellEditor>
+                </td>
+                <!-- <td pEditableColumn>
+                  <p-cellEditor>
+                      <ng-template pTemplate="input">
+                          <p-dropdown [options]="statuses" appendTo="body" [(ngModel)]="rowData.motivo3des" [style]="{'width':'100%'}"></p-dropdown>
+                      </ng-template>
+                      <ng-template pTemplate="output">
+                          {{rowData.motivo3des}}
+                      </ng-template>
+                  </p-cellEditor>
+              </td>
+              <td pEditableColumn>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                       <p-calendar [(ngModel)]="rowData.fecvisita3"   [showIcon]="true" appendTo="body"   dateFormat="dd/mm/yy"></p-calendar>
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{ rowData.fecvisita3 | date:'dd/MM/yyyy' }}
+                    </ng-template>
+                </p-cellEditor>
+            </td> -->
+
+
+
+                        <td class="ui-resizable-column" style="text-align:left;">
+
+                          <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <input pInputText type="text" [(ngModel)]="rowData.observacionvisita" >
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                              {{rowData.observacionvisita}}
+                            </ng-template>
+                        </p-cellEditor>
+
+
+
+
+                        </td>
+                        <td  [ngClass]="rowData.estado == 'Por Despachar' ? 'very-old-car' :  (rowData.estado == 'Por Entregar'?'': rowData.estado == 'Entregado'?'old-car': null) "> {{rowData.estado}}</td>
+                        <td class="ui-resizable-column" style="text-align:center;"> {{rowData.tipoentrega  }}</td>
+                        <td class="ui-resizable-column" style="text-align:center;"> {{rowData.fecharecojo | date: 'dd-MM-yyyy'}}</td>
+                        <td class="ui-resizable-column" style="text-align:left;"> {{rowData.puntopartida  }}</td>
+                        <td class="ui-resizable-column" style="text-align:center;"> {{rowData.fechadespacho | date: 'dd-MM-yyyy'}} </td>
+                        <td class="ui-resizable-column" style="text-align:center;"> {{rowData.fechaentrega | date: 'dd-MM-yyyy HH:mm'}} </td>
+                        <td class="ui-resizable-column" style="text-align:center;"> {{rowData.personaentrega }} </td>
+                        <td class="ui-resizable-column" style="text-align:left;"> {{rowData.destino}}</td>
+                        <td class="ui-resizable-column" style="text-align:left;"> {{rowData.destinatario}}</td>
+                      </tr>
+                    </ng-template>
+                    </p-table>
+                </div>
+              </div>
+      </div>
+
+
+
+  </div>
+
+</div>
+
+<p-overlayPanel [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"  [dismissable]="true" [showCloseIcon]="true" #op1 [appendTo]="'body'">
+
+  <img [src]="imageToShow" width="320" height="320"
+  alt="Place
+  image title"
+  >
+
+</p-overlayPanel>

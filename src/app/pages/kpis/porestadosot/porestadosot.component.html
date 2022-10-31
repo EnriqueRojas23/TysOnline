@@ -1,0 +1,171 @@
+<div class="card card-border-color card-border-color-primary">
+  <div class="card-header">
+      <b> KPIs </b> 
+
+      <!-- <span class="card-subtitle">   Listado de ordenes de Transporte</span> -->
+  </div>
+  <div class="card-body">
+    <div  class="mat-elevation-z8">
+        <div class="card card-border-color card-border-color-primary">
+          <div class="card-header">
+                    <b> Filtro de búsqueda  </b>  
+              </div>
+          <div class="card-body">
+              <div class="row">
+                <div class="col-md-3">
+                  <h6>Cliente :</h6>
+                  
+                  <p-dropdown name="clientes" 
+                      [options]="clientes" [(ngModel)]="model.idcliente"  
+                      scrollHeight="30vh"  class="input-form-field"  
+                      [virtualScroll]="true" itemSize="30"
+                      [style]="{'width':'100%'}" [resetFilterOnHide]="false" 
+                      [hideTransitionOptions]="'0ms'"
+                      [showTransitionOptions]="'0ms'" 
+                      filter="false">
+                          <ng-template let-item pTemplate="selectedItem">
+                              <span style="vertical-align:left;">{{item.label}}</span>
+                          </ng-template>
+                    </p-dropdown>
+              </div>
+
+
+
+
+              <!-- <div class="col-md-3">
+                <h6>Inicio:</h6>
+                <p-calendar [(ngModel)]="dateInicio"  baseZIndex="100"  dateFormat="dd/mm/yy"></p-calendar>
+              </div>
+
+              <div class="col-md-3">
+                <h6>Fin:</h6>
+                <p-calendar [(ngModel)]="dateFin" baseZIndex="100"   dateFormat="dd/mm/yy"></p-calendar>
+              </div> -->
+
+              <div class="col-md-3">
+                <h6>Destino :</h6>
+                
+                <p-dropdown name="ubigeo" 
+                    [options]="ubigeo"  [(ngModel)]="model.iddistrito"  
+                    scrollHeight="30vh"  class="input-form-field"  
+                    [virtualScroll]="true" itemSize="70"
+                    [style]="{'width':'100%'}" 
+                    [resetFilterOnHide]="false" 
+                    [hideTransitionOptions]="'0ms'"
+                    [showTransitionOptions]="'0ms'" 
+                    filter="false">
+                        <ng-template let-item pTemplate="selectedItem">
+                            <span style="vertical-align:left;">{{item.label}}</span>
+                        </ng-template>
+                  </p-dropdown>
+                  
+                
+              </div>
+
+
+            </div>
+            <div class="row">
+              <div class="col-md-2 offset-8">
+                      <button   class='btn-primary btn btn-xs' pButton iconPos="left" label="Buscar" icon="fa fa-search"   (click)="buscar()"  type="button"></button>
+              </div>
+              <div class="col-md-2">
+                      <button   class='btn-primary btn btn-xs' type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL" (click)="exportExcel()"></button>
+              </div>
+          </div>
+          </div>
+                </div>
+                <div class="row">
+
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                  <div class="card card-stats">
+                      <div class="card-header card-header-warning card-header-icon">
+                          <div class="card-icon">
+                              <i class="material-icons">content_copy</i>
+                          </div>
+                          <p class="card-category">Pendientes Entrega</p>
+                          <h3 class="card-title"> {{ model.pendientesentrega }}
+                              <small>OTs</small>
+                          </h3>
+                      </div>
+                      <div class="card-footer">
+                        <div class="stats">
+                          <i class="material-icons">date_range</i>  Último mes
+                      </div>
+                      </div>
+                  </div> 
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header card-header-warning card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">content_copy</i>
+                        </div>
+                        <p class="card-category">Pendientes Conciliación</p>
+                        <h3 class="card-title"> {{ model.pendientesconciliacion }}
+                            <small>OTs</small>
+                        </h3>
+                    </div>
+                    <div class="card-footer">
+                      <div class="stats">
+                        <i class="material-icons">date_range</i> Último mes
+                    </div>
+                    </div>
+                </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                  <div class="card-header card-header-warning card-header-icon">
+                      <div class="card-icon">
+                          <i class="material-icons">content_copy</i>
+                      </div>
+                      <p class="card-category">Conciliadas </p>
+                      <h3 class="card-title"> {{ model.conciliadas }}
+                          <small>OTs</small>
+                      </h3>
+                  </div>
+                  <div class="card-footer">
+                    <div class="stats">
+                      <i class="material-icons">date_range</i>  Último mes
+                  </div>
+                  </div>
+                </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                <div class="card-header card-header-warning card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">content_copy</i>
+                    </div>
+                    <p class="card-category">Facturadas </p>
+                    <h3 class="card-title"> {{ model.facturadas }}
+                        <small>OTs</small>
+                    </h3>
+                </div>
+                <div class="card-footer">
+                  <div class="stats">
+                    <i class="material-icons">date_range</i>  Último mes
+                </div>
+                </div>
+                </div>
+                </div>
+
+                </div>
+                <div class="row">
+                <div class="mt-5  col-md-10">
+                <div class="widget widget-tile bg-white">
+                <div class="chart sparkline" id="spark2"></div>
+                <div class="data-info">
+                  <div class="report-title">Último mes</div>
+                  <!-- <div *ngIf="chart3">
+                      <p-chart type="line"  [data]="data2"></p-chart>
+                    </div> -->
+                    <p-chart type="doughnut" [data]="data"></p-chart>
+
+                </div>
+
+                </div>
+                </div>
+                </div>
+      </div>
+  </div>
+</div>

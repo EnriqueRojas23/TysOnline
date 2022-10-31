@@ -1,0 +1,17 @@
+
+body {
+    padding: 2em;
+    font-family: Verdana,Arial,sans-serif;
+    font-size: 5px;
+  }
+
+  .p-datatable .p-datatable-tbody > tr > td {
+    padding: 0rem 0rem !important;
+    font-size: 9.5px;
+}
+
+::ng-deep p-dialog .ui-dialog {
+  overflow: scroll;
+  max-height: 100%;
+}
+

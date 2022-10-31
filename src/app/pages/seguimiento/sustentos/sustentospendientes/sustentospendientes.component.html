@@ -1,0 +1,181 @@
+
+<div class="main-content container-fluid">
+
+  <div class="col-md-12">
+      <div class="card card-border-color card-border-color-primary">
+          <div class="card-header">
+                    <b> Filtro de búsqueda  </b>
+              </div>
+          <div class="card-body">
+            <div class="p-fluid p-grid">
+                <div class="col-4">
+                  <label for="personarecojo">DNI o RUC :</label>
+                  <input pInputText  minlength="5" maxlength="30" required class="form-control col-md-12"  autocomplete="off" [(ngModel)]="model.dni" name="personarecojo" #personarecojo="ngModel" type="text">
+                  <div *ngIf="personarecojo.invalid && (personarecojo.dirty || personarecojo.touched)"
+                  class="alert-danger">
+
+                <div *ngIf="personarecojo.errors.required">
+                DNI es requerido
+                </div>
+                <div *ngIf="personarecojo.errors.minlength">
+                 No puede contener menos de 6 caracteres.
+                </div>
+              </div>
+                  </div>
+
+                  <div class="col-2">
+
+                      <label for="fechacita">Fecha Inicio</label>
+                      <p-calendar baseZIndex=100   [locale]="es" dateFormat="dd/mm/yy" [(ngModel)]="dateInicio"></p-calendar>
+
+
+                  </div>
+                  <div class="col-2">
+
+                    <label for="fechacita">Fecha Fin</label>
+                    <p-calendar baseZIndex=100   [locale]="es" dateFormat="dd/mm/yy" [(ngModel)]="dateFin"></p-calendar>
+
+
+                </div>
+
+            </div>
+            <div class="row">
+
+              <div class="col-md-2 offset-8">
+                      <button   class='btn-primary btn btn-xs' pButton iconPos="left" label="Buscar" icon="fa fa-search"   (click)="buscar()"  type="button"></button>
+              </div>
+              <div class="col-md-2">
+                      <button   class='btn-primary btn btn-xs' type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL" (click)="exportExcel()"></button>
+              </div>
+          </div>
+          </div>
+      </div>
+
+      <div class="card card-border-color card-border-color-primary">
+            <div class="card-header">
+                <b> OR </b>
+            </div>
+
+              <div class="card-body">
+
+
+
+                <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" ></ngx-loading>
+                <div  class="mat-elevation-z8">
+
+                    <p-table  [columns]="cols"
+                      [scrollable]="false"  [style]="{width:'100%'}"
+                      [rowsPerPageOptions]="[20,40,60,120]"
+                      [(selection)]="selected"
+                      [value]="ordenes" #dt [paginator]="true" selectionMode="multiple"
+                      [rows]="20" [resizableColumns]="true" [responsive]="true" >
+
+
+                        <ng-template pTemplate="colgroup" let-columns>
+                          <colgroup>
+                              <col *ngFor="let col of columns"   [ngStyle]="{'width': col.width}" >
+                          </colgroup>
+                       </ng-template>
+
+
+                        <ng-template pTemplate="header" let-columns>
+                          <tr>
+                              <th  [ngStyle]="{'width': col.width}" *ngFor="let col of columns" pResizableColumn [pSortableColumn]="col.field">
+                                  {{col.header}}
+                              </th>
+                          </tr>
+                      </ng-template>
+
+
+                    <ng-template pTemplate="body" let-rowData let-columns="columns">
+                      <tr [pSelectableRow]="rowData">
+                        <td class="ui-resizable-column" style="text-align:left;">
+                          <button type='button'  class='btn-primary btn btn-xs' pButton  title='Liquidar' icon="fa fa-envelope-open" (click)='editar(rowData.numhojaruta);'>  </button>
+                        </td>
+                        <td class="ui-resizable-column"  style="text-align:center;"> <a style="cursor: pointer" (click)="verguias(rowData.idordentrabajo)">  {{ rowData.numhojaruta    }}  </a> </td>
+
+                        <td class="ui-resizable-column" style="text-align:center;"> {{rowData.fecharegistro | date: 'dd-MM-yyyy hh:mm' }}</td>
+                        <td class="ui-resizable-column" style="text-align:center;"> {{rowData.nombrechofer}} </td>
+                        <td  [ngClass]="rowData.estado == 'Registrado' ? 'very-old-car' :  (rowData.estado == 'Programaddo'?'': rowData.estado == 'Programado'?'old-car': null) "> {{rowData.estado}}</td>
+                        <td class="ui-resizable-column" style="text-align:center;"> {{rowData.bulto}}</td>
+                        <td class="ui-resizable-column" style="text-align:center;"> {{rowData.peso}}</td>
+                        <td class="ui-resizable-column" style="text-align:center;"> {{rowData.pesovol}}</td>
+
+                    </tr>
+                    </ng-template>
+                    </p-table>
+                </div>
+              </div>
+      </div>
+      <div class="card card-border-color card-border-color-primary">
+        <div class="card-header">
+            <b> OT </b>
+        </div>
+
+          <div class="card-body">
+
+
+
+            <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" ></ngx-loading>
+            <div  class="mat-elevation-z8">
+
+                <p-table  [columns]="cols"
+                  [scrollable]="false"  [style]="{width:'100%'}"
+                  [rowsPerPageOptions]="[20,40,60,120]"
+                  [(selection)]="selected"
+                  [value]="ordenesot" #dt [paginator]="true" selectionMode="multiple"
+                  [rows]="20" [resizableColumns]="true" [responsive]="true" >
+
+
+                    <ng-template pTemplate="colgroup" let-columns>
+                      <colgroup>
+                          <col *ngFor="let col of columns"   [ngStyle]="{'width': col.width}" >
+                      </colgroup>
+                   </ng-template>
+
+
+                    <ng-template pTemplate="header" let-columns>
+                      <tr>
+                          <th  [ngStyle]="{'width': col.width}" *ngFor="let col of columns" pResizableColumn [pSortableColumn]="col.field">
+                              {{col.header}}
+                          </th>
+                      </tr>
+                  </ng-template>
+
+
+                <ng-template pTemplate="body" let-rowData let-columns="columns">
+                  <tr [pSelectableRow]="rowData">
+                    <td class="ui-resizable-column" style="text-align:left;">
+                      <button type='button'  class='btn-primary btn btn-xs' pButton  title='Liquidar' icon="fa fa-envelope-open" (click)='editarOT(rowData.numhojaruta);'>  </button>
+                    </td>
+                    <td class="ui-resizable-column"  style="text-align:center;"> <a style="cursor: pointer" (click)="verguias(rowData.numhojaruta)">  {{ rowData.numhojaruta    }}  </a> </td>
+
+                    <td class="ui-resizable-column" style="text-align:center;"> {{rowData.fecharegistro | date: 'dd-MM-yyyy hh:mm' }}</td>
+                    <td class="ui-resizable-column" style="text-align:center;"> {{rowData.nombrechofer}} </td>
+                    <td  [ngClass]="rowData.estado == 'Registrado' ? 'very-old-car' :  (rowData.estado == 'Programaddo'?'': rowData.estado == 'Programado'?'old-car': null) "> {{rowData.estado}}</td>
+                    <td class="ui-resizable-column" style="text-align:center;"> {{rowData.bulto}}</td>
+                    <td class="ui-resizable-column" style="text-align:center;"> {{rowData.peso}}</td>
+                    <td class="ui-resizable-column" style="text-align:center;"> {{rowData.pesovol}}</td>
+
+                </tr>
+                </ng-template>
+                </p-table>
+            </div>
+          </div>
+  </div>
+
+
+
+  </div>
+
+</div>
+
+<p-overlayPanel [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"  [dismissable]="true" [showCloseIcon]="true" #op1 [appendTo]="'body'">
+
+  <img [src]="imageToShow" width="320" height="320"
+  alt="Place
+  image title"
+  >
+
+</p-overlayPanel>
+<p-confirmDialog  header="Confirmación" icon="pi pi-exclamation-triangle"></p-confirmDialog>

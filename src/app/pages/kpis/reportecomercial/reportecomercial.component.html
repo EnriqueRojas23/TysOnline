@@ -1,0 +1,61 @@
+<div class="card card-border-color card-border-color-primary">
+  <div class="card-header">
+      <b> KPI Retorno Documentario </b>
+
+      <!-- <span class="card-subtitle">   Listado de ordenes de Transporte</span> -->
+  </div>
+  <div class="card-body">
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" ></ngx-loading>
+    <div  class="mat-elevation-z8">
+        <div class="card card-border-color card-border-color-primary">
+          <div class="card-header">
+                    <b> Filtro de búsqueda  </b>
+              </div>
+          <div class="card-body">
+              <div class="row">
+                <div class="col-md-3">
+                  <h5>Cliente:</h5>
+
+                  <p-dropdown name="clientes"
+                      [options]="clientes" [(ngModel)]="model.idcliente"
+                      scrollHeight="30vh"  class="input-form-field"
+                      [virtualScroll]="true" itemSize="30"
+                      [style]="{'width':'100%'}" [resetFilterOnHide]="false"
+                      [hideTransitionOptions]="'0ms'"
+                      [showTransitionOptions]="'0ms'"
+                      filter="false">
+                          <ng-template let-item pTemplate="selectedItem">
+                              <span style="vertical-align:left;">{{item.label}}</span>
+                          </ng-template>
+                    </p-dropdown>
+              </div>
+
+
+
+              <div class="ui-g-12 ui-md-3">
+                <h5>Inicio:</h5>
+                <p-calendar [(ngModel)]="dateInicio"   baseZIndex="100" [locale]="es" dateFormat="dd/mm/yy"></p-calendar>
+            </div>
+            <div class="ui-g-12 ui-md-3">
+                <h5>Fin:</h5>
+                <p-calendar [(ngModel)]="dateFin"   baseZIndex="100" [locale]="es" dateFormat="dd/mm/yy"></p-calendar>
+            </div>
+
+
+            </div>
+            <div class="row">
+              <div class="col-md-2 offset-8">
+                      <button   class='btn-primary btn btn-xs' pButton iconPos="left" label="Buscar" icon="fa fa-search"   (click)="buscar()"  type="button"></button>
+              </div>
+              <div class="col-md-2">
+                      <button   class='btn-primary btn btn-xs' type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL" (click)="exportExcel()"></button>
+              </div>
+          </div>
+          </div>
+        </div>
+
+
+      </div>
+  </div>
+</div>
+

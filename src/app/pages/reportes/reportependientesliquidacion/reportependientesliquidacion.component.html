@@ -1,0 +1,132 @@
+<div class="card card-border-color card-border-color-primary">
+  <div class="card-header">
+      <b> KPI Retorno Documentario </b> 
+
+      <!-- <span class="card-subtitle">   Listado de ordenes de Transporte</span> -->
+  </div>
+  <div class="card-body">
+    <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" ></ngx-loading>
+    <div  class="mat-elevation-z8">
+        <div class="card card-border-color card-border-color-primary">
+          <div class="card-header">
+                    <b> Filtro de búsqueda  </b>  
+              </div>
+          <div class="card-body">
+              <div class="row">
+                <div class="col-md-3">
+                <label>Estados</label>
+                <p-dropdown name="id"    id="idestado" [options]="estados" 
+                        [(ngModel)]="model.idestado" 
+                      scrollHeight="40vh"  
+                      placeholder="seleccione un estado"
+                      [style]="{'width':'100%'}"  [resetFilterOnHide]="true"  
+                      [hideTransitionOptions]="'0ms'"
+                      [showTransitionOptions]="'0ms'"   >
+                <ng-template let-item pTemplate="selectedItem">
+                <span style="vertical-align:middle;">{{item.label}}</span>
+                </ng-template>
+              </p-dropdown>
+                </div>
+
+
+              <div class="ui-g-12 ui-md-3">
+                <h5>Inicio:</h5>
+                <p-calendar [(ngModel)]="dateInicio"   baseZIndex="100" [locale]="es" dateFormat="dd/mm/yy"></p-calendar>
+            </div>
+            <div class="ui-g-12 ui-md-3">
+                <h5>Fin:</h5>
+                <p-calendar [(ngModel)]="dateFin"   baseZIndex="100" [locale]="es" dateFormat="dd/mm/yy"></p-calendar>
+            </div>
+
+
+            </div>
+            <div class="row">
+              <div class="col-md-2 offset-8">
+                      <button   class='btn-primary btn btn-xs' pButton iconPos="left" label="Buscar" icon="fa fa-search"   (click)="buscar()"  type="button"></button>
+              </div>
+              <div class="col-md-2">
+                      <button   class='btn-primary btn btn-xs' type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL" (click)="exportExcel()"></button>
+              </div>
+          </div>
+          </div>
+                </div>
+                <div class="row">
+
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                  <div class="card card-stats">
+                      <div class="card-header card-header-warning card-header-icon">
+                          <div class="card-icon">
+                              <i class="material-icons">content_copy</i>
+                          </div>
+                          <p class="card-category">Total Manifiestos</p>
+                          <h3 class="card-title"> {{ model.total }}
+                              <small>Manifiestos</small>
+                          </h3>
+                      </div>
+                      <div class="card-footer">
+                        <div class="stats">
+                          <i class="material-icons">date_range</i>  Rango seleccionado
+                      </div>
+                      </div>
+                  </div> 
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header card-header-warning card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">content_copy</i>
+                        </div>
+                        <p class="card-category"> Manifiestos Liquidados </p>
+                        <h3 class="card-title"> {{ model.liquidados }}
+                            <small>OTs</small>
+                        </h3>
+                    </div>
+                    <div class="card-footer">
+                      <div class="stats">
+                        <i class="material-icons">date_range</i> Rango seleccionado
+                    </div>
+                    </div>
+                </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                  <div class="card-header card-header-warning card-header-icon">
+                      <div class="card-icon">
+                          <i class="material-icons">content_copy</i>
+                      </div>
+                      <p class="card-category">Pendientes</p>
+                      <h3 class="card-title"> {{ model.pendientes }}
+                          <small>OTs</small>
+                      </h3>
+                  </div>
+                  <div class="card-footer">
+                    <div class="stats">
+                      <i class="material-icons">date_range</i>  Rango seleccionado
+                  </div>
+                  </div>
+                </div>
+                </div>
+    
+       
+      
+
+                </div>
+                <div class="row">
+                <div class="mt-5  col-md-10">
+                <div class="widget widget-tile bg-white">
+                <div class="chart sparkline" id="spark2"></div>
+                <div class="data-info">
+                  <div class="report-title">Gráfica de manifiestos</div>
+                  <!-- <div *ngIf="chart3">
+                      <p-chart type="line"  [data]="data2"></p-chart>
+                    </div> -->
+                    <p-chart type="doughnut" [data]="data"></p-chart>
+
+                </div>
+
+                </div>
+                </div>
+                </div>
+      </div>
+  </div>
+</div>
