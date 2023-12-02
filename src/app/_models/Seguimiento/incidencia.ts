@@ -14,3 +14,7 @@ export interface Documento {
     numero_documento: string;
     carga_id: number;
 }
+export interface RespuestaApi {
+  error: boolean;
+  resp: string;
+}

@@ -4,6 +4,7 @@ export interface Rol {
      alias: string  ;
      activo: boolean;
      publico: boolean  ;
+     rol_int_id : number;
 }
 
 

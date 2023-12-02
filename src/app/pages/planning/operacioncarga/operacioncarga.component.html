@@ -1,0 +1,25 @@
+<div class="main-content container-fluid">
+
+  <div class="col-md-12">
+      <div class="card card-border-color card-border-color-primary">
+            <div class="card-header">
+                <b> Hojas de ruta Generados </b>
+
+            </div>
+
+              <div class="card-body">
+                <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" ></ngx-loading>
+                <div  class="mat-elevation-z8">
+
+                  <div class=" mb-3 col-md-2">
+                    <button  class='btn-primary btn-block btn' pButton iconPos="left" label="Agregar OT" icon="fa fa-plus"  (click)="agregar()"  type="button"></button>
+                  </div>
+
+                  <div *ngFor="let item of ordenes2">
+                       <app-operaciondetalle [titulo]="item.idcarga">  </app-operaciondetalle>
+                </div>
+                </div>
+              </div>
+        </div>
+  </div>
+</div>

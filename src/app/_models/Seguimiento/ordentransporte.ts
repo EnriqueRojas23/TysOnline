@@ -49,6 +49,11 @@ export interface OrdenTransporte {
          idordentrabajo?: number;
          idordenrecojo?: number;
          numcp?: string;
+
+         numcarga?: string;
+         idcarga?: number;
+         detalle?: string;
+
          razonsocial?: string;
          destino?: string;
          remitente?: string;
@@ -80,6 +85,8 @@ export interface OrdenTransporte {
          personarecojo?: string;
          direccion?: string;
          telefonorecojo?: string;
+         numhojaruta?: string;
+         ruta?: string;
 
          fecvisita1?: Date;
          fecvisita2?: Date;
@@ -89,16 +96,31 @@ export interface OrdenTransporte {
          tipoentrega?: string;
          idtipoentrega?: number;
          idusuarioentrega?: number;
-         motivo1?: number;
-         motivo2?:number;
-         motivo3?: number;
 
-
-         motivo1des?: string;
-         motivo2des?:string;
-         motivo3des?: string;
+         subtotal?: number;
 
          enzona?: boolean;
+         cantidad?: number;
+         iddepartamento?: number;
+         idprovincia?: number;
+         zona?: string;
+         idorden?: number;
+         idmanifiesto?: number;
+         iddespacho?: number;
+         despachado?: boolean;
+
+         cantidadprecintos?: number;
+         precinto? : string;
+         terminado?: boolean;
+         repartidor?: string;
+         valija?: boolean;
+
+         fechaetaentrega?: Date;
+         fechaetacargo?: Date;
+         fechaetaenviocargo?: Date;
+         fechaentregareparto?: Date;
+
+
 
 
  }
@@ -138,8 +160,9 @@ export interface ManifiestosPendientes {
 }
 export interface Proveedor {
   idproveedor: number;
-  Ruc: string;
+  ruc: string;
   razonSocial: string;
+  distrito : string;
 }
 
 
@@ -177,5 +200,14 @@ export interface Tarifa {
   precio   : number;
 }
 
+export interface OperacionCarga {
+  idcarga : number;
+  numcarga : string;
+  peso : number;
+  vol : number;
+  fecharegistro : Date,
+  planificador: string;
+  tipounidad : string;
+  subtotal: number;
 
-
+}

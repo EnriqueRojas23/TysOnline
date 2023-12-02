@@ -78,6 +78,7 @@ export class PendientesliquidacionComponent implements OnInit {
           {header: 'CANT', field: 'bulto'  ,  width: '80px'  },
           {header: 'PESO', field: 'peso'  ,  width: '80px'  },
           {header: 'VOL', field: 'volumen'  ,  width: '80px'  },
+          {header: 'PLACA', field: 'placa'  ,  width: '80px'  },
       ];
 
 

@@ -1,0 +1,172 @@
+<div class="main-content container-fluid">
+
+  <div class="col-md-12">
+      <div class="card card-border-color card-border-color-primary">
+            <div class="card-header">
+                <b> Hojas de ruta generadas </b>
+            </div>
+
+            <div class="card-body">
+
+              <div class="btn-group mb-4 mt-2" role="group" aria-label="Basic example">
+                <button  class='btn btn-primary ' pButton iconPos="left" label="Agregar OT" icon="pi pi-plus"  (click)="agregar()"  ></button>
+                <button  class='btn btn-secondary' pButton iconPos="left" label="Refrescar" icon="pi pi-refresh"  (click)="actualizar()" ></button>
+            </div>
+
+
+              <p-table  [columns]="cols" selectionMode="single"
+              [style]="{width:'100%'}"  dataKey="iddespacho"
+              [rowsPerPageOptions]="[20,40,60,120]"
+              [value]="ordenes2" #dt [paginator]="true"
+              (onRowSelect)="ver($event)"
+              [rows]="10" [resizableColumns]="true" [responsive]="true" >
+
+
+                <ng-template pTemplate="colgroup" let-columns>
+                  <colgroup>
+                      <col *ngFor="let col of columns"   [ngStyle]="{'width': col.width}" >
+                  </colgroup>
+              </ng-template>
+
+
+                <ng-template pTemplate="header" let-columns>
+                  <tr>
+
+                      <th  [ngStyle]="{'width': col.width}" *ngFor="let col of columns" pResizableColumn [pSortableColumn]="col.field">
+                          {{col.header}}
+
+                      </th>
+                  </tr>
+              </ng-template>
+
+            <ng-template pTemplate="body" let-rowData  let-index="rowIndex">
+              <tr [pSelectableRow]="rowData">
+
+                <td class="ui-resizable-column" style="text-align:center;" > {{ rowData.placa    }}   </td>
+                <td class="ui-resizable-column" style="text-align:center;" > {{ rowData.nombrechofer    }}   </td>
+                <td class="ui-resizable-column" style="text-align:center;">  {{rowData.numhojaruta  }}   </td>
+                <td class="ui-resizable-column" style="text-align:center;"> {{rowData.proveedor}}</td>
+                <td class="ui-resizable-column" style="text-align:center;"> {{rowData.ruta}}</td>
+                <td class="ui-resizable-column" style="text-align:center;"> {{ rowData.precinto  }}</td>
+
+                 <td class="ui-resizable-column" style="text-align:left;">
+                  <button *ngIf="rowData.precinto === 'SI'" type='button'  class='btn-danger btn btn-xs' pButton label="Gen. Manifiestos" title='Imprimir HR' (click)='imprimirManifiesto(rowData);'>  </button>
+                  <button *ngIf="rowData.precinto === 'SI'" type='button'  class='btn-danger btn btn-xs' pButton label="Reiniciar" title='Reiniciar' (click)='reiniciarHojaRuta(rowData);'>  </button>
+                </td>
+
+              </tr>
+            </ng-template>
+            </p-table>
+
+            </div>
+
+      </div>
+  </div>
+  <div *ngIf="this.ordenes.length > 0" class="col-md-12">
+
+            <div class="card card-border-color card-border-color-primary">
+              <div class="card-header">
+                  <b> Ver detalle </b>
+              </div>
+              <div class="card-body">
+
+                          <div class="card card-border-color titulo  row">
+                                <div class="subtitulo"> Hoja de ruta: <b>  {{  model.numhojaruta }}   </b> </div>
+                                <div class="subtitulo"> Placa:    <b>  {{  model.placa }}  </b></div>
+                                <div class="subtitulo"> Conductor:  <b>    {{  model.nombrechofer }} </b> </div>
+                                <div class="subtitulo"> Fecha hora salida (Planificador):  <b>    {{model.fechahoraplanning }} </b> </div>
+                          </div>
+                              <!-- <app-manifiesto [titulo]="model.numhojaruta">  </app-manifiesto> -->
+
+
+                              <div class="card-header">
+                                <b> Manifiestos Generados </b>
+                                <div class="row">
+
+                                  <div   *ngIf="estado !== 'Creado'" class="col-md-2">
+                                    <button  class='btn-primary btn-block btn' pButton iconPos="left" label="Generar hoja de Carga" icon="fa fa-check"  (click)="guardar()"  type="button"></button>
+                                  </div>
+                                  <div   *ngIf="estado === 'Creado'" class="col-md-2">
+                                    <button  class='btn-primary btn-block btn' pButton iconPos="left" label="Imprimir hoja de Carga"   (click)="imprimirCarga()"  type="button"></button>
+                                  </div>
+                                  <div   *ngIf="estado === 'Creado' && esalmacen === true" class="col-md-2">
+                                    <button  class='btn-primary btn-block btn' pButton iconPos="left" label="Imprimir GRT"   (click)="imprimirGrt()"  type="button"></button>
+                                  </div>
+
+
+                                  <div  *ngIf="estado === 'Creado'" class="col-md-2">
+                                    <button *ngIf="esalmacen === true" class='btn-primary btn-block btn' pButton iconPos="left" label="Confirmar estiba" icon="fa fa-plus"  (click)="confirmarDespacho()"  type="button"></button>
+                                 </div>
+
+
+                                 <div  *ngIf="estado === 'Creado'" class="col-md-2">
+                                  <button *ngIf="esalmacen === true" class='btn-primary btn-block btn' pButton iconPos="left" label="Armar Valija" icon="fa fa-plus"  (click)="armadoValija()"  type="button"></button>
+                              </div>
+
+
+
+                                <div   *ngIf="estado === 'Creado'" class="col-md-2">
+                                  <button *ngIf="esalmacen === true" class='btn-primary btn-block btn' pButton iconPos="left" label="Asignar Precinto" icon="fa fa-plus"  (click)="asignarPrecinto()"  type="button"></button>
+                                </div>
+
+                                <!-- <div   *ngIf="estado === 'Creado'" class="col-md-2">
+                                  <button  class='btn-primary btn-block btn' pButton iconPos="left" label="Imprimir Manifiestos"   (click)="imprimirManifiesto()"  type="button"></button>
+                               </div> -->
+                                <div class="col-md-2">
+                                  <button *ngIf="esalmacen === true" class='btn-danger btn-block btn' pButton iconPos="left" label="Desasignar OTs" icon="fa fa-minus"  (click)="desasignarOts()"  type="button"></button>
+                                </div>
+                              </div>
+                            </div>
+                            <p-table  [columns]="cols2" (onRowReorder)="onRowReorder()"
+                              [style]="{width:'100%'}"  editMode="row" dataKey="idmanifiesto"
+                              [rowsPerPageOptions]="[20,40,60,120]"
+                              [value]="ordenes" #dt [paginator]="true"
+                              [rows]="10" [resizableColumns]="true" [responsive]="true" >
+
+
+                                <ng-template pTemplate="colgroup" let-columns>
+                                  <colgroup>
+                                      <col *ngFor="let col of columns"   [ngStyle]="{'width': col.width}" >
+                                  </colgroup>
+                              </ng-template>
+
+
+                                <ng-template pTemplate="header" let-columns>
+                                  <tr>
+
+                                      <th  [ngStyle]="{'width': col.width}" *ngFor="let col of columns" pResizableColumn [pSortableColumn]="col.field">
+                                          {{col.header}}
+
+                                      </th>
+                                  </tr>
+                              </ng-template>
+
+
+                            <ng-template pTemplate="body" let-rowData  let-editing="editing" let-ri="rowIndex" let-index="rowIndex">
+                              <tr [pSelectableRow]="rowData" [pReorderableRow]="index">
+                                <td>
+                                  <span class="pi pi-bars" pReorderableRowHandle></span>
+                              </td>
+                                <td class="ui-resizable-column" style="text-align:center;" > {{ rowData.nummanifiesto    }}   </td>
+                                <td  pEditableColumn class="ui-resizable-column" style="text-align:left;">
+                                      {{rowData.provincia  }}
+                                </td>
+                                <td class="ui-resizable-column" style="text-align:center;"> {{rowData.tipooperacion  }}</td>
+                                <td  [ngClass]="rowData.estado == 'Por Despachar' ? 'very-old-car' :  (rowData.estado == 'Por Entregar'?'': rowData.estado == 'Entregado'?'old-car': null) "> {{rowData.estado}}</td>
+                                <td class="ui-resizable-column" style="text-align:left;"> {{rowData.idorden}}</td>
+                              </tr>
+                            </ng-template>
+                            </p-table>
+
+
+             </div>
+             <p-toast [baseZIndex]="100000"></p-toast>
+          </div>
+
+
+
+   </div>
+
+</div>
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" ></ngx-loading>
+<p-confirmDialog  header="Confirmación" icon="pi pi-exclamation-triangle"></p-confirmDialog>

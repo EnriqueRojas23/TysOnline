@@ -181,9 +181,11 @@
                     <ng-template pTemplate="body" let-rowData  let-editing="editing" let-ri="rowIndex" >
                       <tr  [pEditableRow]="rowData">
                         <td class="ui-resizable-column" style="text-align:left;">
-                          <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" (click)="onRowEditInit(rowData)" class="p-button-rounded p-button-text"></button>
+                          <button type='button' pButton  class="p-button-rounded p-button-text" label=""   title='Ver Fotos' icon='fa fa-download'  (click)='verarchivos(rowData.idordentrabajo);' > </button>
+                          <button type='button' pButton  class="p-button-rounded p-button-text" label=""   title='Ver Fotos' icon='fa fa-upload'  (click)='cargarfiles(rowData.idordentrabajo);' > </button>
+                          <!-- <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" (click)="onRowEditInit(rowData)" class="p-button-rounded p-button-text"></button>
                           <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" (click)="onRowEditSave(rowData)" class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
-                          <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times" (click)="onRowEditCancel(rowData, ri)" class="p-button-rounded p-button-text p-button-danger"></button>
+                          <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times" (click)="onRowEditCancel(rowData, ri)" class="p-button-rounded p-button-text p-button-danger"></button> -->
                         </td>
                         <!-- <td class="ui-resizable-column"  style="text-align:center; background-color:#2c76ff; color: white;text-decoration: underline red"> <a style="cursor: pointer" (click)="verguias(rowData.idordentrabajo)">  {{ rowData.numcp    }}  </a> </td> -->
                         <td class="ui-resizable-column" style="text-align:center;" > {{ rowData.numcp    }}   </td>
@@ -193,7 +195,7 @@
                               {{rowData.docgeneral  }}
                         </td>
 
-                        <td pEditableColumn>
+                        <!-- <td pEditableColumn>
                           <p-cellEditor>
                               <ng-template pTemplate="input">
                                   <p-dropdown [options]="statuses" appendTo="body" [(ngModel)]="rowData.motivo1des" [style]="{'width':'100%'}"></p-dropdown>
@@ -232,7 +234,7 @@
                             {{ rowData.fecvisita2  | date:'dd/MM/yyyy' }}
                         </ng-template>
                     </p-cellEditor>
-                </td>
+                </td> -->
                 <!-- <td pEditableColumn>
                   <p-cellEditor>
                       <ng-template pTemplate="input">
@@ -256,7 +258,7 @@
 
 
 
-                        <td class="ui-resizable-column" style="text-align:left;">
+                        <!-- <td class="ui-resizable-column" style="text-align:left;">
 
                           <p-cellEditor>
                             <ng-template pTemplate="input">
@@ -270,7 +272,7 @@
 
 
 
-                        </td>
+                        </td> -->
                         <td  [ngClass]="rowData.estado == 'Por Despachar' ? 'very-old-car' :  (rowData.estado == 'Por Entregar'?'': rowData.estado == 'Entregado'?'old-car': null) "> {{rowData.estado}}</td>
                         <td class="ui-resizable-column" style="text-align:center;"> {{rowData.tipoentrega  }}</td>
                         <td class="ui-resizable-column" style="text-align:center;"> {{rowData.fecharecojo | date: 'dd-MM-yyyy'}}</td>

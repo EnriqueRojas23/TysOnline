@@ -103,6 +103,7 @@
         <tr [pSelectableRow]="rowData">
 
 
+            <td class="ui-resizable-column" style="background-color: red; color: white;  text-align:center;"> {{rowData.error}} </td>
             <td class="ui-resizable-column" style="text-align:center;"> {{rowData.clientnum}} </td>
             <td class="ui-resizable-column" style="text-align:left;"> {{rowData.lastname  }}</td>
             <td class="ui-resizable-column" style="text-align:left;"> {{rowData.addr1 }} </td>
@@ -119,7 +120,7 @@
         </ng-template>
         <ng-template pTemplate="summary">
           <div class="flex align-items-center justify-content-between">
-            Son {{ordenes ? ordenes.length : 0 }} registros cargados.
+            Son {{ordenes ? ordenes.length : 0 }} registros cargados con errores.
           </div>
       </ng-template>
         </p-table>

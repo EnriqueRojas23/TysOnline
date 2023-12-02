@@ -32,6 +32,7 @@ export class UploadfileComponent implements OnInit {
   ordenes: any[];
   btn_procesar = false;
   loading = false;
+  idcarga : any;
 
   ProveedorLoaded = false;
 
@@ -55,6 +56,7 @@ export class UploadfileComponent implements OnInit {
 
     this.cols =
     [
+      {header: 'ERROR', field: 'error'  ,  width: '160px' },
 
         {header: 'DNI', field: 'clientnum'  ,  width: '80px' },
         {header: 'DESTINATARIO', field: 'lastname' , width: '120px'  },
@@ -125,12 +127,26 @@ export class UploadfileComponent implements OnInit {
 
     this.ordenService.uploadFile(formData, this.UserId , this.model.idcliente ).subscribe(resp => {
 
-      this.ordenes  = resp;
+      this.ordenes  = resp.detalles;
+      this.idcarga = resp.cargaid;
+
+
+      if( this.ordenes.length > 0 )
+      {
+        this.div_visible = false;
+        this.btn_procesar = false;
+      }
+      else {
+        this.div_visible = false;
+        this.btn_procesar = true;
+      }
 
 
 
-          this.div_visible = false;
-          this.btn_procesar = true;
+
+
+
+
           this.toastr.success('Se cargo correctamente'
            , 'Subir File', {
              closeButton: true
@@ -168,7 +184,7 @@ export class UploadfileComponent implements OnInit {
       accept: () => {
 
         this.loading = true;
-        this.ordenService.procesar(this.ordenes[0].cargaid, this.model.idcliente ).subscribe(resp => {
+        this.ordenService.procesar(this.idcarga, this.model.idcliente ).subscribe(resp => {
 
           this.toastr.success('Se cargo correctamente'
           , 'Subir File', {
@@ -177,7 +193,26 @@ export class UploadfileComponent implements OnInit {
 
           this.loading = false;
           this.router.navigate(['seguimientoot/listadoordentransporte']);
-       })
+       }, error => {
+
+
+
+        this.toastr.warning(error.error
+        , 'Subir File', {
+          closeButton: true
+        });
+
+        this.div_visible = false;
+        this.loading = false;
+
+
+      }, () => {
+        // this.router.navigate(['/dashboard']);
+        this.div_visible = false;
+        this.loading = false;
+
+
+      });
 
 
       },

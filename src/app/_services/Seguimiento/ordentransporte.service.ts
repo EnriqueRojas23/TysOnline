@@ -5,8 +5,8 @@ import { Observable } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 
-import { Incidencia, Documento } from '../../_models/Seguimiento/incidencia';
-import { Cliente, DespachosATiempo, kpiestados, ManifiestosPendientes, OrdenTransporte, RetornoDocumetario, Ubigeo, ValorTabla } from 'src/app/_models/Seguimiento/ordentransporte';
+import { Incidencia, Documento, RespuestaApi } from '../../_models/Seguimiento/incidencia';
+import { Cliente, DespachosATiempo, kpiestados, ManifiestosPendientes, OperacionCarga, OrdenTransporte, RetornoDocumetario, Ubigeo, ValorTabla } from 'src/app/_models/Seguimiento/ordentransporte';
 import { EquipoTransporte } from 'src/app/_models/Mantenimiento/equipotransporte';
 import { Vehiculo } from 'src/app/_models/Mantenimiento/vehiculo';
 import { CalendarEventModel } from 'src/app/_models/CalendarModel';
@@ -20,6 +20,7 @@ const httpOptions = {
     Authorization : 'Bearer ' + localStorage.getItem('token'),
     'Content-Type' : 'application/json'
   }),
+
 };
 const headers = new HttpHeaders().set('authorization', 'Bearer ' + localStorage.getItem('token'));
 
@@ -35,6 +36,7 @@ const httpOptionsUpload = {
 })
 
 export class OrdenTransporteService {
+
   baseUrl = environment.baseUrl + '/api/seguimiento/';
 constructor(private http: HttpClient) { }
 
@@ -57,7 +59,19 @@ procesar(id, idcliente): any {
 
 
 }
+generarPremanifiesto(nombre: String){
 
+  let  model: any  = {};
+  model.numcarga = nombre;
+  return this.http.post(this.baseUrl + 'generarPreManifiesto', model , httpOptions);
+
+
+}
+generarManifiesto(nombre: String) {
+  let  model: any  = {};
+  model.numcarga = nombre ;
+  return this.http.post(this.baseUrl + 'generarManifiesto', model , httpOptions);
+}
 
 
 downloadPlantilla(): any {
@@ -237,6 +251,16 @@ getOrden(id: number) {
   );
   }
 
+  confirmar_enviocargo(model: any) {
+
+    return this.http.post(this.baseUrl + 'confirmadoEnvioCargo', model, httpOptions)
+    .pipe(
+      map((response: any) => {
+      }
+    )
+  );
+  }
+
 
   getAllIncidencias(id: number) {
     return this.http.get<Incidencia[]>(this.baseUrl + 'GetAllIncidencias?idordentrabajo=' + id , httpOptions);
@@ -245,6 +269,13 @@ getOrden(id: number) {
       const params = '?Id=' + id ;
       return this.http.get<Documento[]>(this.baseUrl + 'GetAllDocumentos' + params, httpOptions);
     }
+
+    GetAllEventosxIdManifiesto(id: number): Observable<Documento[]> {
+      const params = '?idmanifiesto=' + id ;
+      return this.http.get<Documento[]>(this.baseUrl + 'GetAllEventosxIdManifiesto' + params, httpOptions);
+    }
+
+
 
    getAllOrderTransportDocuments(model: any) {
     if (model.idestado === 0) {
@@ -279,14 +310,79 @@ getOrden(id: number) {
 
      return this.http.get<OrdenTransporte[]>(this.baseUrl + 'GetAllOrderDocument' + param  , httpOptions);
    }
-   getAllOrderTransport(model: any) {
+
+   getAllPreHojaRuta(model: any) {
+      const param = '?idestado=' + 1
+      return this.http.get<OrdenTransporte[]>(this.baseUrl + 'getAllPreHojasRuta' + param  , httpOptions);
+   }
+
+   getAllOperaciones(model: any) {
+    const param = '?idestado=' + 1
+    return this.http.get<OrdenTransporte[]>(this.baseUrl + 'getAllOperaciones' + param  , httpOptions);
+   }
+
+   getAllOperacionesDetalles(model: any) {
+    const param = '?idcarga=' + model.idcarga
+    return this.http.get<OrdenTransporte[]>(this.baseUrl + 'getAllOperacionesDetalles' + param  , httpOptions);
+   }
+
+   getAllPreManifiestos(model: any) {
+      const param = '?numhojaruta=' + model.numhojaruta ;
+      return this.http.get<OrdenTransporte[]>(this.baseUrl + 'getAllPreManifiestos' + param  , httpOptions);
+   }
+
+
+   getOrdenTransportexHojaRuta(model: any){
+    const param = '?numhojaruta=' + model.numhojaruta ;
+    return this.http.get<OrdenTransporte[]>(this.baseUrl + 'getOrdenTransportexHojaRuta' + param  , httpOptions);
+   }
+
+   agregarOtManifiesto(model: any) {
+
+    console.log(model);
+
+    return this.http.post<OrdenTransporte[]>(this.baseUrl + 'agregarOtManifiesto' , model  , httpOptions);
+ }
+
+
+  getAllPrecintosLibres() {
+    return this.http.get<OrdenTransporte[]>(this.baseUrl + 'getAllPrecintosLibres'  , httpOptions);
+  }
+  getAllOrdersForManifest() {
+    return this.http.get<OrdenTransporte[]>(this.baseUrl + 'getAllOrdersForManifest'  , httpOptions);
+  }
+
+  // getAllOrderTransportPending(model: any) {
+
+  //   if (model.idcliente === 0 || model.idcliente === undefined) {
+  //       model.idcliente = '';
+  //    }
+  //   const param = '?idcliente=' + model.idcliente ;
+  //   return this.http.get<OrdenTransporte[]>(this.baseUrl + 'GetAllOrderPending' + param  , httpOptions);
+  // }
+
+    getAllOrderTransport(model: any) {
     if (model.idestado === 0) {
      model.idestado = '';
     }
 
+
+
     if (model.idcliente === 0 || model.idcliente === undefined) {
         model.idcliente = '';
      }
+
+     if (model.idprovincia === 0 || model.idprovincia === undefined) {
+      model.idprovincia = '';
+   }
+
+
+
+     if (model.iddestino === 0 || model.iddestino === undefined) {
+      model.iddestino = '';
+   }
+
+
 
     if (model.iddistrito === 0) {
      model.iddistrito = '';
@@ -308,7 +404,7 @@ getOrden(id: number) {
   + '&grr=' + model.grr
   + '&docreferencia=' + model.docreferencia
   + '&idestado=' + model.idestado
-  + '&iddestino=' + model.iddistrito
+  + '&iddestino=' + model.idprovincia
   + '&idusuario=' + model.idusuario
   + '&iddestinatario=' + model.iddestinatario
   + '&idproveedor=' + model.idproveedor
@@ -316,6 +412,99 @@ getOrden(id: number) {
 
     return this.http.get<OrdenTransporte[]>(this.baseUrl + 'GetAllOrder' + param  , httpOptions);
  }
+
+
+
+GetAllOrdersGroupDepartament(model: any){
+  if (model.idestacionorigen === 0 || model.idestacionorigen === undefined) {
+    model.idestacionorigen = '';
+ }
+
+ if (model.iddepartamento === 0|| model.iddepartamento === undefined) {
+    model.iddepartamento = '';
+ }
+ const param = '?idestacionorigen=' + model.idestacionorigen + '&iddepartamento=' + model.iddepartamento;
+ return this.http.get<OrdenTransporte[]>(this.baseUrl + 'GetAllOrdersGroupDepartament' + param  , httpOptions);
+}
+
+
+
+GetAllPendienteEntregaOrdersGroupDepartament(model: any){
+  if (model.idcliente === 0 || model.idcliente === undefined) {
+    model.idcliente = '';
+ }
+
+ if (model.iddepartamento === 0|| model.iddepartamento === undefined) {
+    model.iddepartamento = '';
+ }
+ const param = '?idcliente=' + model.idcliente + '&iddepartamento=' + model.iddepartamento + '&agrupado=' + model.agrupado + '&idusuario=' + model.idusuario;
+ return this.http.get<OrdenTransporte[]>(this.baseUrl + 'GetAllPendienteEntregaOrdersGroupDepartament' + param  , httpOptions);
+}
+GetAllPendienteEntregaLogiscitaInversa(model: any){
+  if (model.idcliente === 0 || model.idcliente === undefined) {
+      model.idcliente = '';
+  }
+
+  if (model.iddepartamento === 0|| model.iddepartamento === undefined) {
+     model.iddepartamento = '';
+  }
+const param = '?idcliente=' + model.idcliente + '&iddepartamento=' + model.iddepartamento + '&agrupado=' + model.agrupado  + '&idusuario=' + model.idusuario;
+return this.http.get<OrdenTransporte[]>(this.baseUrl + 'GetAllPendienteEntregaLogiscitaInversa' + param  , httpOptions);
+}
+
+
+GetAllPendienteEntregaOrdersGroupProveedor(model: any){
+    if (model.idcliente === 0 || model.idcliente === undefined) {
+        model.idcliente = '';
+    }
+
+    if (model.iddepartamento === 0|| model.iddepartamento === undefined) {
+       model.iddepartamento = '';
+    }
+ const param = '?idcliente=' + model.idcliente + '&iddepartamento=' + model.iddepartamento + '&agrupado=' + model.agrupado  + '&idusuario=' + model.idusuario;
+ return this.http.get<OrdenTransporte[]>(this.baseUrl + 'GetAllPendienteEntregaOrdersGroupProveedor' + param  , httpOptions);
+}
+
+
+
+
+
+
+
+GetAllOrdersGroupProvincias(ids: string){
+
+  ids = ids.substring(1, ids.length + 1 );
+
+ const param = '?idsdepartamento=' + ids
+ return this.http.get<OrdenTransporte[]>(this.baseUrl + 'GetAllOrdersGroupProvincia' + param  , httpOptions);
+}
+GetAllOrdersPendingGroupProvincia(ids: string){
+ const param = '?idsdepartamento=' + ids
+ return this.http.get<OrdenTransporte[]>(this.baseUrl + 'GetAllOrdersPendingGroupProvincia' + param  , httpOptions);
+}
+
+GetAllOrdersxRepartidorGroupProvincias(ids: string){
+
+  const param = '?idrepartidor=' + ids
+  return this.http.get<OrdenTransporte[]>(this.baseUrl + 'GetAllOrdersxRepartidorGroupProvincias' + param  , httpOptions);
+ }
+
+ getAllOrdersxRepartidor(idrepartidor: number, idestado: number){
+  const param = '?idrepartidor=' + idrepartidor + '&idestado=' + idestado;
+  return this.http.get<OrdenTransporte[]>(this.baseUrl + 'getAllOrdersxRepartidor' + param  , httpOptions);
+ }
+
+
+GetAllOrdersCargasTemporal (id){
+ return this.http.get<OrdenTransporte[]>(this.baseUrl + 'GetAllOrdersCargasTemporal?idcarga=' + id   , httpOptions);
+}
+GetAllCargasTemporal () {
+  return this.http.get<OperacionCarga[]>(this.baseUrl + 'GetAllCargasTemporal'   , httpOptions);
+}
+
+
+
+
 GetAllOrderOtros(model: any) {
   const param = '?guiarecojo=' + model.guiarecojo + '&numcp=' + model.numcp  +  '&clave=' + model.clave  ;
   return this.http.get<OrdenTransporte>(this.baseUrl + 'GetAllOrderOtros' + param  , httpOptions);
@@ -345,6 +534,9 @@ actualizar(model: any): Observable<OrdenTransporte> {
 }
 eliminar(model: any): Observable<OrdenTransporte> {
   return this.http.post<OrdenTransporte>(this.baseUrl + 'DeleteOrdenRecojo', model, httpOptions);
+}
+actualizar_cargo(model: any): Observable<OrdenTransporte> {
+  return this.http.post<OrdenTransporte>(this.baseUrl + 'actualizar_cargo', model, httpOptions);
 }
 
 registrar_detalle(model: any) {
@@ -437,6 +629,9 @@ GetOrdenRecojo(id: number) {
 GetOrdenRecojoxid(id: number) {
   return this.http.get<OrdenTransporte>(this.baseUrl + 'GetOrdenRecojoxid?idordenrecojo=' + id   , httpOptions);
 }
+GetOrdenTransporteByNumero(numcp: string) {
+  return this.http.get<OrdenTransporte[]>(this.baseUrl + 'GetOrdenTransporteByNumero?numcp=' + numcp   , httpOptions);
+}
 
 
 GetEquipoTransporteVinculado(id: any ) {
@@ -444,6 +639,7 @@ GetEquipoTransporteVinculado(id: any ) {
 }
 
 getAllGuiasAsignadasBlanco(idmanifiesto: number, idorden: number) {
+
   return this.http.get<OrdenTransporte[]>(this.baseUrl + 'GetGuiaRemisionBlancoPorVehiculo?idmanifiesto='  + idmanifiesto + '&idordentrabajo=' + idorden  , httpOptions);
 }
 
@@ -480,6 +676,15 @@ ActualizarProveedor(id: string , idproveedor: string) {
 asignarGuiasBlanco(id: number, idorden: number) {
   let  model: any  = {};
   return this.http.post<GuiaRemisionBlanco[]>(this.baseUrl + 'asignarGuiasBlanco?id=' + idorden + '&guia=' + id ,model   , httpOptions);
+}
+
+asignarPrecintos(numhojaruta: string, precintos: any[]) {
+
+  let  model: any  = {};
+  model.numhojaruta = numhojaruta ;
+  model.precintos = precintos;
+  return this.http.post<GuiaRemisionBlanco[]>(this.baseUrl + 'asignarPrecintos' ,model   , httpOptions);
+
 }
 
 asignarGuiasBlancoExtraviado(id: number, idorden: number) {
@@ -543,8 +748,138 @@ LiquidarSustento(hojaruta: string) {
   return this.http.post<GuiaRemisionBlanco[]>(this.baseUrl + 'LiquidarHojaRuta?hojaruta=' +   hojaruta ,model   , httpOptions);
 }
 
+CrearCarga(idusuariocreacion: number , idtipovehiculo: number) {
+
+    let  model: any  = {};
+    model.idusuariocreacion = idusuariocreacion;
+    model.idtipounidad = idtipovehiculo;
+    return this.http.post<Incidencia[]>(this.baseUrl + 'GenerarOperacionCarga?', model , httpOptions);
+  }
+
+  AsignarProvinciaCarga(idprovincia: string, idcarga: number) {
+    let  model: any  = {};
+    model.idsprovincia = idprovincia;
+    model.idcarga = idcarga;
+    return this.http.post<Incidencia[]>(this.baseUrl + 'AsignarProvinciaCarga?', model , httpOptions);
+  }
+
+  asignarTipoOperacion(model) {
+    return this.http.post<RespuestaApi>(this.baseUrl + 'AsignarTipoOperacion?', model , httpOptions);
+  }
 
 
+  actualizarFechasEta(model) {
+    return this.http.post<Incidencia[]>(this.baseUrl + 'actualizarFechasETA?', model , httpOptions);
+  }
+  actualizarFechasEtaxOT(model) {
+    return this.http.post<Incidencia[]>(this.baseUrl + 'actualizarFechasEtaxOT?', model , httpOptions);
+  }
+  cambiarEstadoOT(model) {
+    return this.http.post<Incidencia[]>(this.baseUrl + 'cambiarEstadoOT?', model , httpOptions);
+  }
+
+  asignarTipoOperacionAlmacen(model) {
+    return this.http.post<Incidencia[]>(this.baseUrl + 'AsignarTipoOperacionAlmacen?', model , httpOptions);
+  }
+
+  //Genera o actualiza ots pendientes de manifiesto
+  ///
+  GenerarOTsPendientes(model) {
+    return this.http.post<OrdenTransporte[]>(this.baseUrl + 'GenerarOTsPendientes?', model , httpOptions);
+  }
+  confirmarDespacho(model: any) {
+    return this.http.post(this.baseUrl + 'ConfirmarDespacho', model, httpOptions);
+  }
+  confirmarDespacho2(model: any, manifiestos: any[]) {
+
+    model.manifiestos = manifiestos;
+    return this.http.post(this.baseUrl + 'ConfirmarDespacho2', model, httpOptions);
+
+  }
+
+
+  DesAsignarProvinciaCarga(idordentrabajo: number) {
+    let  model: any  = {};
+    model.idordentrabajo = idordentrabajo;
+    return this.http.post<Incidencia[]>(this.baseUrl + 'DesAsignarProvinciaCarga?', model , httpOptions);
+  }
+
+  eliminarDespacho(model : any ) {
+    return this.http.post<Incidencia[]>(this.baseUrl + 'EliminarDespacho?', model , httpOptions);
+  }
+  confirmarSalida(numhojaruta: string) {
+    let  model: any  = {};
+    model.numhojaruta = numhojaruta ;
+
+    return this.http.post<Incidencia[]>(this.baseUrl + 'darSalidaVehiculo?', model , httpOptions);
+  }
+  getAllOrdersForDespacho(numhojaruta: string) {
+    return this.http.get<OrdenTransporte[]>(this.baseUrl + 'getAllOrdersForDespacho?numhojaruta='  + numhojaruta, httpOptions);
+  }
+  getAllOrdersForDespachoAll(numhojaruta: string) {
+    return this.http.get<OrdenTransporte[]>(this.baseUrl + 'getAllOrdersForDespachoAll?numhojaruta='  + numhojaruta, httpOptions);
+  }
+  getOrdenTransporteByNumcp(numcp: string) {
+    return this.http.get<OrdenTransporte>(this.baseUrl + 'getOrdenTransporteByNum?numcp='  + numcp, httpOptions);
+  }
+
+  desvincularOt (idordentrabajo: number) {
+    let  model: any  = {};
+    model.idordentrabajo = idordentrabajo ;
+    return this.http.post<OrdenTransporte[]>(this.baseUrl + 'desvincularOt' , model ,httpOptions);
+  }
+
+  confirmarEstibaxOT (idordentrabajo: number) {
+    let  model: any  = {};
+    model.idordentrabajo = idordentrabajo ;
+    return this.http.post<OrdenTransporte[]>(this.baseUrl + 'confirmarEstibaxOT' , model ,httpOptions);
+  }
+
+
+  confirmarEstibaxOTs (ots: any[]) {
+    console.log(ots);
+    return this.http.post<OrdenTransporte>(this.baseUrl + 'confirmarEstibaxOTs' , ots ,httpOptions);
+  }
+  confirmarValijaxOTs (ots: any[]) {
+    console.log(ots);
+    return this.http.post<OrdenTransporte>(this.baseUrl + 'confirmarValijaxOTs' , ots ,httpOptions);
+  }
+
+  generarGrt (numhojaruta: string, grt: string) {
+    let  model: any  = {};
+    model.numhojaruta = numhojaruta ;
+    model.grt = grt ;
+    return this.http.post<OrdenTransporte[]>(this.baseUrl + 'generarGrt' , model ,httpOptions);
+  }
+
+  getEstibaAutorizada(numhojaruta: string) {
+    console.log(numhojaruta, 'hu')
+    return this.http.get<OrdenTransporte>(this.baseUrl + 'getEstibaAutorizada?numhojaruta='  + numhojaruta, httpOptions);
+  }
+  getAutorizaReinicio  (numhojaruta: any) {
+    console.log(numhojaruta, 'hu');
+    return this.http.get<OrdenTransporte>(this.baseUrl + 'getAutorizaReinicio?numhojaruta='  + numhojaruta.numhojaruta, httpOptions);
+  }
+
+  autorizarHojaRuta (numhojaruta: string) {
+    let  model: any  = {};
+    model.numhojaruta = numhojaruta ;
+    return this.http.post<OrdenTransporte[]>(this.baseUrl + 'autorizarHojaRuta' , model ,httpOptions);
+  }
+  reinicioHojaRuta (numhojaruta: string) {
+    let  model: any  = {};
+    model.numhojaruta = numhojaruta ;
+    return this.http.post<OrdenTransporte[]>(this.baseUrl + 'reinicioHojaRuta' , model ,httpOptions);
+  }
+
+  getAllOrderTransportPending(model: any) {
+
+    if (model.idcliente === 0 || model.idcliente === undefined) {
+        model.idcliente = '';
+     }
+    const param = '?idcliente=' + model.idcliente ;
+    return this.http.get<OrdenTransporte[]>(this.baseUrl + 'GetAllOrderPending' + param  , httpOptions);
+  }
 
 
 }

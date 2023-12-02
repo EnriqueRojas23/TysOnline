@@ -40,7 +40,13 @@
                         </ng-template>
                   </p-dropdown>
             </div>
-              <div class="col-md-3">
+            <div class="col-md-3">
+              <h6>Doc. Referencia :</h6>
+              <input pInputText   class="form-control col-md-12"   name="docreferencia" [(ngModel)]="model.docreferencia" #docreferencia="ngModel" autocomplete="off" minlength="2" maxlength="12" type="text"     placeholder="Documento de Referencia" />
+
+
+            </div>
+              <!-- <div class="col-md-3">
                 <h6>Destinatario :</h6>
 
                 <p-dropdown name="destinatarios" *ngIf="ProveedorLoaded === true"
@@ -55,7 +61,7 @@
                             <span style="vertical-align:left;">{{item.label}}</span>
                         </ng-template>
                   </p-dropdown>
-            </div>
+            </div> -->
 
               <div class="col-md-2">
                 <h6>N° OT :</h6>
@@ -65,12 +71,7 @@
             </div>
             <div class="row">
 
-              <div class="col-md-3">
-                <h6>Doc. Referencia :</h6>
-                <input pInputText   class="form-control col-md-12"   name="docreferencia" [(ngModel)]="model.docreferencia" #docreferencia="ngModel" autocomplete="off" minlength="2" maxlength="12" type="text"     placeholder="Documento de Referencia" />
 
-
-              </div>
 
               <div class="col-md-3">
                 <h6>GRR :</h6>
@@ -90,10 +91,6 @@
                 <p-calendar [(ngModel)]="dateFin" baseZIndex="100"   dateFormat="dd/mm/yy"></p-calendar>
               </div>
 
-            </div>
-            <div class="row">
-
-
               <div class="col-md-3">
                 <h6>Tipo Transporte :</h6>
 
@@ -110,6 +107,12 @@
                         </ng-template>
                   </p-dropdown>
             </div>
+
+            </div>
+            <div class="row">
+
+
+
 
             <div class="col-md-3">
               <h6>Provincia :</h6>
@@ -131,7 +134,7 @@
 
             </div>
 
-              <div class="col-md-3">
+              <!-- <div class="col-md-3">
                 <h6>Destino :</h6>
 
                 <p-dropdown name="ubigeo" *ngIf="UbigeoLoaded === true"
@@ -149,11 +152,10 @@
                   </p-dropdown>
 
 
-              </div>
+              </div> -->
 
-              <div class="col-md-3">
+              <!-- <div class="col-md-3">
               <h6>Estado :</h6>
-
                 <p-dropdown name="estados"
                   [options]="estados" [(ngModel)]="model.idestado"
                   scrollHeight="20vh"  class="input-form-field"
@@ -166,15 +168,13 @@
                           <span style="vertical-align:left;">{{item.label}}</span>
                       </ng-template>
                 </p-dropdown>
-
-
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-2 offset-8">
+              </div> -->
+            <!-- </div> -->
+            <!-- <div class="row"> -->
+              <div class="mt-5 col-md-2 offset-4">
                       <button   class='btn-primary btn btn-xs' pButton iconPos="left" label="Buscar" icon="fa fa-search"   (click)="buscar()"  type="button"></button>
               </div>
-              <div class="col-md-2">
+              <div class="mt-5 col-md-2">
                       <button   class='btn-primary btn btn-xs' type="button" pButton icon="pi pi-file-excel" iconPos="left" label="EXCEL" (click)="exportExcel()"></button>
               </div>
           </div>
@@ -241,9 +241,10 @@
                         <td  pEditableColumn class="ui-resizable-column" style="text-align:left;">
                               {{rowData.docgeneral  }}
                         </td>
-                        <td class="ui-resizable-column" style="text-align:left;">   {{rowData.estado}}</td>
 
-                        <td pEditableColumn class="ui-resizable-column" style="text-align:center;">
+
+
+                        <!-- <td pEditableColumn class="ui-resizable-column" style="text-align:center;">
                           <p-cellEditor>
                               <ng-template pTemplate="input">
                                   <p-checkbox [(ngModel)]="rowData.enzona" [binary]="true" inputId="binary"></p-checkbox>
@@ -252,7 +253,7 @@
                                   {{rowData.enzona}}
                               </ng-template>
                           </p-cellEditor>
-                      </td>
+                      </td> -->
 
                         <td pEditableColumn>
                           <p-cellEditor>
@@ -322,6 +323,7 @@
 
 
                         </td>
+                        <td class="ui-resizable-column" style="text-align:left;">    {{ rowData.direccion }}</td>
 
                         <td class="ui-resizable-column" style="text-align:left;">   {{rowData.destino}}</td>
                         <td class="ui-resizable-column" style="text-align:left;">   {{rowData.destinatario}}</td>

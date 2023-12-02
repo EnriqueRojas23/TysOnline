@@ -1,0 +1,84 @@
+
+
+
+<div class="main-content container-fluid">
+
+  <div class="col-12">
+
+
+      <div class="card card-border-color card-border-color-primary">
+        <div class="card-header">
+            <b> Departamentos por Equipo </b>
+        </div>
+
+        <div class="col-12 card-body">
+                <div class="row">
+                    <div class="p-col-2 p-md-2  drop-column"  pDroppable="products"  (onDrop)="drop('0')">
+                        Departamentos
+                        <div *ngFor="let product of availableProducts">
+                            <div class="product-item" pDraggable="products" (onDragStart)="dragStart(product)" (onDragEnd)="dragEnd()">
+                                <div class="product-list-detail">
+                                    <h5 class="mb-2">{{product.departamento}}</h5>
+
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="p-col-2 p-md-3 drop-column" pDroppable="products" (onDrop)="drop('1')">
+                      Equipo 1
+                        <div *ngFor="let product of selectedEquipo1">
+
+                          <div class="product-item" pDraggable="products" (onDragStart)="dragStart(product)" (onDragEnd)="dragEnd()">
+                              <div class=" product-list-detail">
+                                  <h5 class="mb-2">{{product.departamento}}</h5>
+                                </div>
+                                <button  class='btn btn-xs btn-outline-danger' type="button" pButton icon="fa fa-trash" iconPos="left" (click)="borrar(product)"></button>
+                          </div>
+
+                      </div>
+
+                    </div>
+                    <div class="p-col-2 p-md-3 drop-column" pDroppable="products" (onDrop)="drop('2')">
+                      Equipo 2
+                        <div *ngFor="let product of selectedEquipo2">
+                          <div class="product-item" pDraggable="products" (onDragStart)="dragStart(product)" (onDragEnd)="dragEnd()">
+                            <div class=" product-list-detail">
+                                <h5 class="mb-2">{{product.departamento}}</h5>
+                              </div>
+                              <button  class='btn btn-xs btn-outline-danger' type="button" pButton icon="fa fa-trash" iconPos="left" (click)="borrar(product)"></button>
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="p-col-2 p-md-3 drop-column" pDroppable="products" (onDrop)="drop('3')">
+                      Equipo 3
+                        <div *ngFor="let product of selectedEquipo3">
+                          <div class="product-item" pDraggable="products" (onDragStart)="dragStart(product)" (onDragEnd)="dragEnd()">
+                            <div class=" product-list-detail">
+                                <h5 class="mb-2">{{product.departamento}}</h5>
+                              </div>
+                              <button  class='btn btn-xs btn-outline-danger' type="button" pButton icon="fa fa-trash" iconPos="left" (click)="borrar(product)"></button>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="p-col-2 p-md-3 drop-column" pDroppable="products" (onDrop)="drop('4')">
+                      Equipo 4
+                        <div *ngFor="let product of selectedEquipo4">
+                          <div class="product-item" pDraggable="products" (onDragStart)="dragStart(product)" (onDragEnd)="dragEnd()">
+                            <div class=" product-list-detail">
+                                <h5 class="mb-2">{{product.departamento}}</h5>
+                              </div>
+                              <button  class='btn btn-xs btn-outline-danger' type="button" pButton icon="fa fa-trash" iconPos="left" (click)="borrar(product)"></button>
+                          </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="mt-5 offset-3 row">
+                    <button  class='btn btn-xs btn-success' type="button" pButton label="Guardar" icon="fa fa-save" iconPos="left" (click)="guardar()"></button>
+                    <button  class='btn btn-xs btn-danger' type="button" pButton label="Deshacer"  iconPos="left" (click)="cancelar()"></button>
+                </div>
+            </div>
+          </div>
+  </div>
+</div>

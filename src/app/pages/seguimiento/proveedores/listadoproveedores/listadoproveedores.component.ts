@@ -36,7 +36,7 @@ export class ListadoproveedoresComponent implements OnInit {
   }
   load(){
     this.model.criterio = "";
-    this.clienteService.getProveedores(this.model.criterio).subscribe(resp => {
+    this.clienteService.getProveedores(this.model.criterio, 21513).subscribe(resp => {
     this.provedores = resp;
 
 
@@ -72,7 +72,7 @@ export class ListadoproveedoresComponent implements OnInit {
 }
 buscar() {
 
-  this.clienteService.getProveedores(this.model.proveedor).subscribe(resp => {
+  this.clienteService.getProveedores(this.model.proveedor,21513).subscribe(resp => {
   this.provedores = resp;
 
 

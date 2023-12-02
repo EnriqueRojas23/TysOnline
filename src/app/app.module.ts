@@ -1,4 +1,4 @@
-import {  TreeGridModule } from '@syncfusion/ej2-angular-treegrid';
+
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -39,11 +39,11 @@ import { ListadoplacasprogramadasComponent } from './pages/seguimiento/ordenesre
 import { CalendarModule as CalendarModule2, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { VerordenoriflameComponent } from './pages/seguimiento/ordentransporte/verordenoriflame/verordenoriflame.component';
-import { AgmCoreModule } from '@agm/core';
+import { AgmCoreModule, GoogleMapsAPIWrapper } from '@agm/core';
 import { CarouselModule } from 'primeng/carousel';
-import { GridModule } from '@syncfusion/ej2-angular-grids';
-import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
-import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
+import { FileUploadModule } from 'primeng/fileupload';
+import { IntegradoComponent } from './pages/trafico/integrado/integrado.component';
+
 
 
 
@@ -59,7 +59,8 @@ import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
       GuiasModal2Component,
       ProgramacionplacaComponent,
       ListadoplacasprogramadasComponent,
-      VerordenoriflameComponent
+      VerordenoriflameComponent,
+      IntegradoComponent
 
 
    ],
@@ -72,37 +73,22 @@ import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
       ToastrModule.forRoot(),
       FormsModule,
       BrowserAnimationsModule,
-      SweetAlert2Module.forRoot({ }),
-      MatTableModule,
-      MatPaginatorModule,
-      MatSortModule,
-      NgxLoadingModule.forRoot({}),
-      NgbModule,
-      MatPaginatorModule,
-      MatSortModule,
+      DropdownModule ,
+      CarouselModule,
       CalendarModule,
-      NgxLoadingModule.forRoot({
-     }),
+      ButtonModule,
+      DragDropModule,
+      ConfirmDialogModule,
+      TableModule,
+      NgxLoadingModule,
+      FileUploadModule ,
 
-     SweetAlert2Module,
-     ConfirmDialogModule,
-     ProgressBarModule,
-     ButtonModule,
-     DropdownModule,
-     DragDropModule,
-     DynamicDialogModule,
-     TableModule,
-     CalendarModule2.forRoot({
-      provide: DateAdapter,
-      useFactory: adapterFactory,
-    }),
+      SweetAlert2Module,
+
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDnh35oUHQYGDPcVs6rfKOY057Xo7ujDsQ'
     }),
-    CarouselModule,
-    GridModule   ,
-    DropDownsModule,
-    DateInputsModule,
+
 
    ],
    providers: [
@@ -113,6 +99,7 @@ import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
       GeneralService,
       Data,
 
+      GoogleMapsAPIWrapper
    ],
    bootstrap: [
       AppComponent

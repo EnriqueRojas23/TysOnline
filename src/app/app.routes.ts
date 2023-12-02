@@ -1,5 +1,4 @@
 import { VerordengeneralComponent } from './pages/seguimiento/ordentransporte/verordengeneral/verordengeneral.component';
-import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ListadoordentransportelibreComponent } from './listadoordentransportelibre/listadoordentransportelibre.component';
 import { LoginComponent } from './login/login.component';

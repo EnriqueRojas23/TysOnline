@@ -39,6 +39,10 @@ export class IndexComponent implements OnInit {
 
   ngOnInit() {
 
+    this.user = JSON.parse(localStorage.getItem('user'));
+
+    this.model.idusuario = this.user.usr_int_id;
+
     this.generalService.GetAllDepartamentos().subscribe(resp => {
       this.listaDepartamento.push({ value: '0',  label : 'TODOS LOS DEPARTAMENTOS'});
       resp.forEach(item => {
@@ -51,7 +55,7 @@ export class IndexComponent implements OnInit {
 
     this.user = JSON.parse(localStorage.getItem('user'));
 
-    this.ordenTransporteService.getClientes('').subscribe(resp => {
+    this.ordenTransporteService.getClientes(this.user.idclientes).subscribe(resp => {
       this.clientes.push({ value: '0',  label : 'TODOS LOS CLIENTES'});
       resp.forEach(element => {
           this.clientes.push({ value: element.idcliente ,  label : element.razonsocial});
@@ -348,6 +352,74 @@ export class IndexComponent implements OnInit {
         };
 
      });
+
+
+
+
+
+     this.ordenTransporteService.GetPendientesEntrega(this.model.idcliente
+      , this.dateInicio.toLocaleDateString()
+      , this.dateFin.toLocaleDateString()
+      , this.model.iddepartamento, this.model.idprovincia ).subscribe( resp => {
+
+        this.entrega = resp;
+
+        this.model.anioactual = 2022;
+
+        this.entrega.forEach( x=> {
+
+          if(x.rango === 'hasta7')
+            this.model.hasta7_entrega = x.ots;
+          if(x.rango === 'hasta50')
+            this.model.hasta50_entrega = x.ots;
+          if(x.rango === 'hasta100')
+            this.model.hasta100_entrega = x.ots;
+            if(x.rango === 'masde100')
+            this.model.masde100_entrega = x.ots;
+            if(x.rango === 'entregados')
+            this.model.atiempo_entrega = x.ots;
+
+        });
+
+
+
+
+
+      this.model.notiempo_entrega = this.model.hasta7_entrega +  this.model.hasta50_entrega + this.model.hasta100_entrega + this.model.masde100_entrega;
+
+
+      let total_entrega =  this.model.atiempo_entrega  +   this.model.notiempo_entrega;
+
+      let porcentajeatiempo_entrega =  (this.model.atiempo_entrega  * 100) / total_entrega;
+      let porcentajenotiempo_entrega =  (this.model.notiempo_entrega  * 100) / total_entrega;
+
+      this.data3 = {
+        labels: [' Entregados ' + porcentajeatiempo_entrega.toFixed(2) + '%'
+              ,'Pendientes de Entrega ' + porcentajenotiempo_entrega.toFixed(2) + '%'],
+
+        datasets: [
+            {
+                data: [ porcentajeatiempo_entrega.toFixed(2), porcentajenotiempo_entrega.toFixed(2)],
+                backgroundColor: [
+                  "#006400",
+                  "#ff0000"
+                ],
+                hoverBackgroundColor: [
+                  "#006400",
+                  "#ff0000"
+
+                ]
+            }]
+        };
+
+     });
+
+
+
+
+
+
+
 
   }
   exportExcel() {

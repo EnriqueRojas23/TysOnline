@@ -1,27 +1,19 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { GridComponent, GroupService, GroupSettingsModel, PageService, SortService } from '@syncfusion/ej2-angular-grids';
+
 import { SelectItem } from 'primeng/api';
 import { ManifiestosPendientes } from 'src/app/_models/Seguimiento/ordentransporte';
 import { User } from 'src/app/_models/user';
 import { GeneralService } from 'src/app/_services/Mantenimiento/general.service';
 import { OrdenTransporteService } from 'src/app/_services/Seguimiento/ordentransporte.service';
-import { L10n } from '@syncfusion/ej2-base';
 
 
-L10n.load({
-  'es-PE': {
-      'pager': {
-          'currentPageInfo': '',
-          'totalItemsInfo': '{1} to {2} of {0}',
-      }
-  }
-});
+
 
 @Component({
   selector: 'app-reportependientesdespacho',
   templateUrl: './reportependientesdespacho.component.html',
   styleUrls: ['./reportependientesdespacho.component.scss'],
-  providers: [GroupService,PageService , SortService]
+
 })
 export class ReportependientesdespachoComponent implements OnInit {
 
@@ -39,8 +31,7 @@ export class ReportependientesdespachoComponent implements OnInit {
   listaDepartamento: SelectItem[] = [];
   listaProvincia: SelectItem[] = [];
   cols: any[];
-  public groupOptions: GroupSettingsModel;
-  @ViewChild('grid') public Grid: GridComponent;
+
   public pageSettings: Object;
 
 
@@ -87,7 +78,7 @@ export class ReportependientesdespachoComponent implements OnInit {
 
               this.data = resp;
               this.pageSettings = { pageSizes: true, pageCount: 4 };
-              this.groupOptions = { columns: ['numhojaruta', 'nummanifiesto' ,'numcarga' ] };
+
 
          });
 

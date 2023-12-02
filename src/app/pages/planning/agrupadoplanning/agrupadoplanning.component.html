@@ -1,0 +1,176 @@
+
+
+<div class="main-content container-fluid">
+
+  <div class="col-md-12">
+      <div class="card card-border-color card-border-color-primary">
+          <div class="card-header">
+                    <b> Filtro de búsqueda  </b>
+              </div>
+          <div class="card-body">
+              <div class="row">
+                <div class="col-md-3">
+
+
+                  <h6>Seleccionar la estación :</h6>
+
+                  <p-dropdown name="estaciones"
+                    [options]="estaciones" [(ngModel)]="model.idestacionorigen"
+                    scrollHeight="20vh"  class="input-form-field"
+                    appendTo="body"
+                    [baseZIndex]="100000"
+                    [virtualScroll]="true" itemSize="4"
+                    [style]="{'width':'100%'}" [resetFilterOnHide]="false"
+                    [hideTransitionOptions]="'0ms'"
+                    [showTransitionOptions]="'0ms'"
+                    placeholder="seleccione una estación"
+                    filter="false">
+                        <ng-template let-item pTemplate="selectedItem">
+                            <span style="vertical-align:left;">{{item.label}}</span>
+                        </ng-template>
+                  </p-dropdown>
+
+              </div>
+
+              <div class="col-md-2">
+                <h6>Destino :</h6>
+
+                <p-dropdown name="ubigeo" *ngIf="UbigeoLoaded === true"
+                    [options]="ubigeo"  [(ngModel)]="model.iddistrito"
+                    scrollHeight="30vh"  class="input-form-field"
+                    [virtualScroll]="true" itemSize="70"
+                    [style]="{'width':'100%'}"
+                    [resetFilterOnHide]="false"
+                    [hideTransitionOptions]="'0ms'"
+                    [showTransitionOptions]="'0ms'"
+                    filter="false">
+                        <ng-template let-item pTemplate="selectedItem">
+                            <span style="vertical-align:left;">{{item.label}}</span>
+                        </ng-template>
+                  </p-dropdown>
+
+
+              </div>
+
+
+              <div class="col-md-2 mb-5">
+                      <button   class='btn-primary btn btn-block' pButton iconPos="left" label="Buscar" icon="fa fa-search"   (click)="buscar()"  type="button"></button>
+              </div>
+
+          </div>
+          </div>
+      </div>
+
+      <div class="card card-border-color card-border-color-primary">
+            <div class="card-header">
+                <b> Órdenes de Transporte  </b>
+                <!-- <span class="card-subtitle">   Listado de ordenes de Transporte</span> -->
+            </div>
+
+
+              <div class="card-body row">
+                <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" ></ngx-loading>
+
+                <div  class="col-6">
+
+
+
+                    <agm-map [latitude]="lat"   [longitude]="lng" [zoom]="zoom">
+
+
+                       <agm-marker *ngFor="let data of ordenes; let i = index" #maker [latitude]="data.lat"  [longitude]="data.lng"
+                           [label]="{color: 'black', text: data.cantidad.toString() }"
+
+                        [iconUrl]="{
+                          url: '/assets/img/27-512.png',
+                          scaledSize: {
+                              width: 40,
+                              height: 40
+                          }
+                      }"
+                     ></agm-marker>
+
+
+
+
+                    </agm-map>
+
+                </div>
+
+                <div  class=" col-6">
+
+                  <div class="col-md-6 mb-5">
+                    <button   class='btn-secondary btn btn-block' pButton iconPos="left" label="Planificar" icon="fa fa-file"   (click)="planificar()"  type="button"></button>
+                  </div>
+
+                  <p-table  [columns]="cols" dataKey="iddepartamento"
+                  [style]="{width:'100%'}"
+                  [rowsPerPageOptions]="[20,40,60,120]"
+                  [value]="ordenes2" #dt  selectionMode="multiple"
+                  (onSort)="onSort()"
+                  sortField="zona"
+
+                  [(selection)]="selectedDepartaments"
+                    [rows]="20" [resizableColumns]="true" [responsive]="true" >
+
+                        <ng-template pTemplate="header" let-columns>
+                          <tr>
+
+                              <th  [ngStyle]="{'width': col.width}" *ngFor="let col of columns" pResizableColumn [pSortableColumn]="col.field">
+                                  {{col.header}}
+
+                              </th>
+                          </tr>
+                      </ng-template>
+
+                    <ng-template pTemplate="body" let-product let-rowIndex="rowIndex" let-expanded="expanded">
+                      <tr *ngIf="rowGroupMetadata[product.zona].index === rowIndex">
+                          <td colspan="6">
+                              <button type="button" pButton pRipple [pRowToggler]="product" class="p-button-text p-button-rounded p-button-plain p-mr-2" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                              <span class="p-text-bold p-ml-2">{{product.zona}}  </span>
+                          </td>
+                      </tr>
+                  </ng-template>
+
+                    <ng-template pTemplate="body"  let-rowData  let-expanded="expanded"  let-columns="columns">
+                      <tr [pSelectableRow]="rowData">
+
+                        <td class="ui-resizable-column" style="text-align:center;" > {{ rowData.zona    }}   </td>
+                        <td class="ui-resizable-column" style="text-align:center;" > {{ rowData.departamento    }}   </td>
+                        <td  class="ui-resizable-column" style="text-align:center;">{{rowData.cantidad  }} </td>
+                        <td class="ui-resizable-column" style="text-align:center;"> {{rowData.bulto }} </td>
+                        <td class="ui-resizable-column" style="text-align:center;"> {{rowData.peso | number:'1.0-0'}}</td>
+                        <td class="ui-resizable-column" style="text-align:center;"> {{rowData.volumen | number:'1.0-0'}}</td>
+                        <td class="ui-resizable-column" style="text-align:center;"> S/.{{rowData.subtotal | number:'1.0-0'}}</td>
+                      </tr>
+                    </ng-template>
+                     <ng-template pTemplate="footer">
+                      <tr>
+                          <td colspan="2" class="text-right">Totales</td>
+                          <td>{{otsTotal  | number:'1.0-0'}}  </td>
+                          <td>{{bultosTotal  | number:'1.0-0'}} </td>
+                          <td>{{pesoTotal | number:'1.0-0'}}</td>
+                          <td></td>
+
+                          <td>S/.  {{subtotalTotal  | number:'1.0-0'}} </td>
+                      </tr>
+                  </ng-template>
+                    </p-table>
+                </div>
+              </div>
+      </div>
+
+
+
+  </div>
+
+</div>
+
+<p-overlayPanel [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"  [dismissable]="true" [showCloseIcon]="true" #op1 [appendTo]="'body'">
+
+  <img [src]="imageToShow" width="320" height="320"
+  alt="Place
+  image title"
+  >
+
+</p-overlayPanel>

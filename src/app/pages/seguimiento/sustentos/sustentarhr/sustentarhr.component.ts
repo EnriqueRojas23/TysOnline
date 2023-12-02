@@ -2,13 +2,12 @@ import { SustentoResult, SustentoDetalle } from './../../../../_models/Seguimien
 import { GeneralService } from 'src/app/_services/Mantenimiento/general.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ToolbarService, EditService, PageService } from '@syncfusion/ej2-angular-treegrid';
+
 import { DynamicDialogRef,  } from 'primeng/dynamicdialog';
 import { OrdenTransporteService } from 'src/app/_services/Seguimiento/ordentransporte.service';
-import { DataSourceChangedEventArgs, DataStateChangeEventArgs, EditSettingsModel, IEditCell, NewRowPosition } from '@syncfusion/ej2-angular-grids';
 
-import { GridDataResult } from '@progress/kendo-angular-grid';
-import { orderBy, SortDescriptor } from '@progress/kendo-data-query';
+
+
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 
 
@@ -25,7 +24,7 @@ const createFormGroup = dataItem => new FormGroup({
   selector: 'app-sustentarhr',
   templateUrl: './sustentarhr.component.html',
   styleUrls: ['./sustentarhr.component.scss'],
-  providers: [ToolbarService, EditService, PageService]
+
 })
 export class SustentarhrComponent implements OnInit {
   public dialogOpened = false;
@@ -35,7 +34,7 @@ export class SustentarhrComponent implements OnInit {
   private editedProduct: SustentoResult;
 
 
-  public gridDataResult: GridDataResult ;
+  // public gridDataResult: GridDataResult ;
 
   id: any;
   sustentos: SustentoResult[];
@@ -57,21 +56,21 @@ export class SustentarhrComponent implements OnInit {
   public formatoptions: Object;
   public formGroup: FormGroup;
 
-  public editSettings: EditSettingsModel;
+  // public editSettings: EditSettingsModel;
 
-  public sort: SortDescriptor[] = [
-    {
-      field: 'numero_ot',
-      dir: 'desc',
-    } ,{
-        field: 'orden_entrega',
-        dir: 'asc',
-      }
-  ];
+  // public sort: SortDescriptor[] = [
+  //   {
+  //     field: 'numero_ot',
+  //     dir: 'desc',
+  //   } ,{
+  //       field: 'orden_entrega',
+  //       dir: 'asc',
+  //     }
+  // ];
 
 
-  public stateParams : IEditCell;
-  public tipoSustentoParams : IEditCell;
+  // public stateParams : IEditCell;
+  // public tipoSustentoParams : IEditCell;
 
   public tiposdocumento: any[];
   public formGroups: FormGroup = new FormGroup({ items: new FormArray([]) });
@@ -136,10 +135,10 @@ public TipoSustento: { [key: string]: Object }[] = [
 
       this.ordenTransporteService.GetAllSustentoxHR(this.id).subscribe(list => {
 
-        console.log(list);
-        this.gridDataResult = {
-          data: orderBy(list,this.sort) ,
-          total: list.length };
+        // console.log(list);
+        // this.gridDataResult = {
+        //   data: orderBy(list,this.sort) ,
+        //   total: list.length };
 
       });
 
@@ -229,20 +228,20 @@ guardarCabecera(){
 
 
 
-public dataStateChange(state: DataStateChangeEventArgs): void {
-   alert('Entre');
-}
+// public dataStateChange(state: DataStateChangeEventArgs): void {
+//    alert('Entre');
+// }
 
-public dataSourceChanged(state: DataSourceChangedEventArgs): void {
-  if (state.action === 'add') {
-    alert('Agregar');
-      //this.crudService.addRecord(state).subscribe(() => state.endEdit());
-  } else if (state.action === 'edit') {
-      //this.crudService.updateRecord(state).subscribe(() => state.endEdit());
-  } else if (state.requestType === 'delete') {
-     // this.crudService.deleteRecord(state).subscribe(() => state.endEdit());
-  }
-}
+// public dataSourceChanged(state: DataSourceChangedEventArgs): void {
+//   if (state.action === 'add') {
+//     alert('Agregar');
+//       //this.crudService.addRecord(state).subscribe(() => state.endEdit());
+//   } else if (state.action === 'edit') {
+//       //this.crudService.updateRecord(state).subscribe(() => state.endEdit());
+//   } else if (state.requestType === 'delete') {
+//      // this.crudService.deleteRecord(state).subscribe(() => state.endEdit());
+//   }
+// }
 public addHandler({ sender }) {
 
 
@@ -293,10 +292,10 @@ public saveHandler({ sender, rowIndex, dataItem, isNew }) {
 
     this.ordenTransporteService.GetAllSustentoxHR(this.id).subscribe(list => {
 
-      console.log(list);
-      this.gridDataResult = {
-        data: orderBy(list,this.sort) ,
-        total: list.length };
+      // console.log(list);
+      // this.gridDataResult = {
+      //   data: orderBy(list,this.sort) ,
+      //   total: list.length };
 
     });
   })

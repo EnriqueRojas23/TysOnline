@@ -1,6 +1,6 @@
 
 
-  
+
   <div class="page-head">
     <h2 class="page-head-title">Nueva Orden de Recojo</h2>
    <nav aria-label="breadcrumb" role="navigation">
@@ -13,30 +13,30 @@
      </ol>
    </nav>
  </div>
- 
+
 
 
 
 
   <div class="main-content container-fluid">
-  
+
     <form #f="ngForm"  (ngSubmit)="registrar(f)" >
       <div class="col-12">
         <div class="card card-border-color card-border-color-primary">
           <div class="card-header ">Datos Generales</div>
           <div class="card-body">
-            
+
                 <div class="p-fluid p-grid">
                       <div class="col-4">
                           <label  for="clientes">Cliente (*) </label>
-                          <p-dropdown name="clientes" 
+                          <p-dropdown name="clientes"
                           [virtualScroll]="true" itemSize="30"
-                            [options]="clientes" [(ngModel)]="model.idcliente"  
-                            [showClear]="true" class="input-form-field"  
+                            [options]="clientes" [(ngModel)]="model.idcliente"
+                            [showClear]="true" class="input-form-field"
                               placeholder="Seleccione un cliente"
-                            [style]="{'width':'100%'}" [resetFilterOnHide]="false" 
+                            [style]="{'width':'100%'}" [resetFilterOnHide]="false"
                             [hideTransitionOptions]="'0ms'" required
-                            [showTransitionOptions]="'0ms'" 
+                            [showTransitionOptions]="'0ms'"
                             filter="false">
                                 <ng-template let-item pTemplate="selectedItem">
                                     <span style="vertical-align:left;">{{item.label}}</span>
@@ -50,8 +50,9 @@
                       </div>
                       <div class="col-4">
                         <label  for="horacita">Hora de cita (*) </label>
-                        <input  [style]="{'width':'100%'}" pInputText type="text" size="6" name="horacita" aria-label="12hr format" required class="form-control col-md-12"  #horacita="ngModel"  [style]="{'width':'100%'}"  [(ngModel)]="model.horacita"  [ngxTimepicker]="default" >                
-                        <ngx-material-timepicker #default></ngx-material-timepicker>
+                        <!-- <input  [style]="{'width':'100%'}" pInputText type="text" size="6" name="horacita" aria-label="12hr format" required class="form-control col-md-12"  #horacita="ngModel"  [style]="{'width':'100%'}"  [(ngModel)]="model.horacita"  [ngxTimepicker]="default" > -->
+                        <!-- <ngx-material-timepicker #default></ngx-material-timepicker>  -->
+                        <p-calendar  name="horacita" required [(ngModel)]="model.horacita"    [timeOnly]="true" [hourFormat]="12" inputId="timeonly"></p-calendar>
                       </div>
                 </div>
           </div>
@@ -74,6 +75,25 @@
                   </div>
                 </div>
                     </div>
+                    <div class="col-md-4">
+                      <h6>Origen :</h6>
+
+                      <p-dropdown name="ubigeo"
+                          [options]="ubigeo"  [(ngModel)]="model.idorigen"
+                          scrollHeight="30vh"  class="input-form-field"
+                          [virtualScroll]="true" itemSize="70"
+                          [style]="{'width':'100%'}"
+                          [resetFilterOnHide]="false"
+                          [hideTransitionOptions]="'0ms'"
+                          [showTransitionOptions]="'0ms'"
+                          filter="false">
+                              <ng-template let-item pTemplate="selectedItem">
+                                  <span style="vertical-align:left;">{{item.label}}</span>
+                              </ng-template>
+                        </p-dropdown>
+
+
+                    </div>
                     <div class="col-4">
                     <label for="puntopartida">Punto de Recojo (*) </label>
                     <input pInputText  minlength="5" maxlength="150"  required class="form-control col-md-12"  autocomplete="off" [(ngModel)]="model.puntopartida" name="puntopartida" #puntopartida="ngModel" type="text">
@@ -87,7 +107,26 @@
                            No puede contener menos de 5 caracteres.
                           </div>
                         </div>
-                    
+
+                    </div>
+                    <div class="col-md-4">
+                      <h6>Destino :</h6>
+
+                      <p-dropdown name="ubigeo"
+                          [options]="ubigeo"  [(ngModel)]="model.iddestino"
+                          scrollHeight="30vh"  class="input-form-field"
+                          [virtualScroll]="true" itemSize="70"
+                          [style]="{'width':'100%'}"
+                          [resetFilterOnHide]="false"
+                          [hideTransitionOptions]="'0ms'"
+                          [showTransitionOptions]="'0ms'"
+                          filter="false">
+                              <ng-template let-item pTemplate="selectedItem">
+                                  <span style="vertical-align:left;">{{item.label}}</span>
+                              </ng-template>
+                        </p-dropdown>
+
+
                     </div>
                     <div class="col-4">
                     <label for="centroacopio">Centro de Acopio (*) </label>
@@ -105,47 +144,47 @@
                     </div>
                     <div class="col-4">
                       <label  for="clientes">Tipo unidad </label>
-                      
-                          
-                          <p-dropdown name="tipounidad" 
-                              [options]="tipounidad" [(ngModel)]="model.idtipounidad"  
-                              [showClear]="true" class="input-form-field"  
+
+
+                          <p-dropdown name="tipounidad"
+                              [options]="tipounidad" [(ngModel)]="model.idtipounidad"
+                              [showClear]="true" class="input-form-field"
                                 placeholder="Seleccione un tipo de unidad"
-                              [style]="{'width':'100%'}" [resetFilterOnHide]="false" 
-                              [hideTransitionOptions]="'0ms'" 
-                              [showTransitionOptions]="'0ms'" 
+                              [style]="{'width':'100%'}" [resetFilterOnHide]="false"
+                              [hideTransitionOptions]="'0ms'"
+                              [showTransitionOptions]="'0ms'"
                               filter="false">
                                   <ng-template let-item pTemplate="selectedItem">
                                       <span style="vertical-align:left;">{{item.label}}</span>
                                   </ng-template>
                             </p-dropdown>
-        
+
                     </div>
                     <div class="col-4">
-                 
+
                     <label  for="bultos">Cant. Bultos</label>
                     <p-inputNumber  name="bultos"  [useGrouping]="false" [showButtons]="true" [min]="0" [max]="5000" [(ngModel)]="model.bulto"  ></p-inputNumber>
-                    
+
                     </div>
                     <div class="col-4">
                     <label  for="peso">Peso Kg.</label>
                     <p-inputNumber  name="peso" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="5"  [showButtons]="true" [min]="0" [max]="30000" [(ngModel)]="model.peso"  ></p-inputNumber>
-                    
+
                     </div>
                     <div class="col-4">
-                    
+
                     <label  for="peso">Volumen m3</label>
                     <p-inputNumber  name="volumen" mode="decimal"  [minFractionDigits]="2" [maxFractionDigits]="5" [showButtons]="true" [min]="0" [max]="100" [(ngModel)]="model.volumen"  ></p-inputNumber>
-                    
+
                     </div>
                     <div class="col-12">
-                    
+
                       <label  for="peso">Observación</label>
                       <textarea  pInputTextarea name="observaciones"  maxlength="1000"  [(ngModel)]="model.observaciones"  ></textarea >
-                      
+
                       </div>
-                  
-                   
+
+
                 </div>
               <div class="row pt-2 pt-sm-5 mt-1">
                   <div class="col-sm-6 pl-0">
@@ -155,16 +194,16 @@
                     </p>
                   </div>
                </div>
-             
-              
+
+
           </div>
         </div>
       </div>
-    
+
 
     </form>
-  
-   
+
+
 
 </div>
 <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" ></ngx-loading>

@@ -1,0 +1,195 @@
+
+
+<div class="main-content container-fluid">
+
+  <div class="col-md-12">
+      <div class="card card-border-color card-border-color-primary">
+          <div class="card-body">
+
+            <div class="row">
+              <div class="titulo col-4">
+                Operador de tráfico :  {{  user.usr_str_red }}
+              </div>
+              <div class="col-2 offset-4 ">
+                      <button   class='btn-primary btn btn-block' pButton iconPos="left" label="Refrescar" icon="fa fa-search"   (click)="buscar()"  type="button"></button>
+              </div>
+            </div>
+        </div>
+
+      </div>
+
+      <div class="card card-border-color card-border-color-primary">
+            <div class="card-header">
+                <b> Órdenes de Transporte  </b>
+                <!-- <span class="card-subtitle">   Listado de ordenes de Transporte</span> -->
+            </div>
+            <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" ></ngx-loading>
+
+
+              <div class="card-body row">
+
+                    <div  class="col-md-6">
+                      <div class="subtitulo"> En ruta </div>
+                    <p-table  [columns]="cols" dataKey="iddepartamento"
+                    [style]="{width:'100%'}"
+                    [rowsPerPageOptions]="[20,40,60,120]"
+                    [value]="ordenes" #dt  selectionMode="multiple"
+                    (onSort)="onSort()"
+                    sortField="zona"
+
+                    [(selection)]="selectedDepartaments"
+                    [rows]="20" [resizableColumns]="true" [responsive]="true" >
+
+                    <ng-template pTemplate="header" let-columns>
+                      <tr>
+
+                          <th  [ngStyle]="{'width': col.width}" *ngFor="let col of columns" pResizableColumn [pSortableColumn]="col.field">
+                              {{col.header}}
+
+                          </th>
+                      </tr>
+                    </ng-template>
+
+                    <ng-template pTemplate="body" let-product let-rowIndex="rowIndex" let-expanded="expanded">
+                    <tr *ngIf="rowGroupMetadata[product.zona].index === rowIndex">
+                      <td colspan="6">
+                          <button type="button" pButton pRipple [pRowToggler]="product" class="p-button-text p-button-rounded p-button-plain p-mr-2" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                          <span class="p-text-bold p-ml-2">   {{product.zona}}  </span>
+                      </td>
+                    </tr>
+                    </ng-template>
+
+                    <ng-template pTemplate="body"  let-rowData  let-expanded="expanded"  let-columns="columns">
+                    <tr [pSelectableRow]="rowData">
+
+                    <td class="ui-resizable-column" style="text-align:center;" > {{ rowData.placa    }}   </td>
+                    <td class="ui-resizable-column click" (click)="ver(rowData.idhojaruta)" style="text-align:center;" >
+                       {{ rowData.numhojaruta}}
+                    </td>
+                    <td  class="ui-resizable-column" style="text-align:center;">{{rowData.fechadespacho | date: 'dd/MM/yyyy'  }} </td>
+                    <td  class="ui-resizable-column" style="text-align:left;">{{rowData.destino  }} </td>
+                    <td  class="ui-resizable-column" style="text-align:center;">{{rowData.cantidad  }} </td>
+                    <td class="ui-resizable-column" style="text-align:center;"> {{rowData.bulto }} </td>
+                    <td class="ui-resizable-column" style="text-align:center;"> {{rowData.peso | number:'1.0-0'}}</td>
+                    <td class="ui-resizable-column" style="text-align:center;"> {{rowData.volumen | number:'1.0-0'}}</td>
+                    </tr>
+                    </ng-template>
+                    <ng-template pTemplate="footer">
+                    <tr>
+                      <td colspan="2" class="text-right">Totales</td>
+                      <td>{{otsTotal  | number:'1.0-0'}}  </td>
+                      <td>{{bultosTotal  | number:'1.0-0'}} </td>
+                      <td>{{pesoTotal | number:'1.0-0'}}</td>
+                      <td></td>
+
+                    </tr>
+                    </ng-template>
+                    </p-table>
+                    </div>
+                    <div  class=" col-md-6">
+                      <div class="subtitulo"> En Reparto y Envios de cargo por retornar </div>
+                    <p-table  [columns]="cols2" dataKey="iddepartamento"
+                    [style]="{width:'100%'}"
+                    [rowsPerPageOptions]="[20,40,60,120]"
+                    [value]="ordenes2" #dt  selectionMode="multiple"
+                    (onSort)="onSort()"
+                    sortField="zona"
+
+                    [(selection)]="selectedDepartaments"
+                    [rows]="20" [resizableColumns]="true" [responsive]="true" >
+
+                    <ng-template pTemplate="header" let-columns>
+                      <tr>
+
+                          <th  [ngStyle]="{'width': col.width}" *ngFor="let col of columns" pResizableColumn [pSortableColumn]="col.field">
+                              {{col.header}}
+
+                          </th>
+                      </tr>
+                    </ng-template>
+
+                    <ng-template pTemplate="body"  let-rowData  let-expanded="expanded"  let-columns="columns">
+                    <tr [pSelectableRow]="rowData">
+
+                    <td class="ui-resizable-column" (click)="verRepartidor(rowData.idproveedor)" style="text-align:center;" > {{ rowData.repartidor    }}   </td>
+                    <td class="ui-resizable-column" style="text-align:center;" > {{ rowData.departamento    }}   </td>
+                    <td  class="ui-resizable-column" style="text-align:center;">{{rowData.cantidad  }} </td>
+                    <td class="ui-resizable-column" style="text-align:center;"> {{rowData.bulto }} </td>
+                    <td class="ui-resizable-column" style="text-align:center;"> {{rowData.peso | number:'1.0-0'}}</td>
+                    <td class="ui-resizable-column" style="text-align:center;"> {{rowData.volumen | number:'1.0-0'}}</td>
+                    </tr>
+                    </ng-template>
+                    <ng-template pTemplate="footer">
+                    <tr>
+                      <td colspan="2" class="text-right">Totales</td>
+                      <td>{{otsTotal  | number:'1.0-0'}}  </td>
+                      <td>{{bultosTotal  | number:'1.0-0'}} </td>
+                      <td>{{pesoTotal | number:'1.0-0'}}</td>
+                      <td></td>
+
+
+                    </tr>
+                    </ng-template>
+                    </p-table>
+
+                    </div>
+                    <div  class=" col-md-6">
+                    </div>
+                    <div  class=" col-md-6">
+                      <div class="subtitulo">Ordenes de Recojo - Logística Inversa </div>
+                    <p-table  [columns]="cols3" dataKey="idordentrabajo"
+                    [style]="{width:'100%'}"
+                    [rowsPerPageOptions]="[20,40,60,120]"
+                    [value]="ordenes3" #dt  selectionMode="multiple"
+                    (onSort)="onSort()"
+                    sortField="zona"
+
+                    [(selection)]="selectedDepartaments"
+                    [rows]="20" [resizableColumns]="true" [responsive]="true" >
+
+                    <ng-template pTemplate="header" let-columns>
+                      <tr>
+
+                          <th  [ngStyle]="{'width': col.width}" *ngFor="let col of columns" pResizableColumn [pSortableColumn]="col.field">
+                              {{col.header}}
+
+                          </th>
+                      </tr>
+                    </ng-template>
+
+                    <ng-template pTemplate="body"  let-rowData  let-expanded="expanded"  let-columns="columns">
+                    <tr [pSelectableRow]="rowData">
+                      <td class="ui-resizable-column" (click)="crearOT()" style="text-align:center;" > {{ rowData.cliente    }}   </td>
+                    <td class="ui-resizable-column" (click)="crearOT()" style="text-align:center;" > {{ rowData.numcp    }}   </td>
+                    <td class="ui-resizable-column" style="text-align:center;" > {{ rowData.departamentoorigen    }}   </td>
+                    <td class="ui-resizable-column" style="text-align:center;" > {{ rowData.departamentodestino    }}   </td>
+
+                    <td class="ui-resizable-column" style="text-align:center;"> {{rowData.bulto }} </td>
+                    <td class="ui-resizable-column" style="text-align:center;"> {{rowData.peso | number:'1.0-0'}}</td>
+                    <td class="ui-resizable-column" style="text-align:center;"> {{rowData.volumen | number:'1.0-0'}}</td>
+                    </tr>
+                    </ng-template>
+                    <ng-template pTemplate="footer">
+                    <tr>
+                      <td colspan="2" class="text-right">Totales</td>
+                      <td>{{otsTotal  | number:'1.0-0'}}  </td>
+                      <td>{{bultosTotal  | number:'1.0-0'}} </td>
+                      <td>{{pesoTotal | number:'1.0-0'}}</td>
+                      <td></td>
+
+
+                    </tr>
+                    </ng-template>
+                    </p-table>
+
+                    </div>
+
+              </div>
+      </div>
+
+
+
+  </div>
+
+</div>
+

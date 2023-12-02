@@ -14,19 +14,13 @@
 @import "../node_modules/angular-calendar/css/angular-calendar.css";
 
 
-@import '../node_modules/@syncfusion/ej2-treegrid/styles/material.css';
-@import '../node_modules/@syncfusion/ej2-buttons/styles/material.css';
-@import '../node_modules/@syncfusion/ej2-calendars/styles/material.css';
-@import '../node_modules/@syncfusion/ej2-dropdowns/styles/material.css';
-@import '../node_modules/@syncfusion/ej2-inputs/styles/material.css';
-@import '../node_modules/@syncfusion/ej2-navigations/styles/material.css';
-@import '../node_modules/@syncfusion/ej2-popups/styles/material.css';
-@import '../node_modules/@syncfusion/ej2-splitbuttons/styles/material.css';
-@import '../node_modules/@syncfusion/ej2-angular-grids/styles/material.css';
+.p-toast-top-right {
+  top: 1000px;
+}
 
-@import '../node_modules/@syncfusion/ej2-base/styles/material.css';
-@import '../node_modules/@syncfusion/ej2-lists/styles/material.css';
-@import '../node_modules/@syncfusion/ej2-angular-dropdowns/styles/material.css';
+.p-toast-top-left {
+  top: 1000px;
+}
 
 
 
@@ -57,6 +51,19 @@
 .p-datatable .p-datatable-tbody > tr > td {
 	padding: 0.2rem 0.2rem !important;
 	font-size: 12px !important;
+}
+
+agm-map {
+  height: 700px !important;
+  width: 100%;  /* This is really important*/
+}
+
+::ng-deep .gm-style div[aria-hidden = "true"] {
+  background-color: #393939 !important;
+  color:#fff !important;
+  padding: 5px;
+  margin-left: 10px;
+  border-radius: 5px;
 }
 
 
@@ -90,7 +97,7 @@ body .ui-steps {
 	}
 }
 
-html, body { zoom: 93%; }
+html, body { zoom: 95%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 /* Importing Bootstrap SCSS file. */

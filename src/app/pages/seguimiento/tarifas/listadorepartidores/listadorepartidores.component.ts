@@ -37,7 +37,7 @@ export class ListadorepartidoresComponent implements OnInit {
   }
   load(){
     this.model.criterio = "";
-    this.clienteService.getProveedores(this.model.criterio).subscribe(resp => {
+    this.clienteService.getProveedores(this.model.criterio, 21514).subscribe(resp => {
     this.provedores = resp;
 
 
@@ -73,7 +73,7 @@ export class ListadorepartidoresComponent implements OnInit {
 }
 buscar() {
 
-  this.clienteService.getProveedores(this.model.proveedor).subscribe(resp => {
+  this.clienteService.getProveedores(this.model.proveedor, 21514).subscribe(resp => {
   this.provedores = resp;
 
 

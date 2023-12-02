@@ -12,6 +12,8 @@ export interface User {
      nombreEstado: string;
      estadoId: number;
      idclientes: string;
+     usr_str_red: string;
+     idestacionorigen? : number;
 }
 
 

@@ -7,8 +7,9 @@ import { environment } from 'src/environments/environment';
 import { Proveedor, Tarifa, ValorTabla } from 'src/app/_models/Seguimiento/ordentransporte';
 import { Vehiculo } from 'src/app/_models/Mantenimiento/vehiculo';
 import { Chofer } from 'src/app/_models/Mantenimiento/chofer';
-import { Departamento, Distrito, Provincia } from 'src/app/_models/Seguimiento/guiaremisionblanco';
+import { Departamento, Distrito, Estaciones, Provincia } from 'src/app/_models/Seguimiento/guiaremisionblanco';
 import { map } from 'rxjs/operators';
+import { Ruta } from 'src/app/_models/Mantenimiento/ruta';
 
 const httpOptions = {
     headers: new HttpHeaders({
@@ -31,6 +32,14 @@ export class GeneralService {
               return this.http.get<Vehiculo[]>(this.baseUrl + 'GetVehiculos?placa=' + placa, httpOptions);
 
       }
+      getVehiculosxEstado(idestado: string) {
+        return this.http.get<Vehiculo[]>(this.baseUrl + 'GetVehiculosxEstado?idestado=' + idestado, httpOptions);
+      }
+
+      getRutas(): Observable<Ruta[]> {
+        return this.http.get<Ruta[]>(this.baseUrl + 'GetAllRutas', httpOptions);
+      }
+
 
       getChoferes(criterio: string): Observable<Chofer[]> {
         return this.http.get<Chofer[]>(this.baseUrl + 'GetChofer?criterio=' + criterio , httpOptions);
@@ -49,9 +58,13 @@ export class GeneralService {
       return this.http.get<TipoSustento[]>(this.baseUrl + 'GetAllTipoSustento', httpOptions);
     }
 
-    getProveedores(criterio: string): Observable<Proveedor[]> {
-      return this.http.get<Proveedor[]>(this.baseUrl +'GetProveedores?criterio=' + criterio , httpOptions);
+    getProveedores(criterio: string, tipoid : number): Observable<Proveedor[]> {
+      return this.http.get<Proveedor[]>(this.baseUrl +'GetProveedores?criterio=' + criterio + '&tipoid=' +  tipoid   , httpOptions);
     }
+    getProveedor(idproveedor : number): Observable<Proveedor> {
+      return this.http.get<Proveedor>(this.baseUrl +'GetProveedor?id=' + idproveedor , httpOptions);
+    }
+
 
 
   getAllTarifas(id: number): Observable<Tarifa[]> {
@@ -85,6 +98,10 @@ export class GeneralService {
       }));
     }
 
+
+    GetAllEstaciones(): Observable<Estaciones[]> {
+      return this.http.get<Estaciones[]>(this.baseUrl + 'GetAllEstaciones' , httpOptions);
+      }
 
 
 

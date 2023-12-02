@@ -24,6 +24,8 @@ import {ButtonModule} from 'primeng/button';
 import {DropdownModule} from 'primeng/dropdown';
 import {TableModule} from 'primeng/table';
 
+
+
 import { ProgressBarModule} from 'primeng/progressbar';
 import { NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import { CalendarModule} from 'primeng/calendar';
@@ -98,18 +100,47 @@ import { ReportependientesingresosComponent } from './reportes/reportependientes
 import { ReportependientesdespachoComponent } from './reportes/reportependientesdespacho/reportependientesdespacho.component';
 import { AgmCoreModule } from '@agm/core';
 import { UploadfileComponent } from './seguimiento/ordentransporte/uploadfile/uploadfile.component';
-import { GridModule } from "@progress/kendo-angular-grid";
+
 import { ToolbarModule as ToolbarModule2 } from 'primeng/toolbar';
-import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
-import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
-import { ButtonsModule } from '@progress/kendo-angular-buttons';
-import { DialogsModule } from '@progress/kendo-angular-dialog';
+
 import { EditartarifaComponent } from './seguimiento/proveedores/editartarifa/editartarifa.component';
 import { VincularComponent } from './seguimiento/liquidacion/vincularfactura/modal.vincular';
 import { ConfirmarentregaComponent } from './seguimiento/ordentransporte/confirmarentrega/confirmarentrega.component';
 import { FileUploadModule } from 'primeng/fileupload';
 import { RepartidorModalComponent } from './seguimiento/ordentransporte/confirmarentrega/modal.repartidor';
 import { OtspendientesComponent } from './seguimiento/retorno/otspendientes/otspendientes.component';
+import { ManifiestoComponent } from './seguimiento/hojaruta/manifiesto/manifiesto.component';
+import { AgrupadoplanningComponent } from './planning/agrupadoplanning/agrupadoplanning.component';
+import { GenerarrutasComponent } from './planning/generarrutas/generarrutas.component';
+import { ModalTipoUnidadComponent } from './planning/generarrutas/modaltipounidad';
+import { ModalAsignaraCargaComponent } from './planning/generarrutas/modalasignaracarga';
+import { ModalAsignarTipoOperacionComponent } from './planning/generarrutas/modalasignartipooperacion';
+import { HojarutaComponent } from './seguimiento/hojaruta/hojaruta.component';
+
+import { AgregarOThrModalComponent } from './seguimiento/hojaruta/modalagregarothr';
+import { AsignarPlacaComponent } from './planning/generarrutas/modal.asignarplaca';
+import { OperacioncargaComponent } from './planning/operacioncarga/operacioncarga.component';
+import { OperaciondetalleComponent } from './planning/operacioncarga/operaciondetalle/operaciondetalle.component';
+import { PickListModule } from 'primeng/picklist';
+import { PrecintosModalComponent } from './seguimiento/hojaruta/modalprecintos';
+import { DesasignarModalComponent } from './seguimiento/hojaruta/modaldesasignar';
+import { GrtModalComponent } from './seguimiento/hojaruta/modalgrt';
+import { ConfirmarEstibaModalComponent } from './seguimiento/hojaruta/modalconfirmarestiba';
+import { ArmadoValijaModalComponent } from './seguimiento/hojaruta/modalarmadovalija';
+import { AutorizarEstibaModalComponent } from './seguimiento/hojaruta/modalautorizarestiba';
+import { EquipostraficoComponent } from './trafico/equipostrafico/equipostrafico.component';
+import { VistaenrutaComponent } from './trafico/vistaenruta/vistaenruta.component';
+import { CambiarEstadoModalComponent } from './trafico/vistaenruta/modalcambiarestado';
+import { ModalReprogramarArribosComponent } from './trafico/vistaenruta/modalreprogramararribos';
+import { VistarepartidorComponent } from './trafico/vistarepartidor/vistarepartidor.component';
+import { EventosModalComponent } from './trafico/vistaenruta/modaleventos';
+import { EntregarOtModalComponent } from './trafico/vistarepartidor/modalentregarOT';
+import { AutorizarReinicioModalComponent } from './seguimiento/hojaruta/modalautorizarreinicio';
+import { ProgramarArribosModalComponent } from './trafico/vistarepartidor/modalProgramarArribos';
+import { EnvioCargoModalComponent } from './trafico/vistarepartidor/modalenviocargoOT';
+import { ConfirmarrecepcionComponent } from './almacen/confirmarrecepcion/confirmarrecepcion.component';
+
+
 
 
 
@@ -169,7 +200,38 @@ import { OtspendientesComponent } from './seguimiento/retorno/otspendientes/otsp
     ListadotarifarepartidorComponent,
     EditartarifarepartidorComponent,
     NuevatarifarepartidorComponent,
-    PendientesliquidacionrepartidoresComponent
+    PendientesliquidacionrepartidoresComponent,
+
+    AgrupadoplanningComponent,
+    GenerarrutasComponent,
+    ModalTipoUnidadComponent,
+    ModalAsignaraCargaComponent,
+    ModalAsignarTipoOperacionComponent,
+    ManifiestoComponent,
+    HojarutaComponent,
+    AsignarPlacaComponent,
+    AgregarOThrModalComponent,
+    OperacioncargaComponent,
+    OperaciondetalleComponent,
+    PrecintosModalComponent,
+    DesasignarModalComponent,
+    GrtModalComponent,
+    ConfirmarEstibaModalComponent,
+    ArmadoValijaModalComponent,
+    AutorizarEstibaModalComponent,
+    EquipostraficoComponent,
+    VistaenrutaComponent,
+    CambiarEstadoModalComponent,
+    ModalReprogramarArribosComponent,
+    VistarepartidorComponent,
+    EventosModalComponent,
+    EntregarOtModalComponent,
+    AutorizarReinicioModalComponent,
+    ProgramarArribosModalComponent,
+    EnvioCargoModalComponent,
+    ConfirmarrecepcionComponent
+
+
 
 
 
@@ -222,16 +284,16 @@ import { OtspendientesComponent } from './seguimiento/retorno/otspendientes/otsp
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDnh35oUHQYGDPcVs6rfKOY057Xo7ujDsQ'
     }),
+    FileUploadModule,
+    PickListModule
+
     // TreeGridModule,
     // GridAllModule,
     // DropDownListModule,
     // ToolbarModule,
-    GridModule,
-    DropDownsModule,
-    DateInputsModule,
-    ButtonsModule,
-    DialogsModule,
-    FileUploadModule,
+
+
+
 
 
 
@@ -253,6 +315,8 @@ import { OtspendientesComponent } from './seguimiento/retorno/otspendientes/otsp
     CamModalComponent
 
 
+
+
   ],
   entryComponents: [
     FileModalComponent,
@@ -261,9 +325,30 @@ import { OtspendientesComponent } from './seguimiento/retorno/otspendientes/otsp
     VincularComponent,
     LiquidarManifiestoComponent,
     OtroServicioComponent,
-    UploadModalComponent
+    UploadModalComponent,
+    ModalTipoUnidadComponent,
+    ModalAsignaraCargaComponent,
+    ModalAsignarTipoOperacionComponent,
+    AsignarPlacaComponent,
+    AgregarOThrModalComponent,
+    PrecintosModalComponent,
+    DesasignarModalComponent,
+    GrtModalComponent,
+    ConfirmarEstibaModalComponent,
+    ArmadoValijaModalComponent,
+    AutorizarEstibaModalComponent,
+    CambiarEstadoModalComponent,
+    ModalReprogramarArribosComponent,
+    EventosModalComponent,
+    EntregarOtModalComponent,
+    AutorizarReinicioModalComponent,
+    ProgramarArribosModalComponent,
+    EnvioCargoModalComponent
+
+
 
   ],
+  bootstrap: [EquipostraficoComponent]
 })
 
 export class PagesModule {

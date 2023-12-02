@@ -1,0 +1,109 @@
+
+
+  <!-- <h2 class="page-head-title"> Detalle de la Orden de Trabajo</h2> -->
+  <div class="light-font">
+    <nav aria-label="breadcrumb" role="navigation">
+      <ol class="breadcrumb primary-color">
+        <li class="breadcrumb-item active"></li>
+      </ol>
+    </nav>
+  </div>
+
+
+
+  <div class="main-content container-fluid row">
+    <div class="card md-12">
+        <div class="card-body">
+
+
+
+
+
+
+        <div class="col-md-12">
+          <div class="card card-border-color card-border-color-primary">
+                <div class="card-header">
+                  <div class="card card-border-color titulo  row">
+                    <div class="subtitulo"> Hoja de ruta: <b>  {{  model.numhojaruta }}   </b> </div>
+                    <div class="subtitulo"> Placa:    <b>  {{  model.placa }}  </b></div>
+                    <div class="subtitulo"> Conductor:  <b>    {{  model.nombrechofer }} </b> </div>
+
+              </div>
+                </div>
+
+
+                <div class="card-body">
+
+                  <div class="row mb-2">
+                    <button   class='btn-danger btn mr-2' pButton iconPos="left" label="Actualizar Estado"   (click)="cambiarEstado()"  type="button"></button>
+                    <button   class='btn-primary btn mr-2' pButton iconPos="left" label="Reprogramar Arribos"    (click)="reprogramarArribos()"  type="button"></button>
+                    <button   class='btn-primary btn mr-2' pButton iconPos="left" label="Cambio de Recursos"    (click)="cambiarTipoOperacion()"  type="button"></button>
+                    <button   class='btn-primary btn mr-2' pButton iconPos="left" label="Refrescar"    (click)="reloadDetalles()"  type="button"></button>
+                    <button   class='btn-secondary btn mr-2' pButton iconPos="left" label="Volver"    (click)="volver()"  type="button"></button>
+                  </div>
+
+
+                  <p-table  [columns]="cols3" selectionMode="multiple"
+                  [style]="{width:'100%'}"  dataKey="idmanifiesto"
+                  [rowsPerPageOptions]="[50,100,200,400]"
+                  [value]="despachos" #dt [paginator]="true"
+                  [(selection)]="selectedOTs"
+                  [rows]="50" [resizableColumns]="true" [responsive]="true" >
+
+
+                    <ng-template pTemplate="colgroup" let-columns>
+                      <colgroup>
+                          <col *ngFor="let col of columns"   [ngStyle]="{'width': col.width}" >
+                      </colgroup>
+                  </ng-template>
+
+
+                    <ng-template pTemplate="header" let-columns>
+                      <tr>
+
+                          <th  [ngStyle]="{'width': col.width}" *ngFor="let col of columns" pResizableColumn [pSortableColumn]="col.field">
+                              {{col.header}}
+
+                          </th>
+                      </tr>
+                  </ng-template>
+
+                <ng-template pTemplate="body" let-rowData  let-index="rowIndex">
+                  <tr [pSelectableRow]="rowData">
+
+                    <td class="ui-resizable-column" style="background-color: #d15f4a; color: aliceblue; text-align:center;" > {{ rowData.nummanifiesto    }}   </td>
+                    <td class="ui-resizable-column" style="text-align:center;" > {{ rowData.provincia    }}   </td>
+                    <td class="ui-resizable-column" style="text-align:center;">  {{rowData.tipooperacion   }}   </td>
+                    <td class="ui-resizable-column" style="text-align:center;">  {{rowData.repartidor   }}   </td>
+                    <td class="ui-resizable-column" style="background-color: #FFA000; color:black; text-align:center;">  {{rowData.estado   }}   </td>
+
+                    <td class="ui-resizable-column" style="text-align:center;"> {{rowData.fecha_estado_actual  | date: 'dd/MM/yyyy HH:mm' }}</td>
+
+
+
+                    <td class="ui-resizable-column" style="text-align:center;"> {{rowData.fecha_eta  | date: 'dd/MM/yyyy HH:mm' }}</td>
+                    <td class="ui-resizable-column" style="text-align:center;"> {{ rowData.diferencia_fechas   }}</td>
+                    <td class="ui-resizable-column" style="text-align:center;"> {{ rowData.observacion_eta   }}</td>
+
+
+                    <td class="ui-resizable-column" style="text-align:center;"> {{ rowData.peso  | number:'1.0-2'  }}</td>
+                    <td class="ui-resizable-column" style="text-align:left;">
+                          <button type='button'  class='btn-danger btn btn-xs' pButton  title='Eliminar' icon="fa fa-search" (click)='verEventos(rowData.idmanifiesto);'>  </button>
+                    </td>
+                  </tr>
+                </ng-template>
+                </p-table>
+
+                </div>
+
+          </div>
+      </div>
+
+
+
+      </div>
+  </div>
+
+  <p-confirmDialog  header="Confirmación" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" ></ngx-loading>
+  <p-toast   [baseZIndex]="10000" position="top-right"></p-toast>

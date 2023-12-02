@@ -1,0 +1,99 @@
+
+
+
+      <div class="main-content container-fluid">
+
+        <div class="col-md-12">
+
+
+            <div class="card card-border-color card-border-color-primary">
+                  <div class="card-header">
+                      <b> Manifiestos Generados </b>
+                      <div class="row">
+
+                        <div   *ngIf="estado !== 'Creado'" class="col-md-3">
+                          <button  class='btn-primary btn-block btn' pButton iconPos="left" label="Generar" icon="fa fa-check"  (click)="guardar()"  type="button"></button>
+                        </div>
+                        <div   *ngIf="estado === 'Creado'" class="col-md-3">
+                          <button  class='btn-primary btn-block btn' pButton iconPos="left" label="Imprimir Carga"   (click)="imprimirCarga()"  type="button"></button>
+                        </div>
+                      <div class="col-md-3">
+                        <button  class='btn-primary btn-block btn' pButton iconPos="left" label="Asignar Precinto" icon="fa fa-plus"  (click)="asignarPrecinto()"  type="button"></button>
+                      </div>
+
+                      <div class="col-md-3">
+                        <button  class='btn-danger btn-block btn' pButton iconPos="left" label="Dar Salida" icon="fa fa-check"  (click)="darSalida()"  type="button"></button>
+                      </div>
+                      <div class="col-md-3">
+                        <button  class='btn-danger btn-block btn' pButton iconPos="left" label="Desasignar OTs" icon="fa fa-minus"  (click)="desasignarOts()"  type="button"></button>
+                      </div>
+                    </div>
+                  </div>
+
+
+                    <div class="card-body">
+                      <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" ></ngx-loading>
+
+
+
+                          <p-table  [columns]="cols" (onRowReorder)="onRowReorder()"
+                            [style]="{width:'100%'}"  editMode="row" dataKey="idmanifiesto"
+                            [rowsPerPageOptions]="[20,40,60,120]"
+                            [value]="ordenes2" #dt [paginator]="true"
+                            [rows]="10" [resizableColumns]="true" [responsive]="true" >
+
+
+                              <ng-template pTemplate="colgroup" let-columns>
+                                <colgroup>
+                                    <col *ngFor="let col of columns"   [ngStyle]="{'width': col.width}" >
+                                </colgroup>
+                            </ng-template>
+
+
+                              <ng-template pTemplate="header" let-columns>
+                                <tr>
+
+                                    <th  [ngStyle]="{'width': col.width}" *ngFor="let col of columns" pResizableColumn [pSortableColumn]="col.field">
+                                        {{col.header}}
+
+                                    </th>
+                                </tr>
+                            </ng-template>
+
+
+
+
+                          <ng-template pTemplate="body" let-rowData  let-editing="editing" let-ri="rowIndex" let-index="rowIndex">
+                            <tr  [pReorderableRow]="index">
+                              <td>
+                                <span class="pi pi-bars" pReorderableRowHandle></span>
+                            </td>
+                              <td class="ui-resizable-column" style="text-align:center;" > {{ rowData.nummanifiesto    }}   </td>
+                              <td  pEditableColumn class="ui-resizable-column" style="text-align:left;">
+                                    {{rowData.provincia  }}
+                              </td>
+                              <td class="ui-resizable-column" style="text-align:center;"> {{rowData.tipooperacion  }}</td>
+                              <td  [ngClass]="rowData.estado == 'Por Despachar' ? 'very-old-car' :  (rowData.estado == 'Por Entregar'?'': rowData.estado == 'Entregado'?'old-car': null) "> {{rowData.estado}}</td>
+                              <td class="ui-resizable-column" style="text-align:left;"> {{rowData.idorden}}</td>
+                            </tr>
+                          </ng-template>
+                          </p-table>
+                      </div>
+                    </div>
+            </div>
+
+
+
+
+      </div>
+
+
+<p-overlayPanel [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'"  [dismissable]="true" [showCloseIcon]="true" #op1 [appendTo]="'body'">
+
+  <img [src]="imageToShow" width="320" height="320"
+  alt="Place
+  image title"
+  >
+
+</p-overlayPanel>
+<p-confirmDialog  header="Confirmación" icon="pi pi-exclamation-triangle"></p-confirmDialog>

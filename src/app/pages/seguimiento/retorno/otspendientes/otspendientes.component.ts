@@ -14,7 +14,6 @@ import { User } from 'src/app/_models/user';
 import { GeneralService } from 'src/app/_services/Mantenimiento/general.service';
 import { OrdenTransporteService } from 'src/app/_services/Seguimiento/ordentransporte.service';
 import { CamModalComponent } from '../../ordentransporte/confirmarentrega/modal.cam';
-import { RepartidorModalComponent } from '../../ordentransporte/confirmarentrega/modal.repartidor';
 import { UploadModalComponent } from '../../ordentransporte/confirmarentrega/modal.upload';
 import { FileModalComponent } from '../../ordentransporte/listadoordentransporte/modalfiles';
 import { GuiasModalComponent } from '../../ordentransporte/listadoordentransporte/modalguias';
@@ -126,7 +125,7 @@ export class OtspendientesComponent implements OnInit {
 
 
   this.model.criterio = "";
-      this.generalService.getProveedores(this.model.criterio).subscribe(resp => {
+      this.generalService.getProveedores(this.model.criterio, 21513).subscribe(resp => {
 
 
         this.proveedores.push({ value: 0,  label : 'TODOS LOS REPARTIDORES'});

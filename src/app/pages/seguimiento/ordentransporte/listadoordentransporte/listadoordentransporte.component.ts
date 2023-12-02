@@ -21,6 +21,7 @@ import { OverlayPanel } from 'primeng/overlaypanel';
 import { GuiasModalComponent } from './modalguias';
 import { ToastrService } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
+import { UploadModalComponent } from '../confirmarentrega/modal.upload';
 
 
 
@@ -78,7 +79,7 @@ export class ListadoordentransporteComponent implements OnInit {
     this.user = JSON.parse(localStorage.getItem('user'));
 
     this.model.idusuario = this.user.usr_int_id;
-    this.dateInicio.setDate((new Date()).getDate() - 10);
+    this.dateInicio.setDate((new Date()).getDate() - 1);
     this.dateFin.setDate((new Date()).getDate() );
     this.model.numcp = '';
     this.model.docreferencia = '';
@@ -101,17 +102,16 @@ export class ListadoordentransporteComponent implements OnInit {
     [
 
 
-        {header: 'OT', field: 'numcp'  ,  width: '90px' },
-        {header: 'ACC', field: 'idordentrabajo'  ,  width: '105px' },
-
+        {header: 'ACC', field: 'numcp'  ,  width: '90px' },
+        {header: 'OT', field: 'idordentrabajo'  ,  width: '105px' },
 
         {header: 'REFERENCIA', field: 'docgeneral' , width: '90px'  },
-        {header: 'VISITA 1', field: 'visita1' , width: '120px'  },
-        {header: 'FEC. VISITA 1', field: 'fecvisita1' , width: '120px'  },
-        {header: 'VISITA 2', field: 'docgeneral' , width: '120px'  },
-        {header: 'FEC. VISITA 2', field: 'docgeneral' , width: '120px'  },
+        // {header: 'VISITA 1', field: 'visita1' , width: '120px'  },
+        // {header: 'FEC. VISITA 1', field: 'fecvisita1' , width: '120px'  },
+        // {header: 'VISITA 2', field: 'docgeneral' , width: '120px'  },
+        // {header: 'FEC. VISITA 2', field: 'docgeneral' , width: '120px'  },
 
-        {header: 'OBSERVACIÓN', field: 'observacionvisita' , width: '200px'  },
+        // {header: 'OBSERVACIÓN', field: 'observacionvisita' , width: '200px'  },
         {header: 'ESTADO', field: 'estado'  , width: '90px'   },
         {header: 'TIPO ENTREGA' , field: 'tipoentrega'  , width: '160px'   },
         {header: 'F. RECOJO', field: 'fecharecojo' , width: '120px'  },
@@ -121,8 +121,6 @@ export class ListadoordentransporteComponent implements OnInit {
         {header: 'PERSONA ENTREGA', field: 'destino'  ,  width: '150px'  },
         {header: 'DESTINO', field: 'destino'  ,  width: '90px'  },
         {header: 'DESTINATARIO', field: 'destinatario' , width: '180px'  },
-
-
 
       ];
 
@@ -184,6 +182,27 @@ export class ListadoordentransporteComponent implements OnInit {
 
 
   }
+  // verarchivos(id) {
+
+  //   const ref = this.dialogService.open(FileModalComponent, {
+  //     header: 'Visor Fotos',
+  //     width: '30%',
+  //     data : {id }
+  // });
+  // }
+  cargarfiles(id) {
+
+       const ref = this.dialogService.open(UploadModalComponent, {
+      header: 'Cargar Fotos',
+      width: '70%',
+      data : {id }
+     });
+      ref.onClose.subscribe(() => {
+
+
+
+});
+}
   cargarDestinatarios(event) {
     this.destinatarios = [];
     this.destinatarios.push({ value: 0,  label : 'TODOS LOS DESTINATARIOS'});
@@ -205,14 +224,6 @@ export class ListadoordentransporteComponent implements OnInit {
   onRowEditSave(order: OrdenTransporte) {
     if (order.idordentrabajo > 0) {
         delete this.clonedOrders[order.idordentrabajo];
-
-
-        order.motivo1 = getIdVisita(order.motivo1des);
-        order.motivo2 = getIdVisita(order.motivo2des);
-        order.motivo3 = getIdVisita(order.motivo3des);
-
-
-
 
 
 
@@ -297,14 +308,14 @@ onRowEditCancel(order: OrdenTransporte, index: number) {
         this.ordenes =  list;
         this.ordenes2 = list;
 
-            this.ordenes2.forEach(obj => {
-              if(obj.fecvisita1 !== null)
-                obj.fecvisita1 = moment( obj.fecvisita1).toDate();
-              if(obj.fecvisita2 !== null)
-                obj.fecvisita2 = moment( obj.fecvisita2).toDate();
-              if(obj.fecvisita3 !== null)
-                obj.fecvisita3 = moment( obj.fecvisita3).toDate();
-            });
+            // this.ordenes2.forEach(obj => {
+            //   if(obj.fecvisita1 !== null)
+            //     obj.fecvisita1 = moment( obj.fecvisita1).toDate();
+            //   if(obj.fecvisita2 !== null)
+            //     obj.fecvisita2 = moment( obj.fecvisita2).toDate();
+            //   if(obj.fecvisita3 !== null)
+            //     obj.fecvisita3 = moment( obj.fecvisita3).toDate();
+            // });
 
 
 

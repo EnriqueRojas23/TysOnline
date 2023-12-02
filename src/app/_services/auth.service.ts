@@ -26,10 +26,10 @@ export class AuthService {
 
           const stringMenu = JSON.stringify(user.menu);
           this.menu =   JSON.parse(JSON.stringify(user.menu));
-          console.log(this.menu);
 
           localStorage.setItem('menu', stringMenu);
           localStorage.setItem('user', JSON.stringify(user.user));
+          localStorage.setItem('roles', JSON.stringify(user.roles));
 
           if (model.recuerdame){
                localStorage.setItem('Name', model.username);
@@ -39,8 +39,12 @@ export class AuthService {
       })
     );
    }
+  authorization(model: any): any {
+    return this.http.post(this.baseUrl + 'login', model);
+   }
    loggedIn() {
     const token = localStorage.getItem('token');
     return !this.jwtHelper.isTokenExpired(token);
   }
+
 }

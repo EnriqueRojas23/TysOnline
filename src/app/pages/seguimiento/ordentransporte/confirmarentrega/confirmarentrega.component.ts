@@ -97,17 +97,17 @@ export class ConfirmarentregaComponent implements OnInit {
 
         {header: 'ACC', field: 'idordentrabajo'  ,  width: '160px' },
         {header: 'OT', field: 'numcp'  ,  width: '90px' },
-        {header: 'F. DESPACHO', field: 'fechadespacho' , width: '120px'  },
-        {header: 'DÍAS DE DESPACHO', field: 'fechadespacho' , width: '120px'  },
+        {header: 'F. DESPACHO', field: 'fechadespacho' , width: '100px'  },
+        {header: 'DÍAS', field: 'diasDesdeDespacho' , width: '50px'  },
         {header: 'REF', field: 'docgeneral' , width: '90px'  },
-        {header: 'ESTADO', field: 'estado'  ,  width: '90px'  },
-        {header: 'EN ZONA' , field: 'enzona'  , width: '70px'   },
+        // {header: 'EN ZONA' , field: 'enzona'  , width: '140px'   },
         {header: 'TIPO ENTREGA' , field: 'tipoentrega'  , width: '140px'   },
         {header: 'F. ENTREGA', field: 'fechaentrega' , width: '120px'  },
         {header: 'HR ENTREGA' , field: 'horaentrega'  , width: '120px'   },
-        {header: 'DNI ENTREGA', field: 'fechadespacho' , width: '120px'  },
+        {header: 'DNI ENTREGA', field: 'dnientrega' , width: '120px'  },
         {header: 'PERSONA ENTREGA', field: 'personaentrega' , width: '120px'  },
         {header: 'OBS.', field: 'descripcion' , width: '220px'  },
+        {header: 'DIR DEST' , field: 'direccion'  , width: '280px'   },
         {header: 'DESTINO', field: 'destino'  ,  width: '90px'  },
         {header: 'DESTINATARIO', field: 'destinatario' , width: '180px'  },
         {header: 'REPARTIDOR ', field: 'destinatario' , width: '180px'  },
@@ -129,7 +129,7 @@ export class ConfirmarentregaComponent implements OnInit {
 
 
   this.model.criterio = "";
-      this.generalService.getProveedores(this.model.criterio).subscribe(resp => {
+      this.generalService.getProveedores(this.model.criterio,   21514    ).subscribe(resp => {
 
 
         this.proveedores.push({ value: 0,  label : 'TODOS LOS REPARTIDORES'});
@@ -172,13 +172,13 @@ export class ConfirmarentregaComponent implements OnInit {
       }, error => {
 
       }, () => {
-        this.buscar();
+        //this.buscar();
       });
     });
-    this.estados.push({ value: 0,  label : 'TODOS LOS ESTADOS'});
-    this.estados.push({ value: 1,  label : 'Por Despachar'});
+    // this.estados.push({ value: 0,  label : 'TODOS LOS ESTADOS'});
+    // this.estados.push({ value: 1,  label : 'Por Despachar'});
     this.estados.push({ value: 2,  label : 'Por Entregar'});
-    this.estados.push({ value: 3,  label : 'Entregado'});
+    // this.estados.push({ value: 3,  label : 'Entregado'});
     this.model.idestado = 0;
 
     this.tipotransporte.push({ value: 0,  label : 'TODOS LOS TIPOS'});
@@ -218,13 +218,9 @@ export class ConfirmarentregaComponent implements OnInit {
   });
   }
   onRowEditInit(order: OrdenTransporte) {
-
-
-
     this.clonedOrders[order.idordentrabajo] = {...order};
   }
   onRowEditSave(order: OrdenTransporte) {
-
 
 
     order.idtipoentrega = this.getIdTipoEntrega(order.tipoentrega)
@@ -232,8 +228,6 @@ export class ConfirmarentregaComponent implements OnInit {
 
 
     if (order.idordentrabajo > 0) {
-
-
 
         delete this.clonedOrders[order.idordentrabajo];
 
@@ -272,6 +266,8 @@ onRowEditCancel(order: OrdenTransporte, index: number) {
     delete this.ordenes2[order.idordentrabajo];
 }
   exportExcel() {
+
+
     this.model.fec_ini =  moment(this.dateInicio).format('DD/MM/YYYY');
     this.model.fec_fin = moment(this.dateFin).format('DD/MM/YYYY');
     let iddestino = '';
@@ -328,13 +324,19 @@ onRowEditCancel(order: OrdenTransporte, index: number) {
       this.model.fec_ini = this.dateInicio;
       this.model.fec_fin = this.dateFin;
       this.loading = true;
+      this.model.idestado = 2;
 
       if(this.model.iddestinatario == undefined) {
         this.model.iddestinatario = '';
       }
 
+      if(this.model.iddestino == undefined) {
+        this.model.iddestino = '';
+      }
 
-
+      if(this.model.idprovincia == undefined) {
+        this.model.idprovincia = '';
+      }
 
       this.ordenTransporteService.getAllOrderTransport(this.model).subscribe(list =>  {
         this.loading = false;
@@ -397,34 +399,36 @@ onRowEditCancel(order: OrdenTransporte, index: number) {
 
  getIdTipoEntrega(tipoentrega: string) : number {
 
+  console.log(tipoentrega);
+
   if("Entrega Conforme" == tipoentrega)
   {
         return 5;
   }
-  else if("Entrega: Con Mercaderia Dañada" == tipoentrega)
-  {
-      return 8;
-  }
-  else if("Entrega: Con Mercaderia Faltante" == tipoentrega)
-  {
-      return 9;
-  }
-  else if("Entrega: Rechazo Total" == tipoentrega)
+  // else if("Entrega: Con Mercaderia Dañada" == tipoentrega)
+  // {
+  //     return 8;
+  // }
+  // else if("Entrega: Con Mercaderia Faltante" == tipoentrega)
+  // {
+  //     return 9;
+  // }
+  else if("Rechazo Total" == tipoentrega)
   {
      return 10;
   }
-  else if("Entrega: Rechazo Parcial " == tipoentrega)
+  else if("Rechazo Parcial " == tipoentrega)
   {
     return 11;
   }
-  else if("No Entrega: Local Cerrado" == tipoentrega)
-  {
-    return 12;
-  }
-  else if("No Entrega: No existe la dirección de entrega" == tipoentrega)
-  {
-     return 13;
-  }
+  // else if("No Entrega: Local Cerrado" == tipoentrega)
+  // {
+  //   return 12;
+  // }
+  // else if("No Entrega: No existe la dirección de entrega" == tipoentrega)
+  // {
+  //    return 13;
+  // }
 }
 
 }

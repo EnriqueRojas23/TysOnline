@@ -81,7 +81,7 @@ export class ListadoplacasprogramadasComponent implements OnInit {
         {header: 'PLACA', field: 'fecharegistro' , width: '60px'  },
         {header: 'CHOFER', field: 'razonsocial'  ,  width: '180px'  },
         {header: 'PROVEEDOR', field: 'fechahoracita' , width: '180px'  },
-        // {header: 'CLIENTE', field: 'cliente' , width: '180px'  },
+        {header: 'RUC', field: 'cliente' , width: '180px'  },
         // {header: 'FECHA CITA', field: 'fechahoracita' , width: '120px'  },
         // {header: 'ESTADO' , field: 'responsable'  , width: '120px'   },
      ];

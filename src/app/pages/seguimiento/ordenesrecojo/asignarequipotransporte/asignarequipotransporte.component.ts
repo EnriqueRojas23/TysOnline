@@ -4,8 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Chofer } from 'src/app/_models/Mantenimiento/chofer';
-import { Vehiculo } from 'src/app/_models/Mantenimiento/vehiculo';
 import { OrdenTransporteService } from 'src/app/_services/Seguimiento/ordentransporte.service';
 import { BuscarChoferComponent } from './modal.buscarchofer';
 import { BuscarPlacaComponent } from './modal.buscarplaca';
@@ -62,9 +60,9 @@ export class AsignarequipotransporteComponent implements OnInit {
           this.model.estadoid = '';
           this.model.grr = '';
           this.model.grt = '';
-          
+
           const url = 'http://104.36.166.65/webreports/hojarutaor.aspx?idmanifiesto=' + String(resp)
-      
+
           window.open(url);
 
         }, error => {

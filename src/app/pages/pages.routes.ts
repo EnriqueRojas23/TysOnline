@@ -1,3 +1,4 @@
+import { ManifiestoComponent } from './seguimiento/hojaruta/manifiesto/manifiesto.component';
 import { ListadotarifarepartidorComponent } from './seguimiento/tarifas/listadotarifarepartidor/listadotarifarepartidor.component';
 import { ListadorepartidoresComponent } from './seguimiento/tarifas/listadorepartidores/listadorepartidores.component';
 import { PendientesliquidacionrepartidoresComponent } from './seguimiento/liquidacion/pendientesliquidacionrepartidores/pendientesliquidacionrepartidores.component';
@@ -40,6 +41,15 @@ import { UploadfileComponent } from './seguimiento/ordentransporte/uploadfile/up
 import { ListadoproveedoresComponent } from './seguimiento/proveedores/listadoproveedores/listadoproveedores.component';
 import { ListadotarifaproveedorComponent } from './seguimiento/proveedores/listadotarifaproveedor/listadotarifaproveedor.component';
 import { ConfirmarentregaComponent } from './seguimiento/ordentransporte/confirmarentrega/confirmarentrega.component';
+import { AgrupadoplanningComponent } from './planning/agrupadoplanning/agrupadoplanning.component';
+import { GenerarrutasComponent } from './planning/generarrutas/generarrutas.component';
+import { HojarutaComponent } from './seguimiento/hojaruta/hojaruta.component';
+import { OperacioncargaComponent } from './planning/operacioncarga/operacioncarga.component';
+import { EquipostraficoComponent } from './trafico/equipostrafico/equipostrafico.component';
+import { IntegradoComponent } from './trafico/integrado/integrado.component';
+import { VistaenrutaComponent } from './trafico/vistaenruta/vistaenruta.component';
+import { VistarepartidorComponent } from './trafico/vistarepartidor/vistarepartidor.component';
+import { ConfirmarrecepcionComponent } from './almacen/confirmarrecepcion/confirmarrecepcion.component';
 
 
 
@@ -47,17 +57,9 @@ const pagesRoutes: Routes = [
     {path : 'seguimientoot/listadoparaclientes', component : ListadoordentransporteclienteComponent, canActivate: [AuthGuard]} ,
     {path : 'seguimientoot/listadoordentransporte', component : ListadoordentransporteComponent, canActivate: [AuthGuard]} ,
     {path : 'seguimientoot/confirmarentregas', component : ConfirmarentregaComponent , canActivate: [AuthGuard]} ,
-
-
-
-
     {path : 'seguimiento/verorden/:uid', component : VerordenComponent, canActivate: [AuthGuard]} ,
-
     {path : 'sustentos/listadopendientes', component : SustentospendientesComponent, canActivate: [AuthGuard]} ,
     {path : 'sustentos/sustentarhr/:uid', component : SustentarhrComponent, canActivate: [AuthGuard]} ,
-
-
-
     {path : 'dashboard', component : IndexComponent, canActivate: [AuthGuard]} ,
     {path : 'seguimiento/ordenrecojo', component : ListadoordenesrecojoComponent  , canActivate: [AuthGuard]} ,
     {path : 'seguimiento/nuevaordenrecojo', component : NuevaordenrecojoComponent  , canActivate: [AuthGuard]} ,
@@ -69,8 +71,6 @@ const pagesRoutes: Routes = [
     {path : 'seguimiento/liquidaciondocumentaria', component : PendientesliquidacionComponent  , canActivate: [AuthGuard]} ,
 
     {path : 'seguimiento/vincularfacura', component : VincularfacturaComponent  , canActivate: [AuthGuard]} ,
-
-
     {path : 'seguimiento/liquidarorden/:uid/:uid2', component : LiquidarordenComponent  , canActivate: [AuthGuard]} ,
     {path : 'seguimiento/uploadfile', component : UploadfileComponent  , canActivate: [AuthGuard]} ,
 
@@ -79,44 +79,37 @@ const pagesRoutes: Routes = [
     {path : 'proveedor/nuevatarifa/:uid' , component : NuevatarifaComponent },
     {path : 'proveedor/editartarifa/:uid/:uid2' , component : EditartarifaComponent },
 
-
-    // {path : 'mantenimiento/listadoproveedores' , component : ListadoproveedoresComponent  , canActivate: [AuthGuard]},
-    // {path : 'proveedor/listadoproveedorestarifa/:uid' , component : ListadotarifaproveedorComponent },
-    // {path : 'proveedor/nuevatarifa/:uid' , component : NuevatarifaComponent },
-    // {path : 'proveedor/editartarifa/:uid/:uid2' , component : EditartarifaComponent },
-
-
     {path : 'proveedor/listadorepartidores' , component : ListadorepartidoresComponent  , canActivate: [AuthGuard]},
     {path : 'proveedor/listadotarifarepartidor/:uid' , component : ListadotarifarepartidorComponent },
     {path : 'proveedor/nuevatarifarepartidor/:uid' , component : NuevatarifarepartidorComponent },
     {path : 'proveedor/editartarifa/:uid/:uid2' , component : EditartarifaComponent },
-
-
     {path : 'seguimiento/pendientesliquidacionrepartidores' , component : PendientesliquidacionrepartidoresComponent  , canActivate: [AuthGuard]},
-
-
-
     {path : 'seguimiento/liquidarordenot/:uid/:uid2', component : LiquidaordenotComponent  , canActivate: [AuthGuard]} ,
-
     {path : 'seguimiento/asignarguias/:uid/:uid2', component : AsignarguiasComponent  , canActivate: [AuthGuard]} ,
     {path : 'seguimiento/pendientesmanifiestos/:uid', component : PendientesmanifiestosComponent  , canActivate: [AuthGuard]} ,
-
     {path : 'seguimiento/liquidardocumentos/:uid/:uid2/:uid3', component : LiquidardocumentosComponent  , canActivate: [AuthGuard]} ,
     {path : 'kpi/porestadoot', component : PorestadosotComponent  , canActivate: [AuthGuard]} ,
-
     {path : 'retorno/otspendientes', component : OtspendientesComponent  , canActivate: [AuthGuard]} ,
+    {path : 'planning/agrupadoplanning', component : AgrupadoplanningComponent  , canActivate: [AuthGuard]} ,
+    {path : 'planning/generarrutas/:uid', component : GenerarrutasComponent  , canActivate: [AuthGuard]} ,
 
+    {path : 'planning/manifiestos', component : ManifiestoComponent  , canActivate: [AuthGuard]} ,
+    {path : 'planning/hojasruta', component : HojarutaComponent  , canActivate: [AuthGuard]} ,
+    {path : 'planning/confirmarrecepcion', component : ConfirmarrecepcionComponent  , canActivate: [AuthGuard]} ,
+
+    {path : 'trafico/equipos', component : EquipostraficoComponent  , canActivate: [AuthGuard]} ,
+    {path : 'trafico/integrado', component : IntegradoComponent  , canActivate: [AuthGuard]} ,
+    {path : 'trafico/vistaenruta/:uid', component : VistaenrutaComponent  , canActivate: [AuthGuard]} ,
+    {path : 'trafico/vistarepartidor/:uid', component : VistarepartidorComponent  , canActivate: [AuthGuard]} ,
 
 
     {path : 'kpi/tiempoentrega', component : TiempoentregaComponent  , canActivate: [AuthGuard]} ,
     {path : 'kpi/retornodocumentario', component : RetornodocumentarioComponent  , canActivate: [AuthGuard]} ,
     {path : 'kpi/retornodocumentario1', component : Retornodocumentario1Component  , canActivate: [AuthGuard]} ,
     {path : 'kpi/reportecomercial', component : ReportecomercialComponent  , canActivate: [AuthGuard]} ,
-
     {path : 'reportes/reportependientesliquidacion', component : ReportependientesliquidacionComponent  , canActivate: [AuthGuard]} ,
     {path : 'reportes/reportependientesdespacho', component : ReportependientesdespachoComponent  , canActivate: [AuthGuard]} ,
     {path : 'reportes/reportependientesingresos', component : ReportependientesingresosComponent  , canActivate: [AuthGuard]} ,
-
     {path : '', redirectTo : 'seguimientoot/listadoparaclientes' , canActivate: [AuthGuard]},
 
 ];

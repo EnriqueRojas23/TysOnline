@@ -69,7 +69,7 @@ export class ListadoordenesrecojoComponent implements OnInit {
   ngOnInit() {
 
     this.user = JSON.parse(localStorage.getItem('user'));
-    
+
         this.items = [
           {label: 'Update', icon: 'pi pi-refresh', command: () => {
             // this.update();
@@ -220,7 +220,7 @@ saveAsExcelFile(buffer: any, fileName: string): void {
         console.log(list);
         this.loading = false;
         this.ordenes =  list;
-        
+
 
       });
   }
@@ -286,21 +286,6 @@ saveAsExcelFile(buffer: any, fileName: string): void {
   this.ref.onClose.subscribe((product: any) => {
     if (product === undefined) { return; }
     else{
-      console.log(product);
-      // this.model.placa = product.placa;
-      // this.bitplacaencontrada = true;
-      // this.model.idvehiculo = product.idvehiculo;
-
-      // this.model.datosunidad = product.datosunidad;
-      // this.model.proveedor = product.proveedor;
-      // this.model.idproveedor = product.idproveedor;
-      // this.model.idvehiculo = product.idvehiculo;
-      // this.model.idchofer = product.idchofer;
-      // this.model.dni = product.dni;
-      // this.model.nombrechofer = product.nombrechofer;
-      // this.model.brevete = product.brevete;
-
-
       this.messageService.add({severity: 'info', summary: 'Vehículo seleccionado', detail: product.placa});
     }
 });

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
 import { Router } from '@angular/router';
+import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmationService, SelectItem } from 'primeng/api';
 import { AppDateAdapter, APP_DATE_FORMATS } from 'src/app/_common/datepicker.extend';
@@ -32,11 +33,17 @@ export class NuevaordenrecojoComponent implements OnInit {
   es: any;
   public loading = false;
   model: any = {};
+
   clientes: SelectItem[] = [];
   tipounidad: SelectItem[] = [];
+  ubigeo: SelectItem[] = [];
+
   dateInicio: Date = new Date(Date.now()) ;
   user: User ;
   IdNuevaOrden = 0;
+
+
+  horacita: any;
 
   date: Date = new Date();
   settings = {
@@ -55,6 +62,8 @@ export class NuevaordenrecojoComponent implements OnInit {
   ngOnInit() {
 
 
+
+
     this.es = {
       firstDayOfWeek: 1,
       dayNames: [ 'domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado' ],
@@ -66,6 +75,23 @@ export class NuevaordenrecojoComponent implements OnInit {
       today: 'Hoy',
       clear: 'Borrar'
   };
+
+  this.ordenTransporteService.getUbigeo('').subscribe(resp => {
+
+    this.ubigeo.push({ value: 0,  label : 'TODOS LOS DESTINOS'});
+
+    resp.forEach(element => {
+        this.ubigeo.push({ value: element.iddistrito ,  label : element.ubigeo});
+      });
+
+
+    this.model.iddistrito = 0;
+
+  }, error => {
+
+  }, () => {
+
+  });
 
 
 
@@ -94,6 +120,11 @@ export class NuevaordenrecojoComponent implements OnInit {
    }
 
   registrar(form: NgForm) {
+
+
+
+    this.model.horacita = moment(this.model.horacita).format('HH:mm');
+    console.log(this.model.horacita);
 
     this.confirmationService.confirm({
       message: '¿Esta seguro que desea registrar esta OR?',

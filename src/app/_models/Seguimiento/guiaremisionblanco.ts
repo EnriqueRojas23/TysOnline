@@ -4,6 +4,13 @@ export interface Cuadrilla {
          dni?: string;
  }
 
+ export interface Carga {
+  idcarga: number;
+  numcarga: string;
+  idtipounidad: number;
+
+ }
+
  export interface GuiaRemisionBlanco {
         idmanifiesto?: number;
         id?: number;
@@ -24,6 +31,11 @@ export interface Provincia {
       iddistrito: number;
       distrito: string;
   }
+
+  export interface Estaciones {
+    idestacion: number;
+    estacionorigen: string;
+}
 
 export interface SustentoResult {
     id  : number;
@@ -51,4 +63,10 @@ export class SustentoDetalle {
   montoImpuesto  : string;
   montoTotal : string  ;
 
+}
+export class DepartmentForGroup {
+  iddepartamento: number;
+  departamento: string;
+  idequipo: number;
+  equipo: string;
 }

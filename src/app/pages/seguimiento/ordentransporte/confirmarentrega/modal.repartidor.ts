@@ -130,7 +130,7 @@ export class RepartidorModalComponent implements OnInit {
         clear: 'Borrar'
         };
 
-        this.generalService.getProveedores('').subscribe(resp => {
+        this.generalService.getProveedores('',21513).subscribe(resp => {
 
 
           this.proveedores.push({ value: 0,  label : 'TODOS LOS REPARTIDORES'});
