@@ -162,7 +162,7 @@
     "universal-analytics" "0.4.20"
     "uuid" "7.0.2"
 
-"@angular/common@^16.0.0 || ^17.0.0", "@angular/common@^7.0.0 || ^8.0.0 || ^9.0.0 || ^10.0.0", "@angular/common@^8.0.0", "@angular/common@^9.0.0", "@angular/common@^9.0.0 || ^10.0.0-0", "@angular/common@^9.1.0 || ^10.0.0", "@angular/common@^9.1.12", "@angular/common@>=6.0.0", "@angular/common@>=7.1.0", "@angular/common@>=8.0.0", "@angular/common@>=9.0.0", "@angular/common@>=9.0.0-0", "@angular/common@9 - 10", "@angular/common@9.1.12":
+"@angular/common@^7.0.0 || ^8.0.0 || ^9.0.0 || ^10.0.0", "@angular/common@^9.0.0", "@angular/common@^9.0.0 || ^10.0.0-0", "@angular/common@^9.1.0 || ^10.0.0", "@angular/common@^9.1.12", "@angular/common@>=6.0.0", "@angular/common@>=7.1.0", "@angular/common@>=8.0.0", "@angular/common@>=9.0.0", "@angular/common@>=9.0.0-0", "@angular/common@9 - 10", "@angular/common@9.1.12":
   "integrity" "sha512-XSIqkbM6VV1yixF9zuzeE5eqN1VsiXS517K2VU0XgCRSAzhVhLOeKsdYjeLf7PdSu/HgW/Tr81H+isi9A9I0YA=="
   "resolved" "https://registry.npmjs.org/@angular/common/-/common-9.1.12.tgz"
   "version" "9.1.12"
@@ -190,7 +190,7 @@
   "resolved" "https://registry.npmjs.org/@angular/compiler/-/compiler-9.1.12.tgz"
   "version" "9.1.12"
 
-"@angular/core@^16.0.0 || ^17.0.0", "@angular/core@^7.0.0 || ^8.0.0 || ^9.0.0 || ^10.0.0", "@angular/core@^8.0.0", "@angular/core@^9.0.0", "@angular/core@^9.0.0 || ^10.0.0-0", "@angular/core@^9.1.0 || ^10.0.0", "@angular/core@^9.1.12", "@angular/core@>=2.3.1 <10.0.0 || >9.0.0-beta <10.0.0 || >9.1.0-beta <10.0.0 || >9.2.0-beta <10.0.0", "@angular/core@>=6.0.0", "@angular/core@>=8.0.0", "@angular/core@>=9.0.0", "@angular/core@>=9.0.0-0", "@angular/core@9 - 10", "@angular/core@9.1.12":
+"@angular/core@^7.0.0 || ^8.0.0 || ^9.0.0 || ^10.0.0", "@angular/core@^9.0.0", "@angular/core@^9.0.0 || ^10.0.0-0", "@angular/core@^9.1.0 || ^10.0.0", "@angular/core@^9.1.12", "@angular/core@>=2.3.1 <10.0.0 || >9.0.0-beta <10.0.0 || >9.1.0-beta <10.0.0 || >9.2.0-beta <10.0.0", "@angular/core@>=6.0.0", "@angular/core@>=8.0.0", "@angular/core@>=9.0.0", "@angular/core@>=9.0.0-0", "@angular/core@9 - 10", "@angular/core@9.1.12":
   "integrity" "sha512-WVA/eh3fzjx0apOzkKot4YRRUsGkHj50zFQWrAOMgivGaj1YVrvhf+m3hpglj5fn/BkLiFDl8RT0wAE8z9X+gQ=="
   "resolved" "https://registry.npmjs.org/@angular/core/-/core-9.1.12.tgz"
   "version" "9.1.12"
@@ -199,14 +199,6 @@
   "integrity" "sha512-LhjnZlC4WEsEsAJfOZLte+Lks3WBAFVeRv2lzoQNFVr/IMzBNDVfjEaaSqKF1cei3cjY39Df2nYDMJM7HfqbJA=="
   "resolved" "https://registry.npmjs.org/@angular/forms/-/forms-9.1.12.tgz"
   "version" "9.1.12"
-
-"@angular/google-maps@^16.0.4":
-  "integrity" "sha512-0tgtqcfp8oSqB6hUTodMFmYimnqkRIYy7eGUzIEEsu2XQJjz8xjyLOqg/P1XGZV5jBhKZMDdTPEUbMnu2KDqyw=="
-  "resolved" "https://registry.npmjs.org/@angular/google-maps/-/google-maps-16.0.4.tgz"
-  "version" "16.0.4"
-  dependencies:
-    "@types/google.maps" "^3.52.4"
-    "tslib" "^2.3.0"
 
 "@angular/localize@^9.0.0", "@angular/localize@^9.1.12":
   "integrity" "sha512-31OalfES+dLrxN0VXCxxtT5dWoOSlQ40KYmzMS8X+mQ20gy9eFiZK4qf3DEq3JPqRltBMdEDnwR38uGIMAu2gQ=="
@@ -1304,11 +1296,6 @@
   dependencies:
     "@types/minimatch" "*"
     "@types/node" "*"
-
-"@types/google.maps@^3.52.4":
-  "integrity" "sha512-IiDAYTONQEKCBssPtoM0XqWF8YIIk2leba4NOf9qVQ/d8l5gLuS3QT87TrX6/u8rMonQAXC9KEDmM4q7sT6MWg=="
-  "resolved" "https://registry.npmjs.org/@types/google.maps/-/google.maps-3.53.4.tgz"
-  "version" "3.53.4"
 
 "@types/googlemaps@^3.39.13", "@types/googlemaps@^3.39.8":
   "integrity" "sha512-R/k5WKe8zQHo9oFRINuX/1haKYRkKEfItnBGrSjspbXXITakRdsj6daQIdL1+Pt84lnzduWurxNA5k0fgPMQUg=="
@@ -6180,13 +6167,6 @@
   "resolved" "https://registry.npmjs.org/neo-async/-/neo-async-2.6.2.tgz"
   "version" "2.6.2"
 
-"ngx-loading@^8.0.0":
-  "integrity" "sha512-22q7/ILp0rswl7m3OkKZdIK7rHs7wojd2mGRfxgWWug7C29d3hWL7GE+h1sm12UZMS7VDXSFyTc6wO7APRYJ0Q=="
-  "resolved" "https://registry.npmjs.org/ngx-loading/-/ngx-loading-8.0.0.tgz"
-  "version" "8.0.0"
-  dependencies:
-    "tslib" "^1.9.0"
-
 "ngx-material-timepicker@^5.5.3":
   "integrity" "sha512-Ua6eNNNneHS8S1/3Tn2dUOnLdZ4k6MhQqvLM/eFVoeF0WF+q/uK1DAH8eAki3HW1ogq2oDWnVRSeXvvZGJldhQ=="
   "resolved" "https://registry.npmjs.org/ngx-material-timepicker/-/ngx-material-timepicker-5.5.3.tgz"
@@ -6845,6 +6825,11 @@
   "version" "4.2.0"
   dependencies:
     "find-up" "^4.0.0"
+
+"popper.js@^1.16.1":
+  "integrity" "sha512-Wb4p1J4zyFTbM+u6WuO4XstYx4Ky9Cewe4DWrel7B0w6VVICvPwdOpotjzcf6eD8TsckVnIMNONQyPIUFOUbCQ=="
+  "resolved" "https://registry.npmjs.org/popper.js/-/popper.js-1.16.1.tgz"
+  "version" "1.16.1"
 
 "portfinder@^1.0.26":
   "integrity" "sha512-Se+2isanIcEqf2XMHjyUKskczxbPH7dQnlMjXX6+dybayyHvAf/TCgyMRlzf/B6QDhAEFOGes0pzRo3by4AbMA=="
@@ -7820,7 +7805,7 @@
   dependencies:
     "aproba" "^1.1.1"
 
-"rxjs@^6.0.0", "rxjs@^6.5.3", "rxjs@^6.5.3 || ^7.4.0", "rxjs@^6.6.3":
+"rxjs@^6.0.0", "rxjs@^6.5.3", "rxjs@^6.6.3":
   "integrity" "sha512-trsQc+xYYXZ3urjOiJOuCOa5N3jAZ3eiSpQB5hIT8zGlL2QfnHLJ2r7GMkBGuIausdJN1OneaI6gQlsqNHHmZQ=="
   "resolved" "https://registry.npmjs.org/rxjs/-/rxjs-6.6.3.tgz"
   "version" "6.6.3"
@@ -8947,11 +8932,6 @@
   "integrity" "sha512-uZtkfKblCEQtZKBF6EBXVZeQNl82yqtDQdv+eck8u7tdPxjLu2/lp5/uPW+um2tpuxINHWy3GhiccY7QgEaVHQ=="
   "resolved" "https://registry.npmjs.org/tslib/-/tslib-2.0.3.tgz"
   "version" "2.0.3"
-
-"tslib@^2.3.0":
-  "integrity" "sha512-mSxlJJwl3BMEQCUNnxXBU9jP4JBktcEGhURcPR6VQVlnP0FdDEsIaz0C35dXNGLyRfrATNofF0F5p2KPxQgB+w=="
-  "resolved" "https://registry.npmjs.org/tslib/-/tslib-2.5.3.tgz"
-  "version" "2.5.3"
 
 "tslib@1.11.1":
   "integrity" "sha512-aZW88SY8kQbU7gpV19lN24LtXh/yD4ZZg6qieAJDDg+YBsJcSmLGK9QpnUjAKVG/xefmvJGd1WUmfpT/g6AJGA=="
